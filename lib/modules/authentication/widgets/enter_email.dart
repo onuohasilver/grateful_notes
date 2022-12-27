@@ -1,8 +1,10 @@
+import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
+import 'package:grateful_notes/modules/authentication/controllers/auth_input.dart';
 import 'package:grateful_notes/modules/authentication/widgets/enter_password.dart';
 
 class EnterEmail extends StatelessWidget {
@@ -13,6 +15,8 @@ class EnterEmail extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    AuthInputs ai = AuthInputs(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 33),
       child: Column(
@@ -20,7 +24,7 @@ class EnterEmail extends StatelessWidget {
         children: [
           CustomText(label, size: 34, color: Colors.white),
           const YSpace(31),
-          const TextField(),
+          TextField(onChanged: (value) => ai.onEmailChanged(value)),
           const YSpace(250),
           Align(
             alignment: Alignment.bottomRight,

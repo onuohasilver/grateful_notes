@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
+import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
@@ -8,6 +10,7 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
+import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 
@@ -16,6 +19,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    AuthVariables av = AuthVariables(state);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FadeInRightBig(
@@ -44,10 +49,10 @@ class Home extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children: const [
-                        CustomText("Hi,", size: 24),
+                      children: [
+                        const CustomText("Hi,", size: 24),
                         CustomText(
-                          " Joane",
+                          " ${av.username}",
                           size: 24,
                           weight: FontWeight.bold,
                         ),
