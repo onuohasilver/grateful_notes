@@ -5,7 +5,9 @@ import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
+import 'package:grateful_notes/modules/authentication/controllers/auth_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_input.dart';
+import 'package:logger/logger.dart';
 
 class EnterPassword extends StatelessWidget {
   const EnterPassword({
@@ -18,6 +20,7 @@ class EnterPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
     AuthInputs ai = AuthInputs(state);
+    AuthController ac = AuthController(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 33),
       child: Column(
@@ -34,14 +37,20 @@ class EnterPassword extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: IconButton(
-                onPressed: () => Navigate.to(
-                      SuccessLoading(
-                        texts: label.contains('secret')
-                            ? signUpTexts
-                            : signInTexts,
-                        colors: signUpColors,
-                      ),
-                    ),
+                onPressed: () => {
+                      if (label.contains('secret'))
+                        {ac.signup()}
+                      else
+                        {Logger().i("message")},
+                      Navigate.to(
+                        SuccessLoading(
+                          texts: label.contains('secret')
+                              ? signUpTexts
+                              : signInTexts,
+                          colors: signUpColors,
+                        ),
+                      )
+                    },
                 icon: const Icon(Icons.arrow_forward)),
           )
         ],

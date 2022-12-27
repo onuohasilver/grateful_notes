@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "915947266058",
+    "project_id": "grateful-notes",
+    "storage_bucket": "grateful-notes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915947266058:android:19a8830d07c2d4a1d73ff3",
+        "android_client_info": {
+          "package_name": "com.example.grateful_notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915947266058-tl917oegkq4a1f3av8naaae9ulbl1qbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXyQXQ_wWuHkb7WsW-nyY1hFcnv0UeHuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915947266058-tl917oegkq4a1f3av8naaae9ulbl1qbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

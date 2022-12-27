@@ -38,38 +38,36 @@ class Home extends StatelessWidget {
       body: FlowerBackdrop(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const YSpace(53),
-              Padding(
-                padding: EdgeInsets.only(left: 15.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const CustomText("Hi,", size: 24),
-                        CustomText(
-                          " ${av.username}",
-                          size: 24,
-                          weight: FontWeight.bold,
-                        ),
-                      ],
-                    ),
-                    const YSpace(8),
-                    const CustomText("Gratitude turns what we have into enough",
-                        size: 12, color: Colors.grey),
-                  ],
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const YSpace(53),
+            Padding(
+              padding: EdgeInsets.only(left: 15.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const CustomText("Hi,", size: 24),
+                      CustomText(
+                        " ${av.username}",
+                        size: 24,
+                        weight: FontWeight.bold,
+                      ),
+                    ],
+                  ),
+                  const YSpace(8),
+                  const CustomText("Gratitude turns what we have into enough",
+                      size: 12, color: Colors.grey),
+                ],
               ),
-              const YSpace(35),
-              const GratitudeDisplayCard(),
-              const YSpace(12),
-              const GratitudeDisplayCard(),
-            ],
-          ),
+            ),
+            const YSpace(35),
+            const GratitudeDisplayCard(),
+            const YSpace(12),
+            const GratitudeDisplayCard(),
+          ],
         ),
       ),
     );
