@@ -3,14 +3,12 @@ import 'package:bridgestate/state/bridge_builder.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
-import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_input.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_variables.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
-import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessLoading extends StatelessWidget {
@@ -32,10 +30,6 @@ class SuccessLoading extends StatelessWidget {
           () => sli.onTextsChanged(texts),
           () => sli.onColorsChanged(colors),
           () => slc.updateIndex(),
-          () => Future.delayed(const Duration(seconds: 5), () {
-                Navigate.to(const Home());
-                slc.dispose();
-              })
         ],
         disposeMethods: [() => slc.dispose()],
         dispose: true,

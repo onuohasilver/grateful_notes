@@ -1,5 +1,6 @@
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
@@ -24,7 +25,10 @@ class EnterEmail extends StatelessWidget {
         children: [
           CustomText(label, size: 34, color: Colors.white),
           const YSpace(31),
-          TextField(onChanged: (value) => ai.onEmailChanged(value)),
+          TextField(
+            onChanged: (value) => ai.onEmailChanged(value),
+            style: GoogleFonts.inconsolata(color: Colors.white),
+          ),
           const YSpace(250),
           Align(
             alignment: Alignment.bottomRight,
