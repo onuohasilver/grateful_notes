@@ -12,4 +12,5 @@ class AppColors {
   static const fadedPink = Color(0xFFFCDFFD);
   static const superLightGreen = Color(0xFFDFFDE6);
   static const fadedYellow = Color(0xFFFDF1DF);
+  static const deepRed = Color(0xFFBC3C3C);
 }

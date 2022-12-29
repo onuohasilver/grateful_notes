@@ -23,14 +23,33 @@ class AuthController extends BridgeController {
 
   Future signup() async {
     RequestHandler(
-        request: () => _as.signup(email: _av.email, password: _av.password),
-        onSuccess: (_) => {
-              _createUserProfile(_.data['id']),
-            },
-        onError: (_) => Navigate.replace(ErrorScreen(
-            errorMessage: _.data['error'].toString().split("]").last))
-        // BotToast.showText(text: _.data['error'].toString().split("]").last),
-        ).sendRequest();
+            onRequestStart: () => Navigate.to(
+                  SuccessLoading(texts: signUpTexts, colors: signUpColors),
+                ),
+            request: () => _as.signup(email: _av.email, password: _av.password),
+            onSuccess: (_) => {
+                  _createUserProfile(_.data['id']),
+                },
+            onError: (_) => Navigate.replace(ErrorScreen(
+                errorMessage: _.data['error'].toString().split("]").last)))
+        .sendRequest();
+  }
+
+  //Initializes the signin fllow using the parsed user
+  //data.
+  Future signin() async {
+    RequestHandler(
+            onRequestStart: () => Navigate.to(
+                  SuccessLoading(texts: signUpTexts, colors: signUpColors),
+                ),
+            request: () => _as.signin(email: _av.email, password: _av.password),
+            onSuccess: (_) async => {
+                  await Future.delayed(const Duration(seconds: 2)),
+                  Navigate.to(const Home())
+                },
+            onError: (_) => Navigate.replace(ErrorScreen(
+                errorMessage: _.data['error'].toString().split("]").last)))
+        .sendRequest();
   }
 
   Future _createUserProfile(String id) async {
@@ -41,7 +60,6 @@ class AuthController extends BridgeController {
         {
           _ui.onUsermodelChanged(
               UserModel(email: _av.email, username: _av.username, userid: id)),
-          Navigate.to(SuccessLoading(texts: signUpTexts, colors: signUpColors)),
           await Future.delayed(const Duration(seconds: 6)),
           Navigate.to(const Home())
         }

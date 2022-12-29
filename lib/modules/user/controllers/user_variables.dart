@@ -1,6 +1,6 @@
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
-import 'package:gamee/modules/user/bridge/user_keys.dart';
-import 'package:gamee/modules/user/models/user_model.dart';
+import 'package:grateful_notes/modules/user/controllers/user_keys.dart';
+import 'package:grateful_notes/modules/user/models/user_model.dart';
 
 class UserVariables {
   UserVariables(this.state);

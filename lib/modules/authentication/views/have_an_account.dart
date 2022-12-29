@@ -26,7 +26,7 @@ class HaveAnAccount extends StatelessWidget {
                   const YSpace(304),
                   const CustomText("Do you have \nan account?",
                       animate: true,
-                      size: 34,
+                      size: 20,
                       color: Colors.white,
                       height: 1.3),
                   const YSpace(20),

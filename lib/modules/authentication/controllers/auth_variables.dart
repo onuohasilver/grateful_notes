@@ -7,7 +7,7 @@ class AuthVariables {
   AuthVariables(this.state);
   AuthKeys get _keys => AuthKeys();
 
-  String get email => state.read(_keys.email, "initial").slice;
-  String get password => state.read(_keys.password, "initial").slice;
-  String get username => state.read(_keys.username, "initial").slice;
+  String get email => state.read(_keys.email, "").slice;
+  String get password => state.read(_keys.password, "").slice;
+  String get username => state.read(_keys.username, "").slice;
 }

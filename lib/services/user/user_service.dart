@@ -1,4 +1,5 @@
-import 'package:gamee/core/network/response_model.dart';
+
+import 'package:grateful_notes/core/network/response_model.dart';
 
 abstract class UserService {
   Future<ResponseModel> getuser({required String userid});

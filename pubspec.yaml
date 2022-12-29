@@ -29,6 +29,8 @@ dependencies:
   lottie: ^1.4.2
   logger: ^1.1.0
   animated_text_kit: ^4.2.2
+  cloudinary_public: ^0.20.0
+  
 
 dev_dependencies:
   flutter_test:

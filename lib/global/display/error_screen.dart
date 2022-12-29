@@ -3,6 +3,7 @@ import 'package:bridgestate/state/bridge_builder.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
+import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
@@ -22,7 +23,7 @@ class ErrorScreen extends StatelessWidget {
         controllers: const [],
         dispose: true,
         child: FlowerBackdrop(
-            color: Colors.red,
+            color: AppColors.deepRed,
             child: Column(
               children: [
                 Container(

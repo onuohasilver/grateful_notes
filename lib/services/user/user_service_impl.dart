@@ -1,7 +1,7 @@
-import 'package:gamee/core/network/firebase_extended.dart';
-import 'package:gamee/core/network/network_core.dart';
-import 'package:gamee/core/network/response_model.dart';
-import 'package:gamee/services/user/user_service.dart';
+import 'package:grateful_notes/core/network/firebase_extended.dart';
+import 'package:grateful_notes/core/network/network_core.dart';
+import 'package:grateful_notes/core/network/response_model.dart';
+import 'package:grateful_notes/services/user/user_service.dart';
 
 class UserServiceImpl implements UserService {
   final Network _network = NetworkImpl();
