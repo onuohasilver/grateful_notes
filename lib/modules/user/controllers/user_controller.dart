@@ -15,9 +15,8 @@ class UserController extends BridgeController {
   UserInputs get _ui => UserInputs(state);
   UserVariables get _uv => UserVariables(state);
 
-  getuser(String userid) {
+  getuser(String userid) async {
     RequestHandler(
-      onRequestStart: () => BotToast.showLoading(),
       request: () => _us.getuser(userid: userid),
       onSuccess: (_) => _ui.onUsermodelChanged(
           UserModel.fromJson(_.data as Map<String, dynamic>)),

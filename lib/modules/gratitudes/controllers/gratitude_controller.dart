@@ -1,13 +1,14 @@
 import 'package:bridgestate/bridges.dart';
 import 'package:grateful_notes/core/network/request_handler.dart';
-import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_input.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
+import 'package:grateful_notes/modules/gratitudes/data/statics.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
 import 'package:logger/logger.dart';
@@ -20,6 +21,7 @@ class GratitudeController extends BridgeController {
   GratitudeInput get _gi => GratitudeInput(state);
   GratitudeVariables get _gv => GratitudeVariables(state);
   GratitudeService get _gs => GratitudeServiceImpl();
+  UserVariables get _uv => UserVariables(state);
 
   ///Initializes a new gratitude edit model
   createNew() => _gi.onEditModelChanged(GratitudeEditModel.createNew());
@@ -28,22 +30,13 @@ class GratitudeController extends BridgeController {
     RequestHandler(
             onRequestStart: () => Navigate.to(
                   const SuccessLoading(
-                    texts: [
-                      "You have saved a moment",
-                      "Be proud of what you have done",
-                      "You have saved this happy moment successfully"
-                    ],
-                    colors: [
-                      AppColors.greyGreen,
-                      AppColors.chatreuse,
-                      AppColors.green
-                    ],
-                  ),
+                      texts: Statics.saveGratitudeTexts,
+                      colors: Statics.saveGratitudeColors),
                 ),
             request: () => _gs.createGratitude(
                 text: _gv.currentEdit!.texts,
                 images: _gv.currentEdit!.imagePaths,
-                userid: "userid"),
+                userid: _uv.user!.userid),
             onSuccess: (_) async => {
                   await Future.delayed(const Duration(seconds: 6)),
                   Navigate.to(const Home())
@@ -55,8 +48,12 @@ class GratitudeController extends BridgeController {
 
   getGratitudes() {
     RequestHandler(
-      request: () => _gs.getGratitudes(userid: 'userid'),
-      onSuccess: (_) => Logger().i(_.toString()),
+      request: () => _gs.getGratitudes(userid: _uv.user!.userid),
+      onSuccess: (_) => {
+        _gi.onGratitudesChanged(
+            _.data.values.map((e) => GratitudeEditModel.fromJson(e)).toList()),
+        Logger().i(_gv.allGratitudes)
+      },
       onError: (_) => Logger().i(_.toString()),
     ).sendRequest();
   }

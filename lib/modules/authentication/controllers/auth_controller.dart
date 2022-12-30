@@ -9,9 +9,11 @@ import 'package:grateful_notes/global/display/success_loading.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/authentication/widgets/enter_password.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
+import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_inputs.dart';
 import 'package:grateful_notes/modules/user/models/user_model.dart';
 import 'package:grateful_notes/services/auth/auth_service_impl.dart';
+import 'package:logger/logger.dart';
 
 class AuthController extends BridgeController {
   final BridgeState state;
@@ -20,6 +22,7 @@ class AuthController extends BridgeController {
   AuthServiceImpl get _as => AuthServiceImpl();
   AuthVariables get _av => AuthVariables(state);
   UserInputs get _ui => UserInputs(state);
+  UserController get _uc => UserController(state);
 
   Future signup() async {
     RequestHandler(
@@ -40,10 +43,12 @@ class AuthController extends BridgeController {
   Future signin() async {
     RequestHandler(
             onRequestStart: () => Navigate.to(
-                  SuccessLoading(texts: signUpTexts, colors: signUpColors),
+                  SuccessLoading(texts: signInTexts, colors: signUpColors),
                 ),
             request: () => _as.signin(email: _av.email, password: _av.password),
             onSuccess: (_) async => {
+                  Logger().i(_),
+                  await _uc.getuser(_.data['id']),
                   await Future.delayed(const Duration(seconds: 2)),
                   Navigate.to(const Home())
                 },

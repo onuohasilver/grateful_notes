@@ -10,9 +10,9 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
-import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
-    AuthVariables av = AuthVariables(state);
+    UserVariables uv = UserVariables(state);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FadeInRightBig(
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
                     children: [
                       const CustomText("Hi,", size: 24),
                       CustomText(
-                        " ${av.username}",
+                        " ${uv.user?.username}",
                         size: 24,
                         weight: FontWeight.bold,
                       ),

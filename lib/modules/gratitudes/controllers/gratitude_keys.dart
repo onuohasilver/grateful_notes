@@ -4,4 +4,5 @@ class GratitudeKeys extends BridgeKeys {
   GratitudeKeys() : super("Gratitudes");
 
   get currentEdit => brKey("Current Edit");
+  get allGratitudes => brKey("All Gratitudes");
 }

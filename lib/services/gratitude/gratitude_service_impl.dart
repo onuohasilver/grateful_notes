@@ -17,6 +17,7 @@ class GratitudeServiceImpl extends GratitudeService {
         DateTime.now().toIso8601String(): {
           'imagePaths': images,
           'texts': text,
+          'date': DateTime.now().toIso8601String()
         }
       },
     );

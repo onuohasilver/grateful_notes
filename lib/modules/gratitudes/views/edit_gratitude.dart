@@ -76,8 +76,8 @@ class EditGratitude extends StatelessWidget {
                 hasBorder: true,
                 expand: true,
                 onTap: () {
-                  gc.saveGratitude();
-                  // gc.getGratitudes();
+                  // gc.saveGratitude();
+                  gc.getGratitudes();
                 },
               ),
             ),

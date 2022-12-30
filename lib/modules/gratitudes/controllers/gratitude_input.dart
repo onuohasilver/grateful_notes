@@ -12,6 +12,9 @@ class GratitudeInput extends BridgeController {
   onEditModelChanged(GratitudeEditModel gem) =>
       state.load(_keys.currentEdit, gem, GratitudeEditModel);
 
+  onGratitudesChanged(List<GratitudeEditModel> gems) =>
+      state.load(_keys.allGratitudes, gems, List<GratitudeEditModel>);
+
   @override
   void dispose() {}
 

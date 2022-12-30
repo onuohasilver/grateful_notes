@@ -41,4 +41,9 @@ class GratitudeEditModel {
 
   factory GratitudeEditModel.createNew() =>
       GratitudeEditModel(texts: [""], imagePaths: []);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
