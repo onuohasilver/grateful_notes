@@ -21,11 +21,7 @@ class GratitudeDisplayCard extends StatelessWidget {
             color: AppColors.fadedPink,
             child: Column(
               children: [
-                const CustomText(
-                  "Something done for me!",
-                  size: 20,
-                  weight: FontWeight.bold,
-                ),
+                CustomText(gem.type, size: 20, weight: FontWeight.bold),
                 const YSpace(12),
                 SizedBox(
                   width: 375.w,
@@ -40,11 +36,9 @@ class GratitudeDisplayCard extends StatelessWidget {
                   ),
                 ),
                 const YSpace(12),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomText(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna",
-                      size: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: CustomText(gem.texts.first, size: 14),
                 ),
               ],
             )),
@@ -52,7 +46,7 @@ class GratitudeDisplayCard extends StatelessWidget {
           child: Container(
             width: 375.w,
             height: 200,
-            color: AppColors.fadedPink,
+            color: colorMapper(gem.type),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -77,5 +71,18 @@ class GratitudeDisplayCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Color colorMapper(String type) {
+  switch (type) {
+    case "Something around me":
+      return AppColors.fadedPink;
+    case "Something that I did":
+      return AppColors.superLightGreen;
+    case "Something that was done for me":
+      return AppColors.fadedYellow;
+    default:
+      return AppColors.fadedPink;
   }
 }
