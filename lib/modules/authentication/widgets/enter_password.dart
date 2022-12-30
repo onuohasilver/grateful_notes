@@ -29,11 +29,11 @@ class EnterPassword extends StatelessWidget {
           CustomText(label, size: 20, color: Colors.white),
           const YSpace(31),
           TextField(
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              style: GoogleFonts.inconsolata(color: Colors.white),
-              onChanged: (value) => ai.onPasswordChanged(value),
-              textAlign: TextAlign.center),
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
+            style: GoogleFonts.inconsolata(color: Colors.white),
+            onChanged: (value) => ai.onPasswordChanged(value),
+          ),
           const YSpace(250),
           Align(
             alignment: Alignment.bottomRight,

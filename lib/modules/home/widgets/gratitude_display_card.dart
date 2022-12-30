@@ -45,7 +45,7 @@ class GratitudeDisplayCard extends StatelessWidget {
         child: ElasticIn(
           child: Container(
             width: 375.w,
-            height: 200,
+            // height: 200,
             color: colorMapper(gem.type),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
@@ -53,18 +53,18 @@ class GratitudeDisplayCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(gem.texts.first, size: 14, height: 1.3),
-                SizedBox(
-                  width: 375.w,
-                  height: 100,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: const [
-                      CustomImage(),
-                      CustomImage(),
-                      CustomImage()
-                    ],
-                  ),
-                )
+                // SizedBox(
+                //   width: 375.w,
+                //   height: 100,
+                //   child: ListView(
+                //     scrollDirection: Axis.horizontal,
+                //     children: const [
+                //       CustomImage(),
+                //       CustomImage(),
+                //       CustomImage()
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),

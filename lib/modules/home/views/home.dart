@@ -12,6 +12,7 @@ import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
+import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 
@@ -65,8 +66,22 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
+              const YSpace(12),
+              Flexible(
+                  child: SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  // itemCount: 30,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => DateButton(
+                    date: DateTime(2023).add(Duration(days: index)),
+                  ),
+                ),
+              )),
               Expanded(
+                  flex: 3,
                   child: ListView.builder(
+                      padding: const EdgeInsets.only(top: 20),
                       itemCount: gv.allGratitudes.length,
                       itemBuilder: (context, index) =>
                           GratitudeDisplayCard(gem: gv.allGratitudes[index])))
