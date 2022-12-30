@@ -12,5 +12,5 @@ class GratitudeVariables {
       state.read(_keys.currentEdit, null).slice;
 
   List<GratitudeEditModel> get allGratitudes =>
-      state.read(_keys.allGratitudes, null).slice;
+      state.read(_keys.allGratitudes, <GratitudeEditModel>[]).slice;
 }

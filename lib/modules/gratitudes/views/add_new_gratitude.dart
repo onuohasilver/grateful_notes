@@ -35,7 +35,7 @@ class AddNewGratitude extends StatelessWidget {
                   icon: const IconAssets().person,
                   hasBorder: true,
                   onTap: () => {
-                        gc.createNew(),
+                        gc.createNew("Something that I did"),
                         CustomOverlays().showSheet(
                             height: 700.h,
                             color: AppColors.superLightGreen,
@@ -49,7 +49,7 @@ class AddNewGratitude extends StatelessWidget {
                   hasBorder: true,
                   icon: const IconAssets().people,
                   onTap: () => {
-                        gc.createNew(),
+                        gc.createNew("Something that was done for me"),
                         CustomOverlays().showSheet(
                             height: 700.h,
                             color: AppColors.fadedYellow,
@@ -63,7 +63,7 @@ class AddNewGratitude extends StatelessWidget {
                   hasBorder: true,
                   icon: const IconAssets().around,
                   onTap: () => {
-                        gc.createNew(),
+                        gc.createNew("Something around me"),
                         CustomOverlays().showSheet(
                             height: 700.h,
                             color: AppColors.fadedPink,

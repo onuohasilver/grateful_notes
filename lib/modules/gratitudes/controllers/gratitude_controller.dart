@@ -24,7 +24,8 @@ class GratitudeController extends BridgeController {
   UserVariables get _uv => UserVariables(state);
 
   ///Initializes a new gratitude edit model
-  createNew() => _gi.onEditModelChanged(GratitudeEditModel.createNew());
+  createNew(String type) =>
+      _gi.onEditModelChanged(GratitudeEditModel.createNew(type));
 
   saveGratitude() {
     RequestHandler(
@@ -36,8 +37,10 @@ class GratitudeController extends BridgeController {
             request: () => _gs.createGratitude(
                 text: _gv.currentEdit!.texts,
                 images: _gv.currentEdit!.imagePaths,
+                type: _gv.currentEdit!.type,
                 userid: _uv.user!.userid),
             onSuccess: (_) async => {
+                  await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
                   Navigate.to(const Home())
                 },
@@ -50,8 +53,11 @@ class GratitudeController extends BridgeController {
     RequestHandler(
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
-        _gi.onGratitudesChanged(
-            _.data.values.map((e) => GratitudeEditModel.fromJson(e)).toList()),
+        _gi.onGratitudesChanged(_.data.values
+            .map((e) => GratitudeEditModel.fromJson(e))
+            .toList()
+            .reversed
+            .toList()),
         Logger().i(_gv.allGratitudes)
       },
       onError: (_) => Logger().i(_.toString()),
@@ -82,5 +88,7 @@ class GratitudeController extends BridgeController {
   void dispose() {}
 
   @override
-  void initialise() {}
+  void initialise() {
+    getGratitudes();
+  }
 }
