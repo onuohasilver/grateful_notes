@@ -11,6 +11,7 @@ import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
+import 'package:grateful_notes/services/images/image_service_impl.dart';
 import 'package:logger/logger.dart';
 
 class GratitudeController extends BridgeController {
@@ -21,6 +22,7 @@ class GratitudeController extends BridgeController {
   GratitudeInput get _gi => GratitudeInput(state);
   GratitudeVariables get _gv => GratitudeVariables(state);
   GratitudeService get _gs => GratitudeServiceImpl();
+  ImageServiceImpl get _is => ImageServiceImpl();
   UserVariables get _uv => UserVariables(state);
 
   ///Initializes a new gratitude edit model
@@ -78,11 +80,16 @@ class GratitudeController extends BridgeController {
     Logger().i(_gv.currentEdit!.toJson().toString());
   }
 
-  addImageToModel(String imagePath) {
+  addImageToModel() {
     List<String> current = _gv.currentEdit!.imagePaths;
-    current.add(imagePath);
+    _is
+        .getImagesFromDevice()
+        .then((value) => current.addAll([...value.map((e) => e.path)]));
+    // current.add(imagePath);
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
   }
+
+  addImage() {}
 
   scrollToDate() {}
 

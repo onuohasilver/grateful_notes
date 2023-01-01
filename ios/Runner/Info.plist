@@ -45,5 +45,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Grateful Notes uses the gallery to pick images to add to posts</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Grateful Notes uses the gallery to pick images to add to posts</string>
+
+
 </dict>
 </plist>

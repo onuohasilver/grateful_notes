@@ -44,6 +44,7 @@ class EditGratitude extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
+                        onTap: () => gc.addImageToModel(),
                         child: Row(
                           children: [
                             SvgPicture.asset(const IconAssets().gallery),
