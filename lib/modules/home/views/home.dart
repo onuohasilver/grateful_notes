@@ -81,7 +81,8 @@ class Home extends StatelessWidget {
                   itemBuilder: (context, index) => DateButton(
                       date: DateTime(2023).add(Duration(days: index)),
                       onTap: () {
-                        if (gv.allGratitudes.any((element) => element.date
+                        if (gv.allGratitudes.any((gem) => DateTime(
+                                gem.date.year, gem.date.month, gem.date.day)
                             .isAtSameMomentAs(
                                 DateTime(2023).add(Duration(days: index))))) {
                           isc.scrollToElement(
@@ -100,7 +101,7 @@ class Home extends StatelessWidget {
                 child: StickyGroupedListView(
                   itemScrollController: isc,
                   physics: const ClampingScrollPhysics(),
-                  reverse: true,
+                  // reverse: true,
                   elements: gv.allGratitudes,
                   elementIdentifier: (GratitudeEditModel gem) => gem.date,
                   groupBy: (GratitudeEditModel gem) =>

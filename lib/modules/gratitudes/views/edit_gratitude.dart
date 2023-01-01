@@ -40,6 +40,12 @@ class EditGratitude extends StatelessWidget {
                             (e) => CustomTextArea(onChanged: gc.addTextToModel))
                         .toList(),
                   const YSpace(12),
+                  if (gv.currentEdit!.imagePaths.isNotEmpty)
+                    // SizedBox(
+                    //   height: 200,
+                    //   child: Image.file(File(gv.currentEdit!.imagePaths.first)),
+                    // ),
+                    const YSpace(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -53,16 +59,6 @@ class EditGratitude extends StatelessWidget {
                         ),
                       ),
                       const XSpace(10),
-                      // if (gv.currentEdit!.texts.length < 2)
-                      //   GestureDetector(
-                      //     onTap: () => gc.addNewField(),
-                      //     child: Row(
-                      //       children: [
-                      //         SvgPicture.asset(const IconAssets().text),
-                      //         const CustomText("Add Text", size: 14)
-                      //       ],
-                      //     ),
-                      //   ),
                       const XSpace(10),
                     ],
                   ),

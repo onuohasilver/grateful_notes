@@ -16,7 +16,7 @@ class SuccessLoadingController extends BridgeController {
   updateIndex() async {
     for (var text in slv.texts) {
       await Future.delayed(const Duration(seconds: 2));
-      Logger().i(text);
+      // Logger().÷i(text);
       if (slv.index < slv.texts.length - 1) sli.onIndexChanged(slv.index + 1);
     }
   }

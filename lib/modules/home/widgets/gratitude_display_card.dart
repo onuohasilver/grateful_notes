@@ -53,18 +53,19 @@ class GratitudeDisplayCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(gem.texts.first, size: 16, height: 1.3),
-                // SizedBox(
-                //   width: 375.w,
-                //   height: 100,
-                //   child: ListView(
-                //     scrollDirection: Axis.horizontal,
-                //     children: const [
-                //       CustomImage(),
-                //       CustomImage(),
-                //       CustomImage()
-                //     ],
-                //   ),
-                // )
+                if (gem.imagePaths.isNotEmpty)
+                  SizedBox(
+                    width: 375.w,
+                    height: 100,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                          gem.imagePaths.length,
+                          (index) => CustomImage(
+                                src: gem.imagePaths[index],
+                              )),
+                    ),
+                  )
               ],
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:grateful_notes/core/network/request_handler.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
+import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_input.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
@@ -24,34 +25,45 @@ class GratitudeController extends BridgeController {
   GratitudeService get _gs => GratitudeServiceImpl();
   ImageServiceImpl get _is => ImageServiceImpl();
   UserVariables get _uv => UserVariables(state);
+  SuccessLoadingController get _slc => SuccessLoadingController(state);
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
       _gi.onEditModelChanged(GratitudeEditModel.createNew(type));
 
-  saveGratitude() {
+  saveGratitude() async {
     RequestHandler(
-            onRequestStart: () => Navigate.to(
-                  const SuccessLoading(
-                      texts: Statics.saveGratitudeTexts,
-                      colors: Statics.saveGratitudeColors),
-                ),
-            request: () => _gs.createGratitude(
-                text: _gv.currentEdit!.texts,
-                images: _gv.currentEdit!.imagePaths,
-                type: _gv.currentEdit!.type,
-                userid: _uv.user!.userid),
+            onRequestStart: () async => {
+                  Navigate.to(
+                    const SuccessLoading(
+                        texts: Statics.saveGratitudeTexts,
+                        colors: Statics.saveGratitudeColors),
+                  ),
+                  await _uploadImages()
+                },
+            request: () =>
+
+                // Logger().i("Success savsse"),
+                _gs.createGratitude(
+                    text: _gv.currentEdit!.texts,
+                    images: _gv.currentEdit!.imagePaths,
+                    type: _gv.currentEdit!.type,
+                    userid: _uv.user!.userid),
             onSuccess: (_) async => {
+                  Logger().i("on Success save"),
                   await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
+                  _slc.dispose(),
                   Navigate.to(Home())
                 },
+            // onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();
   }
 
   getGratitudes() {
+    Logger().i("Getting this");
     RequestHandler(
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
@@ -77,7 +89,6 @@ class GratitudeController extends BridgeController {
 
     current.last = text;
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(texts: current));
-    Logger().i(_gv.currentEdit!.toJson().toString());
   }
 
   addImageToModel() {
@@ -86,12 +97,18 @@ class GratitudeController extends BridgeController {
         .getImagesFromDevice()
         .then((value) => current.addAll([...value.map((e) => e.path)]));
     // current.add(imagePath);
+    Logger().i(_gv.currentEdit);
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
   }
 
-  addImage() {}
-
-  scrollToDate() {}
+  _uploadImages() async {
+    if (_gv.currentEdit!.imagePaths.isNotEmpty) {
+      await _is.uploadToDB(_gv.currentEdit!.imagePaths).then(
+            (value) => _gi.onEditModelChanged(
+                _gv.currentEdit!.copyWith(imagePaths: value.data['images'])),
+          );
+    }
+  }
 
   @override
   void dispose() {}

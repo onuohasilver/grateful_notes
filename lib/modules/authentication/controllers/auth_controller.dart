@@ -6,6 +6,7 @@ import 'package:grateful_notes/core/network/request_handler.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
+import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/authentication/widgets/enter_password.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
@@ -23,6 +24,7 @@ class AuthController extends BridgeController {
   AuthVariables get _av => AuthVariables(state);
   UserInputs get _ui => UserInputs(state);
   UserController get _uc => UserController(state);
+  SuccessLoadingController get _slc => SuccessLoadingController(state);
 
   Future signup() async {
     RequestHandler(
@@ -33,6 +35,7 @@ class AuthController extends BridgeController {
             onSuccess: (_) => {
                   _createUserProfile(_.data['id']),
                 },
+            onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();
@@ -52,6 +55,7 @@ class AuthController extends BridgeController {
                   await Future.delayed(const Duration(seconds: 2)),
                   Navigate.to(Home())
                 },
+            onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();

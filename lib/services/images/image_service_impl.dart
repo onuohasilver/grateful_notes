@@ -1,4 +1,5 @@
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:grateful_notes/core/network/response_model.dart';
 import 'package:grateful_notes/services/images/image_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
@@ -14,14 +15,15 @@ class ImageServiceImpl extends ImageService {
   }
 
   @override
-  Future<List<String>> uploadToDB(images) async {
+  Future<ResponseModel> uploadToDB(images) async {
     List<String> imageUrls = [];
+    Logger().i("message");
     for (var element in images) {
       Logger().i(element);
       await _cloudinary
           .uploadFile(CloudinaryFile.fromFile(element))
           .then((value) => imageUrls.add(value.secureUrl));
     }
-    return imageUrls;
+    return ResponseModel(data: {'images': imageUrls}, success: true, code: 200);
   }
 }

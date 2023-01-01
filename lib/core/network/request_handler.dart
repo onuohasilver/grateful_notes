@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:grateful_notes/core/network/response_model.dart';
+import 'package:logger/logger.dart';
 
 class RequestHandler {
   final Function() request;
@@ -43,9 +44,10 @@ class RequestHandler {
       BotToast.showText(text: "Check your network ");
     } catch (e) {
       if (e is ResponseModel) onError(e);
-      BotToast.closeAllLoading();
-      log(e.toString());
+      // Logger().i
 
+      // log(request.toString());
+      Logger().e(e.toString());
       onRequestEnd?.call();
     } finally {
       log("Network Call Terminated >> > Request Ended::");
