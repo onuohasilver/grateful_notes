@@ -27,7 +27,7 @@ class GratefulNotes extends StatelessWidget {
           return MaterialApp(
             home: const Intro(),
             debugShowCheckedModeBanner: false,
-            builder: BotToastInit(),
+            // builder: BotToastInit(),
             navigatorKey: navigatorKey,
             navigatorObservers: [BotToastNavigatorObserver()],
           );

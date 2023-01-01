@@ -8,6 +8,14 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/main.dart';
 
 class CustomOverlays {
+  showPopup(child) {
+    showDialog(
+        context: navigatorKey.currentContext!,
+        builder: (context) {
+          return child;
+        });
+  }
+
   showSheet(
       {required double height,
       required Color color,

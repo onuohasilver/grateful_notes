@@ -15,6 +15,7 @@ import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
+import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -67,16 +68,17 @@ class Home extends StatelessWidget {
                     ),
                     const YSpace(8),
                     const CustomText("Gratitude turns what we have into enough",
-                        size: 12, color: Colors.grey),
+                        size: 14, color: Colors.grey),
                   ],
                 ),
               ),
+              const YSpace(8),
+              const RecapAvailableButton(),
               const YSpace(12),
               Flexible(
                   child: SizedBox(
                 height: 50,
                 child: ListView.builder(
-                  // itemCount: 30,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => DateButton(
                       date: DateTime(2023).add(Duration(days: index)),
@@ -101,14 +103,11 @@ class Home extends StatelessWidget {
                 child: StickyGroupedListView(
                   itemScrollController: isc,
                   physics: const ClampingScrollPhysics(),
-                  // reverse: true,
                   elements: gv.allGratitudes,
                   elementIdentifier: (GratitudeEditModel gem) => gem.date,
                   groupBy: (GratitudeEditModel gem) =>
                       DateTime(gem.date.year, gem.date.month, gem.date.day),
                   padding: EdgeInsets.zero,
-                  // useStickyGroupSeparators: true,
-
                   groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
                     padding:
                         EdgeInsets.only(left: 15.w, top: 15.h, bottom: 15.h),

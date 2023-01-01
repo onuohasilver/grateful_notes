@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:bot_toast/bot_toast.dart';
+// import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:grateful_notes/core/network/response_model.dart';
 import 'package:logger/logger.dart';
@@ -27,21 +26,11 @@ class RequestHandler {
   Future<void> sendRequest() async {
     if (removeFocus) FocusManager.instance.primaryFocus?.unfocus();
     try {
-      if (showProgress) BotToast.showLoading();
+      // if (showProgress) BotToast.showLoading();
       onRequestStart?.call();
       ResponseModel result = await request.call();
 
-      BotToast.closeAllLoading();
       onSuccess(result);
-    } on SocketException {
-      BotToast.closeAllLoading();
-      BotToast.showText(text: "Check your network ");
-    } on TimeoutException {
-      BotToast.closeAllLoading();
-      BotToast.showText(text: "Check your network ");
-    } on HandshakeException {
-      BotToast.closeAllLoading();
-      BotToast.showText(text: "Check your network ");
     } catch (e) {
       if (e is ResponseModel) onError(e);
       // Logger().i
