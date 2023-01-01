@@ -7,12 +7,12 @@ class GratitudeServiceImpl extends GratitudeService {
   final FirebaseExtended firebaseExtended = FirebaseExtended();
 
   @override
-  createGratitude({
-    required List<String> text,
-    required List<String> images,
-    required String userid,
-    required String type
-  }) async {
+  createGratitude(
+      {required List<String> text,
+      required List<String> images,
+      required String userid,
+      required String type}) async {
+    // DateTime date = DateTime.now();
     return await network.post(
       path: UrlPath('notes', userid),
       body: {

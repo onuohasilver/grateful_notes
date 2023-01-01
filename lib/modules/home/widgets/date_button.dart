@@ -13,9 +13,11 @@ class DateButton extends StatelessWidget {
   const DateButton({
     Key? key,
     required this.date,
+    this.onTap,
   }) : super(key: key);
 
   final DateTime date;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class DateButton extends StatelessWidget {
       onTap: () => {
         hi.onCurrentDateChanged(date),
         Logger().i(date.toIso8601String()),
+        onTap?.call()
       },
       child: ElasticIn(
         child: Padding(
@@ -34,6 +37,9 @@ class DateButton extends StatelessWidget {
             height: 40.h,
             width: 50.w,
             decoration: BoxDecoration(
+              color: hv.currentDate.isAtSameMomentAs(date)
+                  ? Colors.black
+                  : Colors.transparent,
               border: hv.currentDate.isAtSameMomentAs(date)
                   ? Border.all()
                   : Border.all(color: Colors.grey.shade500),
@@ -45,13 +51,13 @@ class DateButton extends StatelessWidget {
                   DateFormat('MMM').format(date),
                   size: 12,
                   color: hv.currentDate.isAtSameMomentAs(date)
-                      ? Colors.black
+                      ? Colors.white
                       : Colors.grey.shade400,
                 ),
                 CustomText(date.day.toString(),
                     size: 16,
                     color: hv.currentDate.isAtSameMomentAs(date)
-                        ? Colors.black
+                        ? Colors.white
                         : Colors.grey.shade400)
               ],
             ),

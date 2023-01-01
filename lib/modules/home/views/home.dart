@@ -11,13 +11,18 @@ import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
+import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
+import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
+import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  final GroupedItemScrollController isc = GroupedItemScrollController();
+  Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +79,44 @@ class Home extends StatelessWidget {
                   // itemCount: 30,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => DateButton(
-                    date: DateTime(2023).add(Duration(days: index)),
-                  ),
+                      date: DateTime(2023).add(Duration(days: index)),
+                      onTap: () {
+                        if (gv.allGratitudes.any((element) => element.date
+                            .isAtSameMomentAs(
+                                DateTime(2023).add(Duration(days: index))))) {
+                          isc.scrollToElement(
+                              identifier:
+                                  DateTime(2023).add(Duration(days: index)),
+                              duration: const Duration(seconds: 1));
+                        } else {
+                          Logger().i("New aa");
+                        }
+                      }),
                 ),
               )),
+              const YSpace(15),
               Expanded(
-                  flex: 3,
-                  child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 20),
-                      itemCount: gv.allGratitudes.length,
-                      itemBuilder: (context, index) =>
-                          GratitudeDisplayCard(gem: gv.allGratitudes[index])))
+                flex: 8,
+                child: StickyGroupedListView(
+                  itemScrollController: isc,
+                  physics: const ClampingScrollPhysics(),
+                  reverse: true,
+                  elements: gv.allGratitudes,
+                  elementIdentifier: (GratitudeEditModel gem) => gem.date,
+                  groupBy: (GratitudeEditModel gem) =>
+                      DateTime(gem.date.year, gem.date.month, gem.date.day),
+                  padding: EdgeInsets.zero,
+                  // useStickyGroupSeparators: true,
+
+                  groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
+                    padding: EdgeInsets.only(left: 15.w),
+                    child: CustomText(DateFormat.yMMMMEEEEd().format(gem.date),
+                        size: 15, weight: FontWeight.bold),
+                  ),
+                  itemBuilder: (context, GratitudeEditModel gem) =>
+                      GratitudeDisplayCard(gem: gem),
+                ),
+              )
             ],
           ),
         ),

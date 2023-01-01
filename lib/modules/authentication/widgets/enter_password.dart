@@ -30,6 +30,7 @@ class EnterPassword extends StatelessWidget {
           const YSpace(31),
           TextField(
             keyboardType: TextInputType.visiblePassword,
+            autofocus: true,
             obscureText: true,
             style: GoogleFonts.inconsolata(color: Colors.white),
             onChanged: (value) => ai.onPasswordChanged(value),

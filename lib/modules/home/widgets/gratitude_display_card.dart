@@ -14,7 +14,7 @@ class GratitudeDisplayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 4.0),
       child: GestureDetector(
         onTap: () => CustomOverlays().showSheet(
             height: 400,
@@ -52,7 +52,7 @@ class GratitudeDisplayCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(gem.texts.first, size: 14, height: 1.3),
+                CustomText(gem.texts.first, size: 16, height: 1.3),
                 // SizedBox(
                 //   width: 375.w,
                 //   height: 100,

@@ -42,7 +42,7 @@ class GratitudeController extends BridgeController {
             onSuccess: (_) async => {
                   await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
-                  Navigate.to(const Home())
+                  Navigate.to(Home())
                 },
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
@@ -83,6 +83,8 @@ class GratitudeController extends BridgeController {
     current.add(imagePath);
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
   }
+
+  scrollToDate() {}
 
   @override
   void dispose() {}

@@ -31,6 +31,8 @@ dependencies:
   animated_text_kit: ^4.2.2
   cloudinary_public: ^0.20.0
   intl: ^0.17.0
+  grouped_list: ^5.1.2
+  sticky_grouped_list: ^3.1.0
   
 
 dev_dependencies:

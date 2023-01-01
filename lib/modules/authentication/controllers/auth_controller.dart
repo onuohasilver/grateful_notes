@@ -50,7 +50,7 @@ class AuthController extends BridgeController {
                   Logger().i(_),
                   await _uc.getuser(_.data['id']),
                   await Future.delayed(const Duration(seconds: 2)),
-                  Navigate.to(const Home())
+                  Navigate.to(Home())
                 },
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
@@ -66,7 +66,7 @@ class AuthController extends BridgeController {
           _ui.onUsermodelChanged(
               UserModel(email: _av.email, username: _av.username, userid: id)),
           await Future.delayed(const Duration(seconds: 6)),
-          Navigate.to(const Home())
+          Navigate.to(Home())
         }
       },
       onError: (_) => log("message"),
