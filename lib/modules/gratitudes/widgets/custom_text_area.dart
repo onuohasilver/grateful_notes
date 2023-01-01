@@ -15,6 +15,7 @@ class CustomTextArea extends StatelessWidget {
       child: TextField(
         maxLines: 5,
         maxLength: 200,
+        // autofocus: true,
         style: GoogleFonts.inconsolata(height: 1.4),
         inputFormatters: [LengthLimitingTextInputFormatter(200)],
         onChanged: onChanged,

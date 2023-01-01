@@ -111,7 +111,7 @@ class Home extends StatelessWidget {
                   groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
                     padding: EdgeInsets.only(left: 15.w),
                     child: CustomText(DateFormat.yMMMMEEEEd().format(gem.date),
-                        size: 15, weight: FontWeight.bold),
+                        size: 16, weight: FontWeight.bold),
                   ),
                   itemBuilder: (context, GratitudeEditModel gem) =>
                       GratitudeDisplayCard(gem: gem),

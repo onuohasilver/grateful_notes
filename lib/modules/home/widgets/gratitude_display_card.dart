@@ -18,7 +18,7 @@ class GratitudeDisplayCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () => CustomOverlays().showSheet(
             height: 400,
-            color: AppColors.fadedPink,
+            color: colorMapper(gem.type),
             child: Column(
               children: [
                 CustomText(gem.type, size: 20, weight: FontWeight.bold),

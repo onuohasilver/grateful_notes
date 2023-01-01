@@ -43,23 +43,25 @@ class EditGratitude extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(const IconAssets().gallery),
-                          const CustomText("Add Photo", size: 14)
-                        ],
+                      GestureDetector(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(const IconAssets().gallery),
+                            const CustomText("Add Photo", size: 14)
+                          ],
+                        ),
                       ),
                       const XSpace(10),
-                      if (gv.currentEdit!.texts.length < 2)
-                        GestureDetector(
-                          onTap: () => gc.addNewField(),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(const IconAssets().text),
-                              const CustomText("Add Text", size: 14)
-                            ],
-                          ),
-                        ),
+                      // if (gv.currentEdit!.texts.length < 2)
+                      //   GestureDetector(
+                      //     onTap: () => gc.addNewField(),
+                      //     child: Row(
+                      //       children: [
+                      //         SvgPicture.asset(const IconAssets().text),
+                      //         const CustomText("Add Text", size: 14)
+                      //       ],
+                      //     ),
+                      //   ),
                       const XSpace(10),
                     ],
                   ),
