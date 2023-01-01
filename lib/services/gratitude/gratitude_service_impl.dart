@@ -21,7 +21,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'imagePaths': images,
           'texts': text,
           'type': type,
-          'date': DateTime(date.year, date.month, 2).toIso8601String()
+          'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },
     );

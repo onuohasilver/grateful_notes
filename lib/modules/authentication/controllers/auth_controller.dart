@@ -28,17 +28,14 @@ class AuthController extends BridgeController {
 
   Future signup() async {
     RequestHandler(
-            onRequestStart: () => Navigate.to(
-                  SuccessLoading(texts: signUpTexts, colors: signUpColors),
-                ),
-            request: () => _as.signup(email: _av.email, password: _av.password),
-            onSuccess: (_) => {
-                  _createUserProfile(_.data['id']),
-                },
-            onRequestEnd: () => _slc.dispose(),
-            onError: (_) => Navigate.replace(ErrorScreen(
-                errorMessage: _.data['error'].toString().split("]").last)))
-        .sendRequest();
+        onRequestStart: () => Navigate.to(
+              SuccessLoading(texts: signUpTexts, colors: signUpColors),
+            ),
+        request: () => _as.signup(email: _av.email, password: _av.password),
+        onSuccess: (_) => {_createUserProfile(_.data['id']), _slc.dispose()},
+        onError: (_) => Navigate.replace(ErrorScreen(
+            errorMessage:
+                _.data['error'].toString().split("]").last))).sendRequest();
   }
 
   //Initializes the signin fllow using the parsed user
@@ -53,9 +50,9 @@ class AuthController extends BridgeController {
                   Logger().i(_),
                   await _uc.getuser(_.data['id']),
                   await Future.delayed(const Duration(seconds: 2)),
+                  _slc.dispose(),
                   Navigate.to(Home())
                 },
-            onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();

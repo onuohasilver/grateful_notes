@@ -91,14 +91,16 @@ class GratitudeController extends BridgeController {
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(texts: current));
   }
 
-  addImageToModel() {
+  addImageToModel() async {
     List<String> current = _gv.currentEdit!.imagePaths;
-    _is
+    await _is
         .getImagesFromDevice()
         .then((value) => current.addAll([...value.map((e) => e.path)]));
     // current.add(imagePath);
-    Logger().i(_gv.currentEdit);
+    
+
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
+    Logger().i(_gv.currentEdit);
   }
 
   _uploadImages() async {

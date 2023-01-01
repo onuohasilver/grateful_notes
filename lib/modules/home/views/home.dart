@@ -110,7 +110,8 @@ class Home extends StatelessWidget {
                   // useStickyGroupSeparators: true,
 
                   groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
-                    padding: EdgeInsets.only(left: 15.w),
+                    padding:
+                        EdgeInsets.only(left: 15.w, top: 15.h, bottom: 15.h),
                     child: CustomText(DateFormat.yMMMMEEEEd().format(gem.date),
                         size: 16, weight: FontWeight.bold),
                   ),

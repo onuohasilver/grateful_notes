@@ -1,11 +1,10 @@
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
+import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/widgets/custom_text_area.dart';
@@ -41,20 +40,28 @@ class EditGratitude extends StatelessWidget {
                         .toList(),
                   const YSpace(12),
                   if (gv.currentEdit!.imagePaths.isNotEmpty)
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: Image.file(File(gv.currentEdit!.imagePaths.first)),
-                    // ),
-                    const YSpace(12),
+                    SizedBox(
+                      width: 375.w,
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                            gv.currentEdit!.imagePaths.length,
+                            (index) => CustomImage(
+                                  src: gv.currentEdit!.imagePaths[index],
+                                )),
+                      ),
+                    ),
+                  const YSpace(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
                         onTap: () => gc.addImageToModel(),
                         child: Row(
-                          children: [
-                            SvgPicture.asset(const IconAssets().gallery),
-                            const CustomText("Add Photo", size: 14)
+                          children: const [
+                            Icon(Icons.add),
+                            CustomText("Add Photo", size: 14)
                           ],
                         ),
                       ),
