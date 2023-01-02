@@ -27,3 +27,10 @@ class IconAssets {
   get gallery => _svg("gallery");
   get confetti => _png('confeti');
 }
+
+class AnimationAssets {
+  const AnimationAssets();
+  _lottie(file) => "assets/animations/$file.json";
+
+  get loading => _lottie('loading');
+}

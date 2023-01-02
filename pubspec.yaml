@@ -37,6 +37,7 @@ dependencies:
   story_view: ^0.14.0
   flutter_native_splash: ^2.2.9
   flutter_secure_storage: ^7.0.1
+  flutter_launcher_icons: ^0.11.0
   
 
 dev_dependencies:
@@ -52,4 +53,5 @@ flutter:
   # - assets/animations/
   - assets/images/
   - assets/icons/
+  - assets/animations/
   # - .env

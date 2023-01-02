@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
@@ -43,37 +42,35 @@ class GratitudeDisplayCard extends StatelessWidget {
                 ),
               ],
             )),
-        child: ElasticIn(
-          child: Container(
-            width: 375.w,
-            // height: 200,
-            color: colorMapper(gem.type).withOpacity(.85),
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(gem.texts.first, size: 18, height: 1.3),
-                const YSpace(12),
-                if (gem.imagePaths.isNotEmpty)
-                  SizedBox(
-                    width: 375.w,
-                    height: 100,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                          gem.imagePaths.length,
-                          (index) => Container(
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 7),
-                                width: 80,
-                                height: 89,
-                                child: CustomImage(src: gem.imagePaths[index]),
-                              )),
-                    ),
-                  )
-              ],
-            ),
+        child: Container(
+          width: 375.w,
+          // height: 200,
+          color: colorMapper(gem.type).withOpacity(.85),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(gem.texts.first, size: 18, height: 1.3),
+              const YSpace(12),
+              if (gem.imagePaths.isNotEmpty)
+                SizedBox(
+                  width: 375.w,
+                  height: 100,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(
+                        gem.imagePaths.length,
+                        (index) => Container(
+                              color: Colors.black,
+                              margin: const EdgeInsets.only(right: 7),
+                              width: 80,
+                              height: 89,
+                              child: CustomImage(src: gem.imagePaths[index]),
+                            )),
+                  ),
+                )
+            ],
           ),
         ),
       ),

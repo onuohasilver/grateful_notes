@@ -4,9 +4,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
+import 'package:grateful_notes/global/display/state_aware_builder.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
@@ -19,6 +21,7 @@ import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart'
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class Home extends StatelessWidget {
@@ -98,25 +101,41 @@ class Home extends StatelessWidget {
                 ),
               )),
               const YSpace(15),
-              Expanded(
-                flex: 8,
-                child: StickyGroupedListView(
-                  itemScrollController: isc,
-                  order: StickyGroupedListOrder.DESC,
-                  physics: const ClampingScrollPhysics(),
-                  elements: gv.allGratitudes.reversed.toList(),
-                  elementIdentifier: (GratitudeEditModel gem) => gem.date,
-                  groupBy: (GratitudeEditModel gem) =>
-                      DateTime(gem.date.year, gem.date.month, gem.date.day),
-                  padding: EdgeInsets.zero,
-                  groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
-                    padding:
-                        EdgeInsets.only(left: 15.w, top: 15.h, bottom: 15.h),
-                    child: CustomText(DateFormat.yMMMMEEEEd().format(gem.date),
-                        size: 16, weight: FontWeight.bold),
+              StateAwareBuilder(
+                currentState: gv.currentState,
+                error: const Center(
+                    child: CustomText("An error occured", size: 12)),
+                loading: Center(
+                  child: LottieBuilder.asset(
+                    const AnimationAssets().loading,
+                    height: 300,
                   ),
-                  itemBuilder: (context, GratitudeEditModel gem) =>
-                      GratitudeDisplayCard(gem: gem),
+                ),
+                done: Expanded(
+                  flex: 8,
+                  child: StickyGroupedListView(
+                    itemScrollController: isc,
+                    order: StickyGroupedListOrder.DESC,
+                    physics: const ClampingScrollPhysics(),
+                    elements: gv.allGratitudes.reversed.toList(),
+                    elementIdentifier: (GratitudeEditModel gem) => gem.date,
+                    groupBy: (GratitudeEditModel gem) =>
+                        DateTime(gem.date.year, gem.date.month, gem.date.day),
+                    padding: EdgeInsets.zero,
+                    groupSeparatorBuilder: (GratitudeEditModel gem) => Padding(
+                      padding:
+                          EdgeInsets.only(left: 15.w, top: 15.h, bottom: 15.h),
+                      child: CustomText(
+                          DateFormat.yMMMMEEEEd().format(gem.date),
+                          size: 16,
+                          weight: FontWeight.bold),
+                    ),
+                    itemBuilder: (context, GratitudeEditModel gem) => ElasticIn(
+                      duration: Duration(
+                          milliseconds: 100 * gv.allGratitudes.indexOf(gem)),
+                      child: GratitudeDisplayCard(gem: gem),
+                    ),
+                  ),
                 ),
               )
             ],

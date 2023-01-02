@@ -1,5 +1,6 @@
 import 'package:bridgestate/bridges.dart';
 import 'package:grateful_notes/core/network/request_handler.dart';
+import 'package:grateful_notes/core/utilities/loading_states.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
@@ -64,6 +65,7 @@ class GratitudeController extends BridgeController {
   getGratitudes() {
     Logger().d("Fetching the gratitudes ${_uv.user?.userid}");
     RequestHandler(
+      onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
         Logger().d("Fetching the gratitudes $_"),
@@ -72,9 +74,10 @@ class GratitudeController extends BridgeController {
             .toList()
             .reversed
             .toList()),
+        _gi.onCurrentStateChanged(LoadingStates.done),
         Logger().i(_gv.allGratitudes)
       },
-      onError: (_) => Logger().i(_.toString()),
+      onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
     ).sendRequest();
   }
 

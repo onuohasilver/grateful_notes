@@ -3,6 +3,7 @@ import 'package:bridgestate/state/bridge_builder.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
+import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
@@ -47,8 +48,8 @@ class SuccessLoading extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const YSpace(40),
-                        LottieBuilder.network(
-                          'https://assets8.lottiefiles.com/packages/lf20_lz5srsyo.json',
+                        LottieBuilder.asset(
+                          const AnimationAssets().loading,
                           height: 300,
                         ),
                         if (slv.texts.isNotEmpty)

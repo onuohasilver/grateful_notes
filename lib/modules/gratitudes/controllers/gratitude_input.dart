@@ -1,5 +1,6 @@
 import 'package:bridgestate/state/bridge_controller.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
+import 'package:grateful_notes/core/utilities/loading_states.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_keys.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
 
@@ -14,6 +15,9 @@ class GratitudeInput extends BridgeController {
 
   onGratitudesChanged(List<GratitudeEditModel> gems) =>
       state.load(_keys.allGratitudes, gems, List<GratitudeEditModel>);
+
+  onCurrentStateChanged(LoadingStates ls) =>
+      state.load(_keys.currentState, ls, LoadingStates);
 
   @override
   void dispose() {}
