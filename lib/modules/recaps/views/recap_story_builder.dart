@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
@@ -51,8 +52,14 @@ class RecapStoryBuilder extends StatelessWidget {
           const YSpace(30),
           SizedBox(
             width: 250.w,
-            child: CustomText(text,
-                size: 20, height: 1.2, align: TextAlign.center),
+            child: SlideInUp(
+              key: Key(text),
+              child: FadeInUpBig(
+                duration: const Duration(seconds: 2),
+                child: CustomText(text,
+                    size: 20, height: 1.2, align: TextAlign.center),
+              ),
+            ),
           ),
         ],
       ),

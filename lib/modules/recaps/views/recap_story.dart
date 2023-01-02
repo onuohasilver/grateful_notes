@@ -53,7 +53,7 @@ class RecapStory extends StatelessWidget {
                   ),
                 ],
               ),
-              duration: const Duration(seconds: 4)),
+              duration: const Duration(seconds: 2)),
           StoryItem(
               RecapStoryBuilder(
                 color: AppColors.fadedPink,
