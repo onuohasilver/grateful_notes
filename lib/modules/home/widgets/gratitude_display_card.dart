@@ -17,7 +17,7 @@ class GratitudeDisplayCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4.0),
       child: GestureDetector(
         onTap: () => CustomOverlays().showSheet(
-            height: 400,
+            height: gem.imagePaths.isNotEmpty ? 400 : 250,
             color: colorMapper(gem.type),
             child: Column(
               children: [
@@ -39,7 +39,7 @@ class GratitudeDisplayCard extends StatelessWidget {
                 const YSpace(12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomText(gem.texts.first, size: 14),
+                  child: CustomText(gem.texts.first, size: 20),
                 ),
               ],
             )),
@@ -47,13 +47,14 @@ class GratitudeDisplayCard extends StatelessWidget {
           child: Container(
             width: 375.w,
             // height: 200,
-            color: colorMapper(gem.type),
+            color: colorMapper(gem.type).withOpacity(.85),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(gem.texts.first, size: 18, height: 1.3),
+                const YSpace(12),
                 if (gem.imagePaths.isNotEmpty)
                   SizedBox(
                     width: 375.w,
@@ -62,8 +63,12 @@ class GratitudeDisplayCard extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: List.generate(
                           gem.imagePaths.length,
-                          (index) => CustomImage(
-                                src: gem.imagePaths[index],
+                          (index) => Container(
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 7),
+                                width: 80,
+                                height: 89,
+                                child: CustomImage(src: gem.imagePaths[index]),
                               )),
                     ),
                   )
@@ -79,11 +84,11 @@ class GratitudeDisplayCard extends StatelessWidget {
 Color colorMapper(String type) {
   switch (type) {
     case "Something around me":
-      return AppColors.fadedPink.withOpacity(.45);
+      return AppColors.fadedPink;
     case "Something that I did":
-      return AppColors.superLightGreen.withOpacity(.45);
+      return AppColors.superLightGreen;
     case "Something that was done for me":
-      return AppColors.fadedYellow.withOpacity(.45);
+      return AppColors.fadedYellow;
     default:
       return AppColors.fadedPink;
   }

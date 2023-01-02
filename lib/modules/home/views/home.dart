@@ -102,8 +102,9 @@ class Home extends StatelessWidget {
                 flex: 8,
                 child: StickyGroupedListView(
                   itemScrollController: isc,
+                  order: StickyGroupedListOrder.DESC,
                   physics: const ClampingScrollPhysics(),
-                  elements: gv.allGratitudes,
+                  elements: gv.allGratitudes.reversed.toList(),
                   elementIdentifier: (GratitudeEditModel gem) => gem.date,
                   groupBy: (GratitudeEditModel gem) =>
                       DateTime(gem.date.year, gem.date.month, gem.date.day),

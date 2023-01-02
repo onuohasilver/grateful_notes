@@ -28,7 +28,7 @@ class AddNewGratitude extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomText("What are you \ngrateful for?", size: 34),
+              const CustomText("What are you \nhappy about?", size: 34),
               const YSpace(20),
               CustomFlatButton(
                   label: "Something that I did",

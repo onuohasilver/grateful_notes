@@ -10,9 +10,8 @@ class CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: src.contains('https') ? Image.network(src) : Image.asset(src),
-    );
+    return src.contains('https')
+        ? Image.network(src, fit: BoxFit.cover)
+        : Image.asset(src);
   }
 }

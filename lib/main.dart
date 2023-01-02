@@ -27,7 +27,13 @@ class GratefulNotes extends StatelessWidget {
           return MaterialApp(
             home: const Intro(),
             debugShowCheckedModeBanner: false,
-            // builder: BotToastInit(),
+            builder: (context, child) {
+              final mediaQueryData = MediaQuery.of(context);
+              final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.05);
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+                  child: child!);
+            },
             navigatorKey: navigatorKey,
             navigatorObservers: [BotToastNavigatorObserver()],
           );

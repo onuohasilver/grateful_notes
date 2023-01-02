@@ -9,6 +9,9 @@ class ImageAssets {
   get shape1 => _png("shape1");
   get shape2 => _png("shape2");
   get shape3 => _png("shape3");
+  get shape4 => _png("shape4");
+  get shape5 => _png("shape5");
+  get shape6 => _png("shape6");
   get blob1 => _png("blob1");
 }
 

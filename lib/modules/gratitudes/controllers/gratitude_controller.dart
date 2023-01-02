@@ -32,15 +32,14 @@ class GratitudeController extends BridgeController {
       _gi.onEditModelChanged(GratitudeEditModel.createNew(type));
 
   saveGratitude() async {
+    Navigate.to(
+      const SuccessLoading(
+          texts: Statics.saveGratitudeTexts,
+          colors: Statics.saveGratitudeColors),
+    );
+    await _uploadImages();
     RequestHandler(
-            onRequestStart: () async => {
-                  Navigate.to(
-                    const SuccessLoading(
-                        texts: Statics.saveGratitudeTexts,
-                        colors: Statics.saveGratitudeColors),
-                  ),
-                  await _uploadImages()
-                },
+            onRequestStart: () async => {},
             request: () =>
 
                 // Logger().i("Success savsse"),
@@ -97,7 +96,6 @@ class GratitudeController extends BridgeController {
         .getImagesFromDevice()
         .then((value) => current.addAll([...value.map((e) => e.path)]));
     // current.add(imagePath);
-    
 
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
     Logger().i(_gv.currentEdit);

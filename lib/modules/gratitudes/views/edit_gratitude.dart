@@ -35,8 +35,10 @@ class EditGratitude extends StatelessWidget {
                   const YSpace(12),
                   if (gv.currentEdit != null)
                     ...gv.currentEdit!.texts
-                        .map(
-                            (e) => CustomTextArea(onChanged: gc.addTextToModel))
+                        .map((e) => CustomTextArea(
+                              onChanged: gc.addTextToModel,
+                              autofocus: true,
+                            ))
                         .toList(),
                   const YSpace(12),
                   if (gv.currentEdit!.imagePaths.isNotEmpty)
