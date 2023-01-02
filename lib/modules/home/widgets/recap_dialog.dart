@@ -5,6 +5,7 @@ import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
+import 'package:grateful_notes/modules/recaps/views/recap_story.dart';
 
 class RecapDialog extends StatefulWidget {
   const RecapDialog({
@@ -46,19 +47,15 @@ class _RecapDialogState extends State<RecapDialog> {
                           ),
                           Center(
                             child: Spin(
-                              infinite: true,
-                              // delay: const Duration(seconds: 1),
-                              duration: const Duration(seconds: 4),
-                              child: Image.asset(const ImageAssets().shape2),
-                            ),
+                                infinite: true,
+                                duration: const Duration(seconds: 4),
+                                child: Image.asset(const ImageAssets().shape2)),
                           ),
                           Center(
                             child: Swing(
-                              infinite: true,
-                              // delay: const Duration(seconds: 3),
-                              duration: const Duration(seconds: 3),
-                              child: Image.asset(const ImageAssets().shape1),
-                            ),
+                                infinite: true,
+                                duration: const Duration(seconds: 3),
+                                child: Image.asset(const ImageAssets().shape1)),
                           ),
                           Center(
                             child: Column(
@@ -86,6 +83,7 @@ class _RecapDialogState extends State<RecapDialog> {
                             expand: true,
                             onTap: () {
                               Navigate.pop();
+                              Navigate.to(RecapStory());
                             },
                             hasBorder: true,
                           ),

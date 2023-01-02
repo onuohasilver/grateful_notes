@@ -9,6 +9,7 @@ class ImageAssets {
   get shape1 => _png("shape1");
   get shape2 => _png("shape2");
   get shape3 => _png("shape3");
+  get blob1 => _png("blob1");
 }
 
 class IconAssets {

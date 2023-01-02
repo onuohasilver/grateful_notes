@@ -79,11 +79,11 @@ class GratitudeDisplayCard extends StatelessWidget {
 Color colorMapper(String type) {
   switch (type) {
     case "Something around me":
-      return AppColors.fadedPink;
+      return AppColors.fadedPink.withOpacity(.45);
     case "Something that I did":
-      return AppColors.superLightGreen;
+      return AppColors.superLightGreen.withOpacity(.45);
     case "Something that was done for me":
-      return AppColors.fadedYellow;
+      return AppColors.fadedYellow.withOpacity(.45);
     default:
       return AppColors.fadedPink;
   }
