@@ -62,7 +62,6 @@ class GratitudeController extends BridgeController {
   }
 
   getGratitudes() {
-    Logger().i("Getting this");
     RequestHandler(
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
@@ -85,7 +84,6 @@ class GratitudeController extends BridgeController {
 
   addTextToModel(String text) {
     List<String> current = _gv.currentEdit!.texts;
-
     current.last = text;
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(texts: current));
   }
@@ -95,8 +93,6 @@ class GratitudeController extends BridgeController {
     await _is
         .getImagesFromDevice()
         .then((value) => current.addAll([...value.map((e) => e.path)]));
-    // current.add(imagePath);
-
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(imagePaths: current));
     Logger().i(_gv.currentEdit);
   }

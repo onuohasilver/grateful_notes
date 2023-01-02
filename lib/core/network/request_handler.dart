@@ -27,7 +27,7 @@ class RequestHandler {
     if (removeFocus) FocusManager.instance.primaryFocus?.unfocus();
     try {
       // if (showProgress) BotToast.showLoading();
-      onRequestStart?.call();
+      await onRequestStart?.call();
       ResponseModel result = await request.call();
 
       onSuccess(result);
