@@ -6,4 +6,5 @@ class AuthKeys extends BridgeKeys {
   get email => brKey("Email");
   get password => brKey("Password");
   get username => brKey("name");
+  get returningUser => brKey("Returning User");
 }

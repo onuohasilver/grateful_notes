@@ -6,6 +6,7 @@ import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/modules/user/models/user_model.dart';
 import 'package:grateful_notes/services/user/user_service.dart';
 import 'package:grateful_notes/services/user/user_service_impl.dart';
+import 'package:logger/logger.dart';
 
 class UserController extends BridgeController {
   final BridgeState state;
@@ -15,11 +16,14 @@ class UserController extends BridgeController {
   UserInputs get _ui => UserInputs(state);
   UserVariables get _uv => UserVariables(state);
 
-  getuser(String userid) async {
+  Future getuser(String userid) async {
     RequestHandler(
       request: () => _us.getuser(userid: userid),
-      onSuccess: (_) => _ui.onUsermodelChanged(
-          UserModel.fromJson(_.data as Map<String, dynamic>)),
+      onSuccess: (_) => {
+        // Logger().i(_),
+        _ui.onUsermodelChanged(
+            UserModel.fromJson(_.data as Map<String, dynamic>)),
+      },
       onError: (_) => BotToast.showText(text: "An error occured"),
     ).sendRequest();
   }

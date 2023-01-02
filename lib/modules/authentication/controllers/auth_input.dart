@@ -12,6 +12,8 @@ class AuthInputs extends BridgeController {
   onEmailChanged(String value) => state.load(_keys.email, value, String);
   onPasswordChanged(String value) => state.load(_keys.password, value, String);
   onUsernameChanged(String value) => state.load(_keys.username, value, String);
+  onIsReturningUserChanged(String value) =>
+      state.load(_keys.returningUser, value, String);
 
   @override
   void dispose() {}

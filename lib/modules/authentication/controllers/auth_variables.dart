@@ -10,4 +10,5 @@ class AuthVariables {
   String get email => state.read(_keys.email, "").slice;
   String get password => state.read(_keys.password, "").slice;
   String get username => state.read(_keys.username, "").slice;
+  String get returningUser => state.read(_keys.returningUser, "Waiting").slice;
 }

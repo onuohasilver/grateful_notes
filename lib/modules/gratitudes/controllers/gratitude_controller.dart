@@ -62,9 +62,11 @@ class GratitudeController extends BridgeController {
   }
 
   getGratitudes() {
+    Logger().d("Fetching the gratitudes ${_uv.user?.userid}");
     RequestHandler(
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
+        Logger().d("Fetching the gratitudes $_"),
         _gi.onGratitudesChanged(_.data.values
             .map((e) => GratitudeEditModel.fromJson(e))
             .toList()
@@ -110,7 +112,8 @@ class GratitudeController extends BridgeController {
   void dispose() {}
 
   @override
-  void initialise() {
+  void initialise() async {
+    await Future.delayed(const Duration(seconds: 2));
     getGratitudes();
   }
 }
