@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
@@ -7,6 +8,7 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_dialog.dart';
+import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
 
 class RecapAvailableButton extends StatelessWidget {
   const RecapAvailableButton({
@@ -15,8 +17,13 @@ class RecapAvailableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    RecapController rc = RecapController(state);
     return GestureDetector(
-      onTap: () => {CustomOverlays().showPopup(const RecapDialog())},
+      onTap: () => {
+        rc.createNew(),
+        CustomOverlays().showPopup(const RecapDialog()),
+      },
       child: ElasticInLeft(
         child: Container(
           height: 40.h,

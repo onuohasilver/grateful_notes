@@ -54,11 +54,8 @@ class RecapStoryBuilder extends StatelessWidget {
             width: 250.w,
             child: SlideInUp(
               key: Key(text),
-              child: FadeInUpBig(
-                duration: const Duration(seconds: 2),
-                child: CustomText(text,
-                    size: 20, height: 1.2, align: TextAlign.center),
-              ),
+              child: CustomText(text,
+                  size: 20, height: 1.2, align: TextAlign.center),
             ),
           ),
         ],

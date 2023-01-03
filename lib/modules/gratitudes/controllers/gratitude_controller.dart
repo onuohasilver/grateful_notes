@@ -117,6 +117,6 @@ class GratitudeController extends BridgeController {
   @override
   void initialise() async {
     await Future.delayed(const Duration(seconds: 2));
-    getGratitudes();
+    await getGratitudes();
   }
 }

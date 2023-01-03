@@ -51,7 +51,7 @@ class GratitudeDisplayCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(gem.texts.first, size: 18, height: 1.3),
+              CustomText(gem.texts.first, size: 17, height: 1.3),
               const YSpace(12),
               if (gem.imagePaths.isNotEmpty)
                 SizedBox(
