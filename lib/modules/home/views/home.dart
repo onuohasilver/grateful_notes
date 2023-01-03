@@ -18,8 +18,8 @@ import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
-import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
+import 'package:grateful_notes/services/notifications/notification_service_impl.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
@@ -35,9 +35,15 @@ class Home extends StatelessWidget {
     UserVariables uv = UserVariables(state);
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
-    RecapController rc = RecapController(state);
+
     return GestureDetector(
-      onTap: () => rc.getMostCommonWord(DateTime.january),
+      onTap: () => {
+        Logger().i("message Create New"),
+        const NotificationServiceImpl().scheduleNotification(
+            payload: "Create New",
+            title: "Keep some happy notes today!",
+            body: "Any happy moments you want to keep note of today?"),
+      },
       child: BridgeBuilder(
         controllers: [gc],
         child: Scaffold(
