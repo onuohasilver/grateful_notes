@@ -95,7 +95,8 @@ class AuthController extends BridgeController {
 
       await _uc
           .getuser(id!)
-          .whenComplete(() => Future.delayed(const Duration(seconds: 1)))
+          .whenComplete(
+              () async => await Future.delayed(const Duration(seconds: 3)))
           .whenComplete(() => Navigate.to(Home()));
     } else {
       _ai.onIsReturningUserChanged("New");

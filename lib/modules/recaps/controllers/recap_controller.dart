@@ -17,9 +17,10 @@ class RecapController extends BridgeController {
   createNew() => _ri.onRecapModelChanged(RecapModel.createNew());
 
   getNumberOfMoments(int month) {
-    return _gv.allGratitudes
+    int nom = _gv.allGratitudes
         .where((element) => element.date.month == month)
         .length;
+    _ri.onRecapModelChanged(_rv.currentRecap!.copyWith(numberOfMoments: nom));
   }
 
   getMostCommonWord(int month) {
@@ -46,7 +47,7 @@ class RecapController extends BridgeController {
     counter.forEach((k, v) {
       if (v > value) {
         value = v;
-        // _ri.onRecapModelChanged(_rv.currentRecap!.copyWith(mostCommonWord: k));
+        _ri.onRecapModelChanged(_rv.currentRecap!.copyWith(mostCommonWord: k));
         Logger().i(k);
       }
     });
@@ -58,6 +59,7 @@ class RecapController extends BridgeController {
   @override
   void initialise() {
     getNumberOfMoments(DateTime.january);
+    getMostCommonWord(DateTime.january);
   }
 }
 

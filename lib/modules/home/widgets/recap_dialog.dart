@@ -24,7 +24,7 @@ class _RecapDialogState extends State<RecapDialog> {
       child: Container(
         color: Colors.white,
         height: 600.h,
-        margin: const EdgeInsets.symmetric(horizontal: 30),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

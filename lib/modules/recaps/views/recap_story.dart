@@ -90,9 +90,9 @@ class RecapStory extends StatelessWidget {
                   color: AppColors.fadedYellow,
                   image: const ImageAssets().shape6,
                   text:
-                      "You recorded your happy moments 31 times and we are so happy you found happiness in this month.",
-                  unit: 'moments',
-                  value: '31',
+                      "The word you used most commonly as you wrote your happy moments",
+                  unit: '✍️',
+                  value: '${rv.currentRecap?.mostCommonWord}',
                 ),
                 duration: const Duration(seconds: 10)),
           ],
