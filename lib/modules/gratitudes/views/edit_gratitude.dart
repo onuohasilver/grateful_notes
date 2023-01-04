@@ -27,10 +27,14 @@ class EditGratitude extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomText(
-                    header,
-                    size: 20,
-                    weight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: CustomText(
+                      title(header),
+                      size: 20,
+                      height: 1.5,
+                      weight: FontWeight.bold,
+                    ),
                   ),
                   const YSpace(12),
                   if (gv.currentEdit != null)

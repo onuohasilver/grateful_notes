@@ -13,9 +13,11 @@ class RecapStoryBuilder extends StatelessWidget {
     required this.value,
     required this.unit,
     required this.color,
+    this.valueFontSize= 64
   }) : super(key: key);
   final String image, text, value, unit;
   final Color color;
+  final double valueFontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,9 @@ class RecapStoryBuilder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(value,
-                                size: 64, weight: FontWeight.bold),
+                                align: TextAlign.center,
+                                size: valueFontSize,
+                                weight: FontWeight.bold),
                             CustomText(unit, size: 25, weight: FontWeight.bold),
                           ],
                         ),

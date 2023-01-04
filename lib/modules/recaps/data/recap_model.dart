@@ -16,19 +16,23 @@ class RecapModel {
       {required this.mostCommonWord,
       required this.numberOfMoments,
       required this.timeOfDay,
+      required this.type,
       this.month});
 
   final String mostCommonWord;
   final int numberOfMoments;
   final String? month;
   final String timeOfDay;
+  final String type;
 
   RecapModel copyWith(
           {String? mostCommonWord,
           int? numberOfMoments,
+          String? type,
           String? timeOfDay,
           String? month}) =>
       RecapModel(
+        type: type??this.type,
           mostCommonWord: mostCommonWord ?? this.mostCommonWord,
           numberOfMoments: numberOfMoments ?? this.numberOfMoments,
           timeOfDay: timeOfDay ?? this.timeOfDay,
@@ -38,11 +42,13 @@ class RecapModel {
       mostCommonWord: json["mostCommonWord"],
       numberOfMoments: json["numberOfMoments"],
       timeOfDay: json["timeOfDay"],
+      type: json['type'],
       month: DateFormat('MMMM')
           .format(DateTime.now().subtract(const Duration(days: 30))));
 
   factory RecapModel.createNew() => RecapModel(
       mostCommonWord: "",
+      type: "",
       numberOfMoments: 12,
       timeOfDay: "Morning",
       month: DateFormat('MMMM')
@@ -52,6 +58,8 @@ class RecapModel {
         "mostCommonWord": mostCommonWord,
         "numberOfMoments": numberOfMoments,
         "timeOfDay": timeOfDay,
-        "month": month
+        "month": month,
+        "type":""
+
       };
 }

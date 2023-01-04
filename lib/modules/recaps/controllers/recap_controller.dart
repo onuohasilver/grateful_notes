@@ -1,6 +1,7 @@
 import 'package:bridgestate/state/bridge_controller.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
+import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_inputs.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_variables.dart';
 import 'package:grateful_notes/modules/recaps/data/recap_model.dart';
@@ -21,6 +22,29 @@ class RecapController extends BridgeController {
         .where((element) => element.date.month == month)
         .length;
     _ri.onRecapModelChanged(_rv.currentRecap!.copyWith(numberOfMoments: nom));
+  }
+
+  getMostCommonType(int month) {
+    List data = _gv.allGratitudes
+        .where((element) => element.date.month == month)
+        .toList();
+
+    Map types = {
+      "Something around me": 0,
+      "Something that I did": 0,
+      "Something that was done for me": 0
+    };
+    for (GratitudeEditModel gem in data) {
+      types[gem.type] += 1;
+    }
+    int value = 0;
+    types.forEach((k, v) {
+      if (v > value) {
+        value = v;
+        _ri.onRecapModelChanged(_rv.currentRecap!.copyWith(type: k));
+        Logger().i(k);
+      }
+    });
   }
 
   getMostCommonWord(int month) {
@@ -59,8 +83,10 @@ class RecapController extends BridgeController {
   @override
   void initialise() {
     createNew();
-    getNumberOfMoments(DateTime.now().subtract(const Duration(days: 30)).month);
-    getMostCommonWord(DateTime.now().subtract(const Duration(days: 30)).month);
+    int month = DateTime.now().subtract(const Duration(days: 0)).month;
+    getNumberOfMoments(month);
+    getMostCommonWord(month);
+    getMostCommonType(month);
   }
 }
 
@@ -68,6 +94,8 @@ List stopWords = [
   "i",
   "me",
   "my",
+  "dy",
+  "dey",
   "myself",
   "we",
   "our",

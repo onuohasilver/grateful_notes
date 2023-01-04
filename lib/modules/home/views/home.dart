@@ -65,7 +65,7 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const YSpace(53),
+              const YSpace(67),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Column(

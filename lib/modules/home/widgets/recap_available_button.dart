@@ -24,12 +24,12 @@ class RecapAvailableButton extends StatelessWidget {
     RecapVariables rv = RecapVariables(state);
     GratitudeVariables gv = GratitudeVariables(state);
     return Visibility(
-      visible: DateTime.now().day < 10 &&
-          gv.allGratitudes
-              .where((element) =>
-                  element.date.month ==
-                  DateTime.now().subtract(const Duration(days: 30)).month)
-              .isNotEmpty,
+      // visible: DateTime.now().day < 10 &&
+      //     gv.allGratitudes
+      //         .where((element) =>
+      //             element.date.month ==
+      //             DateTime.now().subtract(const Duration(days: 30)).month)
+      //         .isNotEmpty,
       child: GestureDetector(
         onTap: () => {
           rc.createNew(),

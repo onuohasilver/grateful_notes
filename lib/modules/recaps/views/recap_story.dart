@@ -95,9 +95,32 @@ class RecapStory extends StatelessWidget {
                   value: '${rv.currentRecap?.mostCommonWord}',
                 ),
                 duration: const Duration(seconds: 10)),
+            StoryItem(
+                RecapStoryBuilder(
+                  color: AppColors.greyGreen,
+                  image: const ImageAssets().shape2,
+                  text: textMapper(rv.currentRecap!.type),
+                  unit: '',
+                  valueFontSize: 44,
+                  value: '${rv.currentRecap?.type}',
+                ),
+                duration: const Duration(seconds: 10)),
           ],
         ),
       ),
     );
+  }
+}
+
+String textMapper(String type) {
+  switch (type) {
+    case "Something around me":
+      return "You found happiness from all the things around you.\nWe are happy you drew joy from the outside this month";
+    case "Something that I did":
+      return "Nothing is better than finding that ray of sunshine from within, and that is what you did this month";
+    case "Something that was done for me":
+      return "This month you were surrounded by amazing people who did some really nice things for you!";
+    default:
+      return "";
   }
 }
