@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
               icon: Roulette(child: const Icon(Icons.add))),
         ),
         body: FlowerBackdrop(
-          filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
           color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

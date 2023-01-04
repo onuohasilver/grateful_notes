@@ -27,23 +27,21 @@ class GratitudeDisplayCard extends StatelessWidget {
                   const YSpace(12),
                   if (gem.imagePaths.isNotEmpty)
                     SizedBox(
-                      width: 375.w,
-                      height: 170.h,
-                      child: ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 50.w),
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(
-                            gem.imagePaths.length,
-                            (index) => Container(
-                                  color: Colors.black,
-                                  margin: const EdgeInsets.only(right: 7),
-                                  width: 180,
-                                  height: 189,
-                                  child:
-                                      CustomImage(src: gem.imagePaths[index]),
-                                )),
-                      ),
-                    ),
+                        width: 375.w,
+                        height: 170.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              gem.imagePaths.length,
+                              (index) => Container(
+                                    color: Colors.black,
+                                    margin: const EdgeInsets.only(right: 7),
+                                    width: 180,
+                                    height: 189,
+                                    child:
+                                        CustomImage(src: gem.imagePaths[index]),
+                                  )),
+                        )),
                   const YSpace(12),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -67,15 +65,10 @@ class GratitudeDisplayCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: colorMapper(gem.type).withOpacity(.1),
-                padding: const EdgeInsets.all(5),
-                child: CustomText(
-                  gem.type,
-                  size: 12,
-                  height: 1.3,
-                  color: colorMapper(gem.type),
-                  weight: FontWeight.bold,
-                ),
+                color: colorMapper(gem.type).withOpacity(.25),
+                width: double.infinity,
+                height: 5.h,
+                // padding: const EdgeInsets.all(5),
               ),
               const YSpace(5),
               CustomText(gem.texts.first, size: 16, height: 1.3),

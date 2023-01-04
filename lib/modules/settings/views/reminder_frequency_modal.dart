@@ -5,6 +5,7 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
@@ -153,8 +154,8 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        LottieBuilder.network(
-                          "https://assets4.lottiefiles.com/temp/lf20_5tgmik.json",
+                        LottieBuilder.asset(
+                          const AnimationAssets().done,
                           height: 100,
                         ),
                         Padding(

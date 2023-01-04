@@ -33,4 +33,5 @@ class AnimationAssets {
   _lottie(file) => "assets/animations/$file.json";
 
   get loading => _lottie('loading');
+  get done => _lottie("done");
 }
