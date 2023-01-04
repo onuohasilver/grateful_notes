@@ -133,7 +133,7 @@ class Home extends StatelessWidget {
                   flex: 8,
                   child: gv.allGratitudes.isEmpty
                       ? Center(
-                          child: Pulse(
+                          child: Flash(
                             infinite: true,
                             duration: const Duration(seconds: 10),
                             child: const CustomText(

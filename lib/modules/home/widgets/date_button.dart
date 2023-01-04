@@ -25,10 +25,13 @@ class DateButton extends StatelessWidget {
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
     return GestureDetector(
-      onTap: () => {
-        hi.onCurrentDateChanged(date),
-        Logger().i(date.toIso8601String()),
-        onTap?.call()
+      onTap: () {
+        // Logger().i();
+        if (date.isBefore(DateTime.now())) {
+          hi.onCurrentDateChanged(date);
+          Logger().i(date.toIso8601String());
+          onTap?.call();
+        }
       },
       child: ElasticIn(
         child: Padding(

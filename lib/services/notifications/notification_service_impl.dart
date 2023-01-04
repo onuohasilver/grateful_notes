@@ -24,7 +24,8 @@ class NotificationServiceImpl extends NotificationService {
   @override
   Future<void> initialize(onDidReceiveNotificationResponse) async {
     tz.initializeTimeZones();
-    // tzz.setLocalLocation(tzz.getLocation("Nigeria/Lagos"));
+
+    // tzz.setLocalLocation(tzz.getLocation("Lagosx"));
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 
@@ -73,8 +74,14 @@ class NotificationServiceImpl extends NotificationService {
       TimeOfDay? timeOfDay,
       DateTimeComponents? dateTimeComponents = DateTimeComponents.time}) async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('HappyNotes01', 'HappyNotes',
-            channelDescription: 'Notifications from happy notes');
+        AndroidNotificationDetails(
+      'HappyNotes01',
+      'HappyNotes',
+      channelDescription: 'Notifications from happy notes',
+      importance: Importance.max,
+      ticker: "HappyNotes1",
+      priority: Priority.high,
+    );
     DarwinNotificationDetails darwinNotificationDetails =
         const DarwinNotificationDetails(
             presentAlert: true, presentBadge: true, presentSound: true);

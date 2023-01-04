@@ -19,9 +19,10 @@ class NotificationController extends BridgeController {
     await _ns.initialize(_handleNotifications);
   }
 
-  _handleNotifications(NotificationResponse response) {
+  _handleNotifications(NotificationResponse response) async {
     switch (response.payload) {
       case "Create New":
+        await Future.delayed(const Duration(seconds: 2));
         CustomOverlays().showSheet(
             height: 700.h,
             color: AppColors.superLightGreen,

@@ -101,3 +101,16 @@ class EditGratitude extends StatelessWidget {
     );
   }
 }
+
+String title(String header) {
+  switch (header) {
+    case "Something that I did...":
+      return "What did you do that made you smile?";
+    case "Something done for me...":
+      return "What did someone do for you that made you smile?";
+    case "Something around me..":
+      return "What happened that made you smile?";
+    default:
+      return "What did you do that made you smile?";
+  }
+}

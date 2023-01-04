@@ -7,6 +7,7 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
+import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_dialog.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_variables.dart';
@@ -21,8 +22,14 @@ class RecapAvailableButton extends StatelessWidget {
     BridgeState state = bridge(context);
     RecapController rc = RecapController(state);
     RecapVariables rv = RecapVariables(state);
+    GratitudeVariables gv = GratitudeVariables(state);
     return Visibility(
-      visible: DateTime.now().day < 10,
+      visible: DateTime.now().day < 10 &&
+          gv.allGratitudes
+              .where((element) =>
+                  element.date.month ==
+                  DateTime.now().subtract(const Duration(days: 30)).month)
+              .isNotEmpty,
       child: GestureDetector(
         onTap: () => {
           rc.createNew(),

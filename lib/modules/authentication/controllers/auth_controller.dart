@@ -15,7 +15,6 @@ import 'package:grateful_notes/modules/authentication/widgets/enter_password.dar
 import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_inputs.dart';
-import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/modules/user/models/user_model.dart';
 import 'package:grateful_notes/services/auth/auth_service_impl.dart';
 import 'package:grateful_notes/services/local_storage/key_storage.dart';
@@ -31,7 +30,6 @@ class AuthController extends BridgeController {
   AuthKeys get _ak => AuthKeys();
   UserInputs get _ui => UserInputs(state);
   UserController get _uc => UserController(state);
-  UserVariables get _uv => UserVariables(state);
   SuccessLoadingController get _slc => SuccessLoadingController(state);
   FlutterSecureStorageImpl get _ks => const FlutterSecureStorageImpl();
 

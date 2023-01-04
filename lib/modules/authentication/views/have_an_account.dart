@@ -36,6 +36,7 @@ class HaveAnAccount extends StatelessWidget {
                       BounceInUp(
                           delay: const Duration(milliseconds: 100),
                           child: CustomFlatButton(
+                            expand: true,
                             label: 'Yes',
                             onTap: () {
                               CustomOverlays().showSheet(
@@ -50,6 +51,7 @@ class HaveAnAccount extends StatelessWidget {
                         delay: const Duration(milliseconds: 100),
                         child: CustomFlatButton(
                           label: 'No',
+                          expand: true,
                           onTap: () {
                             CustomOverlays().showSheet(
                                 height: 603,
