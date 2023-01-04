@@ -40,6 +40,7 @@ class CustomOverlays {
                   color: color,
                   child: SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(right: 18.w),

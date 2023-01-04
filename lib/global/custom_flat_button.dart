@@ -9,11 +9,11 @@ class CustomFlatButton extends StatelessWidget {
     required this.onTap,
     this.hasBorder = false,
     this.icon,
-    this.expand = false,
+    this.expand = false, this.alignment,
   }) : super(key: key);
   final String label;
   final String? icon;
-
+  final MainAxisAlignment? alignment;
   final bool hasBorder, expand;
   final Function() onTap;
 
@@ -31,8 +31,8 @@ class CustomFlatButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(Colors.white)),
       child: Row(
         mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-        mainAxisAlignment:
-            expand ? MainAxisAlignment.center : MainAxisAlignment.start,
+        mainAxisAlignment: alignment ??
+            (expand ? MainAxisAlignment.center : MainAxisAlignment.start),
         children: [
           CustomText(label, size: 14, color: Colors.black),
           if (icon != null)

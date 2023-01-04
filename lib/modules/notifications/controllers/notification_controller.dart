@@ -9,8 +9,8 @@ import 'package:grateful_notes/services/notifications/notification_service_impl.
 class NotificationController extends BridgeController {
   NotificationServiceImpl get _ns => const NotificationServiceImpl();
 
-  setup() {
-    _ns.initialize(_handleNotifications);
+  setup() async {
+    await _ns.initialize(_handleNotifications);
   }
 
   _handleNotifications(NotificationResponse response) {
@@ -25,11 +25,19 @@ class NotificationController extends BridgeController {
     }
   }
 
+  createSchedule() {
+    const NotificationServiceImpl().scheduleNotification(
+        payload: "Create New",
+        title: "Keep some happy notes today!",
+        body: "Any happy moments you want to keep note of today?");
+  }
+
   @override
   void dispose() {}
 
   @override
-  void initialise() {
-    setup();
+  void initialise() async {
+    await setup();
+    createSchedule();
   }
 }

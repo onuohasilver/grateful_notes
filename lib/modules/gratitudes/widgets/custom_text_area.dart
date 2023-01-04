@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextArea extends StatelessWidget {
-  const CustomTextArea({Key? key, this.onChanged, this.autofocus=false})
+  const CustomTextArea({Key? key, this.onChanged, this.autofocus = false})
       : super(key: key);
   final Function(String)? onChanged;
   final bool autofocus;

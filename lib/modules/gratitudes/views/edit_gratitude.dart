@@ -41,20 +41,6 @@ class EditGratitude extends StatelessWidget {
                             ))
                         .toList(),
                   const YSpace(12),
-                  if (gv.currentEdit!.imagePaths.isNotEmpty)
-                    SizedBox(
-                      width: 375.w,
-                      height: 100,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(
-                            gv.currentEdit!.imagePaths.length,
-                            (index) => CustomImage(
-                                  src: gv.currentEdit!.imagePaths[index],
-                                )),
-                      ),
-                    ),
-                  const YSpace(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -71,6 +57,25 @@ class EditGratitude extends StatelessWidget {
                       const XSpace(10),
                     ],
                   ),
+                  const YSpace(12),
+                  if (gv.currentEdit!.imagePaths.isNotEmpty)
+                    SizedBox(
+                      width: 375.w,
+                      height: 189,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                            gv.currentEdit!.imagePaths.length,
+                            (index) => Container(
+                                  color: Colors.black,
+                                  margin: const EdgeInsets.only(right: 7),
+                                  width: 180,
+                                  height: 189,
+                                  child: CustomImage(
+                                      src: gv.currentEdit!.imagePaths[index]),
+                                )),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -78,7 +83,8 @@ class EditGratitude extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0) +
+                  const EdgeInsets.only(bottom: 50),
               child: CustomFlatButton(
                 label: "Save",
                 hasBorder: true,
