@@ -10,6 +10,7 @@ import 'package:grateful_notes/global/display/success_loading_controller/success
 import 'package:grateful_notes/modules/authentication/controllers/auth_input.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_keys.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
+import 'package:grateful_notes/modules/authentication/views/intro.dart';
 import 'package:grateful_notes/modules/authentication/widgets/enter_password.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
@@ -18,7 +19,6 @@ import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/modules/user/models/user_model.dart';
 import 'package:grateful_notes/services/auth/auth_service_impl.dart';
 import 'package:grateful_notes/services/local_storage/key_storage.dart';
-import 'package:grateful_notes/services/local_storage/key_value_storage_service.dart';
 import 'package:logger/logger.dart';
 
 class AuthController extends BridgeController {
@@ -33,7 +33,7 @@ class AuthController extends BridgeController {
   UserController get _uc => UserController(state);
   UserVariables get _uv => UserVariables(state);
   SuccessLoadingController get _slc => SuccessLoadingController(state);
-  KeyValueStorageService get _ks => const FlutterSecureStorageImpl();
+  FlutterSecureStorageImpl get _ks => const FlutterSecureStorageImpl();
 
   Future signup() async {
     RequestHandler(
@@ -101,6 +101,12 @@ class AuthController extends BridgeController {
     } else {
       _ai.onIsReturningUserChanged("New");
     }
+  }
+
+  logout() {
+    state.close();
+    _ks.close();
+    Navigate.replaceUntil(const Intro());
   }
 
   @override

@@ -32,11 +32,15 @@ class RequestHandler {
 
       onSuccess(result);
     } catch (e) {
-      if (e is ResponseModel) onError(e);
+      if (e is ResponseModel) {
+        onError(e);
+        return;
+      }
       // Logger().i
 
       // log(request.toString());
       Logger().e(e.toString());
+      onError(ResponseModel(code: 400, data: {"data": "fail"}, success: false));
       onRequestEnd?.call();
     } finally {
       log("Network Call Terminated >> > Request Ended::");

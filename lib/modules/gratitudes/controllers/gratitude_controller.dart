@@ -69,12 +69,17 @@ class GratitudeController extends BridgeController {
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
         Logger().d("Fetching the gratitudes $_"),
-        _gi.onGratitudesChanged(_.data.values
-            .map((e) => GratitudeEditModel.fromJson(e))
-            .toList()
-            .reversed
-            .toList()),
-        _gi.onCurrentStateChanged(LoadingStates.done),
+        if (_.success)
+          {
+            _gi.onGratitudesChanged(_.data.values
+                .map((e) => GratitudeEditModel.fromJson(e))
+                .toList()
+                .reversed
+                .toList()),
+            _gi.onCurrentStateChanged(LoadingStates.done),
+          }
+        else
+          {_gi.onCurrentStateChanged(LoadingStates.done)},
         Logger().i(_gv.allGratitudes)
       },
       onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),

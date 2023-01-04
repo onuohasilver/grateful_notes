@@ -39,7 +39,7 @@ class Intro extends StatelessWidget {
                   left: 111.w,
                   child: ElasticIn(
                     child: Flash(
-                      infinite: true,
+                      infinite: av.returningUser == "New" ? false : true,
                       delay: const Duration(milliseconds: 300),
                       child: const CustomText(
                         'H A P P Y\nN O T E S',
