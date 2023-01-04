@@ -9,7 +9,6 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_variables.dart';
 import 'package:grateful_notes/modules/recaps/views/recap_story_builder.dart';
-import 'package:intl/intl.dart';
 import 'package:story_view/story_view.dart';
 
 class RecapStory extends StatelessWidget {
@@ -52,10 +51,8 @@ class RecapStory extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CustomText(
-                                      DateFormat('MMMM').format(DateTime.now()),
-                                      size: 64,
-                                      weight: FontWeight.bold),
+                                  CustomText(rv.currentRecap!.month!,
+                                      size: 64, weight: FontWeight.bold),
                                   CustomText("${DateTime.now().year}",
                                       size: 25, weight: FontWeight.bold),
                                 ],

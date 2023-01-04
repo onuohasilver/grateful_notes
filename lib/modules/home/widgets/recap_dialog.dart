@@ -1,10 +1,13 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
+import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
+import 'package:grateful_notes/modules/recaps/controllers/recap_variables.dart';
 import 'package:grateful_notes/modules/recaps/views/recap_story.dart';
 
 class RecapDialog extends StatefulWidget {
@@ -19,6 +22,8 @@ class RecapDialog extends StatefulWidget {
 class _RecapDialogState extends State<RecapDialog> {
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    RecapVariables rv = RecapVariables(state);
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -60,10 +65,10 @@ class _RecapDialogState extends State<RecapDialog> {
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                CustomText("OCT",
+                              children: [
+                                CustomText("${(rv.currentRecap?.month)}",
                                     size: 64, weight: FontWeight.bold),
-                                CustomText("2023",
+                                const CustomText("2023",
                                     size: 25, weight: FontWeight.bold),
                               ],
                             ),

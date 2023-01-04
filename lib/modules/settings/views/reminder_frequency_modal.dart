@@ -52,72 +52,7 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
                           CustomOverlays().showSheet(
                               height: 500,
                               color: Colors.white,
-                              child: createInlinePicker(
-                                  value: TimeOfDay(
-                                      hour: sv.reminderFrequency.hour,
-                                      minute: sv.reminderFrequency.minute),
-                                  onChange: (_) {
-                                    Logger().i(_);
-                                    sc.setReminderFrequency("Daily",
-                                        timeOfDay: _);
-                                  },
-                                  elevation: 0,
-                                  is24HrFormat: true,
-                                  buttonsSpacing: 12.w,
-                                  buttonStyle: ButtonStyle(
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(130.w, 48.h)),
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.grey, width: 2)),
-                                      splashFactory: NoSplash.splashFactory,
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white)),
-                                  accentColor: Colors.black,
-                                  onCancel: () => {
-                                        CustomOverlays().showSheet(
-                                            height: 350,
-                                            color: Colors.white,
-                                            child: SizedBox(
-                                              width: double.infinity,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  LottieBuilder.network(
-                                                    "https://assets4.lottiefiles.com/temp/lf20_5tgmik.json",
-                                                    height: 100,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 15.0.w),
-                                                    child: TextButton(
-                                                        child: Text(
-                                                            "Back to home",
-                                                            style: GoogleFonts
-                                                                .inconsolata(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .underline)),
-                                                        onPressed: () {
-                                                          Navigate.pop(
-                                                              number: 4);
-                                                        }),
-                                                  )
-                                                ],
-                                              ),
-                                            ))
-                                        // Navigate.pop(),
-                                      },
-
-                                  // iosStylePicker: true,
-                                  borderRadius: 0))
+                              child: showTime(sv, sc, 'Daily'))
                         },
                     expand: true,
                     hasBorder: true,
@@ -142,7 +77,10 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
               children: [
                 CustomFlatButton(
                     label: "Weekly",
-                    onTap: () => sc.setReminderFrequency("Weekly"),
+                    onTap: () => CustomOverlays().showSheet(
+                        height: 500,
+                        color: Colors.white,
+                        child: showTime(sv, sc, "Weekly")),
                     expand: true,
                     hasBorder: true,
                     alignment: MainAxisAlignment.start),
@@ -162,9 +100,10 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
               children: [
                 CustomFlatButton(
                     label: "Monthly",
-                    onTap: () => {
-                          sc.setReminderFrequency("Monthly"),
-                        },
+                    onTap: () => CustomOverlays().showSheet(
+                        height: 500,
+                        color: Colors.white,
+                        child: showTime(sv, sc, "Monthly")),
                     expand: true,
                     hasBorder: true,
                     alignment: MainAxisAlignment.start),
@@ -183,5 +122,59 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
         ],
       ),
     );
+  }
+
+  Widget showTime(SettingsVariables sv, SettingsController sc, frequency) {
+    return createInlinePicker(
+        value: TimeOfDay(
+            hour: sv.reminderFrequency.hour,
+            minute: sv.reminderFrequency.minute),
+        onChange: (_) {
+          Logger().i(_);
+          sc.setReminderFrequency(frequency, timeOfDay: _);
+        },
+        elevation: 0,
+        is24HrFormat: true,
+        buttonsSpacing: 12.w,
+        buttonStyle: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(Size(130.w, 48.h)),
+            side: MaterialStateProperty.all(
+                const BorderSide(color: Colors.grey, width: 2)),
+            splashFactory: NoSplash.splashFactory,
+            backgroundColor: MaterialStateProperty.all(Colors.white)),
+        accentColor: Colors.black,
+        onCancel: () => {
+              CustomOverlays().showSheet(
+                  height: 350,
+                  color: Colors.white,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        LottieBuilder.network(
+                          "https://assets4.lottiefiles.com/temp/lf20_5tgmik.json",
+                          height: 100,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+                          child: TextButton(
+                              child: Text("Back to home",
+                                  style: GoogleFonts.inconsolata(
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline)),
+                              onPressed: () {
+                                Navigate.pop(number: 4);
+                              }),
+                        )
+                      ],
+                    ),
+                  ))
+              // Navigate.pop(),
+            },
+
+        // iosStylePicker: true,
+        borderRadius: 0);
   }
 }

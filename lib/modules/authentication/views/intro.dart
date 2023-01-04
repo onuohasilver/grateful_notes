@@ -12,6 +12,7 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/authentication/views/have_an_account.dart';
+import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_controller.dart';
 
 class Intro extends StatelessWidget {
@@ -23,8 +24,9 @@ class Intro extends StatelessWidget {
     AuthVariables av = AuthVariables(state);
     AuthController ac = AuthController(state);
     SettingsController sc = SettingsController(state);
+    RecapController rc = RecapController(state);
     return BridgeBuilder(
-      controllers: [ac, sc],
+      controllers: [ac, sc, rc],
       child: Scaffold(
         body: Container(
           color: Colors.white,
