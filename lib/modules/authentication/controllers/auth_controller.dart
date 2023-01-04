@@ -41,8 +41,8 @@ class AuthController extends BridgeController {
                   SuccessLoading(texts: signUpTexts, colors: signUpColors),
                 ),
             request: () => _as.signup(email: _av.email, password: _av.password),
-            onSuccess: (_) => {
-                  _createUserProfile(_.data['id']),
+            onSuccess: (_) async => {
+                  await _createUserProfile(_.data['id']),
                   _ks.saveString(_ak.username, _.data['id']),
                   _slc.dispose()
                 },

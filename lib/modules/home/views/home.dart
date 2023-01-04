@@ -27,6 +27,7 @@ import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class Home extends StatelessWidget {
   final GroupedItemScrollController isc = GroupedItemScrollController();
+  final ScrollController lsc = ScrollController();
   Home({super.key});
 
   @override
@@ -38,6 +39,12 @@ class Home extends StatelessWidget {
 
     return BridgeBuilder(
       controllers: [gc],
+      initMethods: [
+        () => lsc.animateTo(
+            -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeIn)
+      ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
@@ -92,6 +99,7 @@ class Home extends StatelessWidget {
                   child: SizedBox(
                 height: 50,
                 child: ListView.builder(
+                  controller: lsc,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => DateButton(
                       date: DateTime(2023).add(Duration(days: index)),

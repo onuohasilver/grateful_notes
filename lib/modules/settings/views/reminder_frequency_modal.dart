@@ -54,8 +54,8 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
                               color: Colors.white,
                               child: createInlinePicker(
                                   value: TimeOfDay(
-                                      hour: DateTime.now().hour,
-                                      minute: DateTime.now().minute),
+                                      hour: sv.reminderFrequency.hour,
+                                      minute: sv.reminderFrequency.minute),
                                   onChange: (_) {
                                     Logger().i(_);
                                     sc.setReminderFrequency("Daily",

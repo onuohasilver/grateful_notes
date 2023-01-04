@@ -18,39 +18,44 @@ class GratitudeDisplayCard extends StatelessWidget {
         onTap: () => CustomOverlays().showSheet(
             height: gem.imagePaths.isNotEmpty ? 500 : 250,
             color: colorMapper(gem.type),
-            child: Column(
-              children: [
-                CustomText(gem.type, size: 20, weight: FontWeight.bold),
-                const YSpace(12),
-                if (gem.imagePaths.isNotEmpty)
-                  SizedBox(
-                    width: 375.w,
-                    height: 170.h,
-                    child: ListView(
-                      padding: EdgeInsets.symmetric(horizontal: 50.w),
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                          gem.imagePaths.length,
-                          (index) => Container(
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 7),
-                                width: 180,
-                                height: 189,
-                                child: CustomImage(src: gem.imagePaths[index]),
-                              )),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomText(gem.type, size: 20, weight: FontWeight.bold),
+                  const YSpace(12),
+                  if (gem.imagePaths.isNotEmpty)
+                    SizedBox(
+                      width: 375.w,
+                      height: 170.h,
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 50.w),
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                            gem.imagePaths.length,
+                            (index) => Container(
+                                  color: Colors.black,
+                                  margin: const EdgeInsets.only(right: 7),
+                                  width: 180,
+                                  height: 189,
+                                  child:
+                                      CustomImage(src: gem.imagePaths[index]),
+                                )),
+                      ),
+                    ),
+                  const YSpace(12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: CustomText(
+                      gem.texts.first,
+                      size: 20,
+                      height: 1.5,
+                      align: TextAlign.center,
                     ),
                   ),
-                const YSpace(12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomText(
-                    gem.texts.first,
-                    size: 20,
-                    height: 1.5,
-                    align: TextAlign.center,
-                  ),
-                ),
-              ],
+                ],
+              ),
             )),
         child: Container(
           width: 375.w,
@@ -61,7 +66,7 @@ class GratitudeDisplayCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(gem.texts.first, size: 17, height: 1.3),
+              CustomText(gem.texts.first, size: 16, height: 1.3),
               const YSpace(12),
               if (gem.imagePaths.isNotEmpty)
                 SizedBox(

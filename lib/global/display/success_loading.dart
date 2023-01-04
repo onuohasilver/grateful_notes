@@ -32,7 +32,6 @@ class SuccessLoading extends StatelessWidget {
           () => sli.onColorsChanged(colors),
           () => slc.updateIndex(),
         ],
-        disposeMethods: [() => slc.dispose()],
         dispose: true,
         child: AnimatedContainer(
           color: slv.colors[slv.index],
