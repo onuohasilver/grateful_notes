@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:grateful_notes/services/notifications/notification_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -68,7 +69,9 @@ class NotificationServiceImpl extends NotificationService {
   scheduleNotification(
       {required String title,
       required String body,
-      required String payload}) async {
+      required String payload,
+      TimeOfDay? timeOfDay,
+      DateTimeComponents? dateTimeComponents = DateTimeComponents.time}) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('HappyNotes01', 'HappyNotes',
             channelDescription: 'Notifications from happy notes');
@@ -85,11 +88,13 @@ class NotificationServiceImpl extends NotificationService {
         title,
         body,
         tzz.TZDateTime.from(
-            DateTime(dt.year, dt.month, dt.day, 20, 00), tzz.local),
+            DateTime(
+                dt.year, dt.month, dt.day, timeOfDay!.hour, timeOfDay.minute),
+            tzz.local),
         notificationDetails,
         androidAllowWhileIdle: true,
         payload: payload,
-        matchDateTimeComponents: DateTimeComponents.time,
+        matchDateTimeComponents: dateTimeComponents,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }

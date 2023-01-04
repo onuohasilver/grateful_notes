@@ -21,7 +21,8 @@ class AddNewGratitude extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(const ImageAssets().blackWoman),
+        Center(
+            child: Image.asset(const ImageAssets().blackWoman, height: 200.h)),
         const YSpace(34),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -37,7 +38,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something that I did"),
                         CustomOverlays().showSheet(
-                            height: 600.h,
+                            height: 700.h,
                             color: AppColors.superLightGreen,
                             child: const EditGratitude(
                                 header: "Something that I did..."),
@@ -51,7 +52,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something that was done for me"),
                         CustomOverlays().showSheet(
-                            height: 600.h,
+                            height: 700.h,
                             color: AppColors.fadedYellow,
                             child: const EditGratitude(
                                 header: "Something done for me..."),
@@ -65,7 +66,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something around me"),
                         CustomOverlays().showSheet(
-                            height: 600.h,
+                            height: 700.h,
                             color: AppColors.fadedPink,
                             child: const EditGratitude(
                                 header: "Something around me.."),

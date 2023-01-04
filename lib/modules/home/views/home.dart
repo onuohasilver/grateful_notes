@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
-import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/state_aware_builder.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
@@ -19,6 +18,7 @@ import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
+import 'package:grateful_notes/modules/settings/views/settings_modal.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -72,11 +72,10 @@ class Home extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                           onTap: () => CustomOverlays().showSheet(
-                            height: 400.h,
-                            color: Colors.white,
-                            child: const SettingsModal(),
-                          ),
-                          child: const Icon(Icons.more_vert_rounded),
+                              height: 400.h,
+                              color: Colors.white,
+                              child: const SettingsModal()),
+                          child: const Icon(Icons.settings),
                         )
                       ],
                     ),
@@ -152,80 +151,6 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class SettingsModal extends StatelessWidget {
-  const SettingsModal({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CustomText("Settings", size: 18, weight: FontWeight.bold),
-          const YSpace(24),
-          ElasticInLeft(
-            child: CustomFlatButton(
-                alignment: MainAxisAlignment.start,
-                label: "Set Reminder Frequency",
-                hasBorder: true,
-                expand: true,
-                onTap: () {
-                  CustomOverlays().showSheet(
-                    height: 350.h,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const CustomText(
-                            "How often do you want\nto be reminded to take\nyour happy notes?",
-                            size: 18,
-                            weight: FontWeight.bold,
-                            height: 1.5,
-                          ),
-                          const YSpace(24),
-                          ElasticInLeft(
-                            child: CustomFlatButton(
-                                label: "Daily",
-                                onTap: () {},
-                                expand: true,
-                                hasBorder: true,
-                                alignment: MainAxisAlignment.start),
-                          ),
-                          const YSpace(12),
-                          ElasticInRight(
-                            child: CustomFlatButton(
-                                label: "Weekly",
-                                onTap: () {},
-                                expand: true,
-                                hasBorder: true,
-                                alignment: MainAxisAlignment.start),
-                          ),
-                          const YSpace(12),
-                          ElasticInUp(
-                            child: CustomFlatButton(
-                                label: "Monthly",
-                                onTap: () {},
-                                expand: true,
-                                hasBorder: true,
-                                alignment: MainAxisAlignment.start),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          )
-        ],
       ),
     );
   }

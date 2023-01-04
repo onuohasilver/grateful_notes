@@ -51,7 +51,7 @@ class CustomOverlays {
                                 icon: const Icon(Icons.close)),
                           ),
                         ),
-                        const YSpace(45),
+                        const YSpace(25),
                         child,
                       ],
                     ),

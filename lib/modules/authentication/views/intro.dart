@@ -12,6 +12,7 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
 import 'package:grateful_notes/modules/authentication/views/have_an_account.dart';
+import 'package:grateful_notes/modules/settings/controllers/settings_controller.dart';
 
 class Intro extends StatelessWidget {
   const Intro({super.key});
@@ -21,8 +22,9 @@ class Intro extends StatelessWidget {
     BridgeState state = bridge(context);
     AuthVariables av = AuthVariables(state);
     AuthController ac = AuthController(state);
+    SettingsController sc = SettingsController(state);
     return BridgeBuilder(
-      controllers: [ac],
+      controllers: [ac, sc],
       child: Scaffold(
         body: Container(
           color: Colors.white,
@@ -34,9 +36,13 @@ class Intro extends StatelessWidget {
                   top: 187.h,
                   left: 111.w,
                   child: ElasticIn(
-                    child: const CustomText(
-                      'H A P P Y\nN O T E S',
-                      size: 34,
+                    child: Flash(
+                      infinite: true,
+                      delay: const Duration(milliseconds: 300),
+                      child: const CustomText(
+                        'H A P P Y\nN O T E S',
+                        size: 34,
+                      ),
                     ),
                   )),
               if (av.returningUser == "New")

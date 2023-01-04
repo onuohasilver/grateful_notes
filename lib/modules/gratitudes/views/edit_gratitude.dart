@@ -49,11 +49,11 @@ class EditGratitude extends StatelessWidget {
                         child: Row(
                           children: const [
                             Icon(Icons.add),
-                            CustomText("Add Photo", size: 14)
+                            CustomText("Add Photo",
+                                size: 14, weight: FontWeight.bold)
                           ],
                         ),
                       ),
-                      const XSpace(10),
                       const XSpace(10),
                     ],
                   ),
