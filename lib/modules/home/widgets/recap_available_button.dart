@@ -9,6 +9,7 @@ import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_dialog.dart';
 import 'package:grateful_notes/modules/recaps/controllers/recap_controller.dart';
+import 'package:intl/intl.dart';
 
 class RecapAvailableButton extends StatelessWidget {
   const RecapAvailableButton({
@@ -43,8 +44,8 @@ class RecapAvailableButton extends StatelessWidget {
                 ),
               ),
               const XSpace(5),
-              const CustomText(
-                'Your Happy Moments Recap for October is ready!',
+              CustomText(
+                'Your Happy Moments Recap for ${DateFormat('MMMM').format(DateTime.now())} is ready!',
                 size: 12,
                 color: Colors.white,
               ),

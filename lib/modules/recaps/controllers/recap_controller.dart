@@ -58,8 +58,8 @@ class RecapController extends BridgeController {
 
   @override
   void initialise() {
-    getNumberOfMoments(DateTime.january);
-    getMostCommonWord(DateTime.january);
+    getNumberOfMoments(DateTime.now().month);
+    getMostCommonWord(DateTime.now().month);
   }
 }
 

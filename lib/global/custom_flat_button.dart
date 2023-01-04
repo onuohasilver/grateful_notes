@@ -9,7 +9,8 @@ class CustomFlatButton extends StatelessWidget {
     required this.onTap,
     this.hasBorder = false,
     this.icon,
-    this.expand = false, this.alignment,
+    this.expand = false,
+    this.alignment,
   }) : super(key: key);
   final String label;
   final String? icon;
@@ -23,6 +24,7 @@ class CustomFlatButton extends StatelessWidget {
       onPressed: onTap,
       style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(153, 48)),
+          shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
           side: hasBorder
               ? MaterialStateProperty.all(
                   const BorderSide(color: Colors.grey, width: 2))

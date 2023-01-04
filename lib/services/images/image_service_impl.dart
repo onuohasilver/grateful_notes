@@ -11,7 +11,7 @@ class ImageServiceImpl extends ImageService {
 
   @override
   Future<List<XFile>> getImagesFromDevice() {
-    return _picker.pickMultiImage();
+    return _picker.pickMultiImage(imageQuality: 12);
   }
 
   @override

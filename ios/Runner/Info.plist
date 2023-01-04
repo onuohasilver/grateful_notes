@@ -50,6 +50,7 @@
 		<key>NSCameraUsageDescription</key>
 		<string>Grateful Notes uses the gallery to pick images to add to posts</string>
 		<key>UIStatusBarHidden</key>
+		
 		<false/>
 	</dict>
 </plist>
