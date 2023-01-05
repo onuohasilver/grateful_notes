@@ -1,3 +1,4 @@
+import 'package:grateful_notes/core/network/api.dart';
 import 'package:grateful_notes/core/network/firebase_extended.dart';
 import 'package:grateful_notes/core/network/network_core.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
@@ -15,7 +16,7 @@ class GratitudeServiceImpl extends GratitudeService {
       required String type}) async {
     DateTime date = DateTime.now();
     var notes = await network.post(
-      path: UrlPath('notes', userid),
+      path: UrlPath(Api().notes, userid),
       body: {
         DateTime.now().toIso8601String(): {
           'imagePaths': images,
@@ -31,6 +32,6 @@ class GratitudeServiceImpl extends GratitudeService {
 
   @override
   getGratitudes({required String userid}) async {
-    return await network.get(path: UrlPath('notes', userid));
+    return await network.get(path: UrlPath(Api().notes, userid));
   }
 }

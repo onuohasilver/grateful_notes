@@ -136,13 +136,23 @@ class Home extends StatelessWidget {
                   flex: 8,
                   child: gv.allGratitudes.isEmpty
                       ? Center(
-                          child: Flash(
-                            infinite: true,
-                            duration: const Duration(seconds: 10),
-                            child: const CustomText(
-                              "You don't have any happy notes yet",
-                              size: 18,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              LottieBuilder.network(
+                                "https://assets5.lottiefiles.com/packages/lf20_afcavdfg.json",
+                                height: 90,
+                                width: 90,
+                              ),
+                              Flash(
+                                infinite: true,
+                                duration: const Duration(seconds: 10),
+                                child: const CustomText(
+                                  "You don't have any happy notes yet",
+                                  size: 18,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       : StickyGroupedListView(

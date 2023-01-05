@@ -42,7 +42,6 @@ class AuthController extends BridgeController {
             onSuccess: (_) async => {
                   await _createUserProfile(_.data['id']),
                   _ks.saveString(_ak.username, _.data['id']),
-                  _slc.dispose()
                 },
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
@@ -79,7 +78,8 @@ class AuthController extends BridgeController {
           _ui.onUsermodelChanged(
               UserModel(email: _av.email, username: _av.username, userid: id)),
           await Future.delayed(const Duration(seconds: 6)),
-          Navigate.replaceUntil(Home())
+          Navigate.replaceUntil(Home()),
+          _slc.dispose()
         }
       },
       onError: (_) => log("message"),

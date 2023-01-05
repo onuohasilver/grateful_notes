@@ -28,6 +28,7 @@ class EnterEmail extends StatelessWidget {
           CustomText(label, size: 20, color: Colors.white),
           const YSpace(31),
           TextField(
+            autofocus: true,
             onChanged: (value) => ai.onEmailChanged(value),
             keyboardType: TextInputType.emailAddress,
             style: GoogleFonts.inconsolata(color: Colors.white),

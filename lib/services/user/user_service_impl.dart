@@ -1,3 +1,4 @@
+import 'package:grateful_notes/core/network/api.dart';
 import 'package:grateful_notes/core/network/firebase_extended.dart';
 import 'package:grateful_notes/core/network/network_core.dart';
 import 'package:grateful_notes/core/network/response_model.dart';
@@ -8,12 +9,12 @@ class UserServiceImpl implements UserService {
   final FirebaseExtended _firebaseExtended = FirebaseExtended();
   @override
   Future<ResponseModel> getuser({required String userid}) async {
-    return await _network.get(path: UrlPath('users', userid));
+    return await _network.get(path: UrlPath(Api().users, userid));
   }
 
   @override
   Future<ResponseModel> finduser({required String username}) async {
     return await _firebaseExtended.findWhere(
-        matcher: MatcherPath('users', username.toLowerCase(), 'username'));
+        matcher: MatcherPath(Api().users, username.toLowerCase(), 'username'));
   }
 }
