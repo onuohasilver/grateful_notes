@@ -29,6 +29,49 @@
             {
               "client_id": "915947266058-tl917oegkq4a1f3av8naaae9ulbl1qbg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "915947266058-2vs20bhjj7jjl63ii8t56craojeals2v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gratefulNotes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915947266058:android:1c4c3ce5404ccf0dd73ff3",
+        "android_client_info": {
+          "package_name": "com.happy.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915947266058-tl917oegkq4a1f3av8naaae9ulbl1qbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXyQXQ_wWuHkb7WsW-nyY1hFcnv0UeHuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915947266058-tl917oegkq4a1f3av8naaae9ulbl1qbg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "915947266058-2vs20bhjj7jjl63ii8t56craojeals2v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gratefulNotes"
+              }
             }
           ]
         }

@@ -7,11 +7,11 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Grateful Notes</string>
+		<string>Hap Notes</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
-		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<string>com.happy.notes</string>
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
@@ -46,9 +46,9 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Grateful Notes uses the gallery to pick images to add to posts</string>
+		<string>Happy Notes uses the gallery to pick images to add to posts</string>
 		<key>NSCameraUsageDescription</key>
-		<string>Grateful Notes uses the gallery to pick images to add to posts</string>
+		<string>Happy Notes uses the gallery to pick images to add to posts</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>

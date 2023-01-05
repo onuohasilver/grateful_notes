@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDXyQXQ_wWuHkb7WsW-nyY1hFcnv0UeHuQ',
-    appId: '1:915947266058:android:19a8830d07c2d4a1d73ff3',
+    appId: '1:915947266058:android:1c4c3ce5404ccf0dd73ff3',
     messagingSenderId: '915947266058',
     projectId: 'grateful-notes',
     storageBucket: 'grateful-notes.appspot.com',

@@ -82,7 +82,10 @@ class Home extends StatelessWidget {
                               height: 400.h,
                               color: Colors.white,
                               child: const SettingsModal()),
-                          child: const Icon(Icons.settings),
+                          child: Icon(
+                            Icons.settings,
+                            size: 24.h,
+                          ),
                         )
                       ],
                     ),

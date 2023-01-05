@@ -41,7 +41,7 @@ class CustomText extends StatelessWidget {
             animatedTexts: [
               TypewriterAnimatedText(text,
                   textStyle: GoogleFonts.inconsolata(
-                      fontSize: size.sp,
+                      fontSize: size.sm,
                       fontWeight: weight,
                       color: color,
                       height: height),
