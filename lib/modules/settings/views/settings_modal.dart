@@ -25,9 +25,9 @@ class SettingsModal extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomText("Settings", size: 18, weight: FontWeight.bold),
+          const CustomText("More", size: 18, weight: FontWeight.bold),
           const YSpace(24),
-          ElasticInLeft(
+          ElasticIn(
             child: CustomFlatButton(
                 alignment: MainAxisAlignment.start,
                 label: "Set Reminder Frequency",
@@ -45,18 +45,34 @@ class SettingsModal extends StatelessWidget {
           ElasticInLeft(
             child: CustomFlatButton(
                 alignment: MainAxisAlignment.start,
+                label: "Set My Close Circle",
+                hasBorder: true,
+                expand: true,
+                onTap: () {
+                  ac.logout();
+                }),
+          ),
+          const YSpace(12),
+          ElasticInRight(
+            child: CustomFlatButton(
+                alignment: MainAxisAlignment.start,
+                label: "Set Privacy",
+                hasBorder: true,
+                expand: true,
+                onTap: () {
+                  ac.logout();
+                }),
+          ),
+          const YSpace(12),
+          ElasticInLeft(
+            child: CustomFlatButton(
+                alignment: MainAxisAlignment.start,
                 label: "Logout",
                 hasBorder: true,
                 expand: true,
                 color: Colors.red,
                 onTap: () {
                   ac.logout();
-                  // stat
-                  // CustomOverlays().showSheet(
-                  //   height: 380.h,
-                  //   color: Colors.white,
-                  //   child: const ReminderFrequencyModal(),
-                  // );
                 }),
           )
         ],

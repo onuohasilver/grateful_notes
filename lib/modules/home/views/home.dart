@@ -126,10 +126,12 @@ class Home extends StatelessWidget {
                 currentState: gv.currentState,
                 error: const Center(
                     child: CustomText("An error occured", size: 12)),
-                loading: Center(
-                  child: LottieBuilder.asset(
-                    const AnimationAssets().loading,
-                    height: 300,
+                loading: Expanded(
+                  child: Center(
+                    child: LottieBuilder.asset(
+                      const AnimationAssets().loading,
+                      height: 300,
+                    ),
                   ),
                 ),
                 done: Expanded(
@@ -139,11 +141,8 @@ class Home extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              LottieBuilder.network(
-                                "https://assets5.lottiefiles.com/packages/lf20_afcavdfg.json",
-                                height: 90,
-                                width: 90,
-                              ),
+                              LottieBuilder.asset(const AnimationAssets().write,
+                                  height: 90, width: 90),
                               Flash(
                                 infinite: true,
                                 duration: const Duration(seconds: 10),

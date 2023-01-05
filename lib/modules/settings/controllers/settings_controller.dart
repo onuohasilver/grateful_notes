@@ -19,7 +19,8 @@ class SettingsController extends BridgeController {
   KeyValueStorageService get _ks => const FlutterSecureStorageImpl();
   SettingsKeys get _sk => SettingsKeys();
 
-  setReminderFrequency(String frequency, {TimeOfDay? timeOfDay}) {
+  setReminderFrequency(String frequency,
+      {TimeOfDay? timeOfDay, String? dayOfWeek}) {
     ReminderFrequencyModel rfm = ReminderFrequencyModel(
         hour: timeOfDay!.hour, minute: timeOfDay.minute, frequency: frequency);
 
@@ -38,6 +39,7 @@ class SettingsController extends BridgeController {
         _ns.scheduleNotification(
             payload: "Create New",
             title: "Keep some happy notes today!",
+            dateTime: DateTime.now().next(days.indexOf(dayOfWeek!)),
             body: "Any happy moments you want to keep note of today?",
             dateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
             timeOfDay: timeOfDay);
@@ -70,3 +72,23 @@ class SettingsController extends BridgeController {
     loadSettings();
   }
 }
+
+extension DateTimeExtension on DateTime {
+  DateTime next(int day) {
+    return add(
+      Duration(
+        days: (day - weekday) % DateTime.daysPerWeek,
+      ),
+    );
+  }
+}
+
+List<String> days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];

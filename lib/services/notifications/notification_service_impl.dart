@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:grateful_notes/services/notifications/notification_service.dart';
+import 'package:logger/logger.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tzz;
 
@@ -72,6 +73,7 @@ class NotificationServiceImpl extends NotificationService {
       required String body,
       required String payload,
       TimeOfDay? timeOfDay,
+      DateTime? dateTime,
       DateTimeComponents? dateTimeComponents = DateTimeComponents.time}) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
@@ -88,8 +90,8 @@ class NotificationServiceImpl extends NotificationService {
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
-    DateTime dt = DateTime.now();
-
+    DateTime dt = dateTime ?? DateTime.now();
+    Logger().i(dt);
     await _notification.zonedSchedule(
         0,
         title,
