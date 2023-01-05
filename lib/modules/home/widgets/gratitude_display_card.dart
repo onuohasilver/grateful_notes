@@ -16,7 +16,7 @@ class GratitudeDisplayCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12.0),
       child: GestureDetector(
         onTap: () => CustomOverlays().showSheet(
-            height: gem.imagePaths.isNotEmpty ? 500 : 250,
+            height: gem.imagePaths.isNotEmpty ? 500 : 350,
             color: secondColorMapper(gem.type),
             child: SizedBox(
               width: double.infinity,
