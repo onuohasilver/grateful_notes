@@ -49,6 +49,8 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
+              // onPressed: () => CircleServiceImpl()
+              //     .updateCircle(friends: ["Emmanuel"], userid: uv.user!.userid),
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,
@@ -121,7 +123,30 @@ class Home extends StatelessWidget {
                       }),
                 ),
               )),
-              const YSpace(15),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child: const CustomText(
+                          "My Notes",
+                          weight: FontWeight.bold,
+                          size: 12,
+                          decoration: TextDecoration.underline,
+                        )),
+                    TextButton(
+                        onPressed: () {},
+                        child: const CustomText(
+                          "My Circle",
+                          // weight: FontWeight.bold,
+                          size: 12,
+                          // decoration: TextDecoration.underline,
+                        ))
+                  ],
+                ),
+              ),
               StateAwareBuilder(
                 currentState: gv.currentState,
                 error: const Center(

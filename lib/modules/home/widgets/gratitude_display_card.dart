@@ -1,3 +1,5 @@
+import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
+import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
@@ -6,12 +8,15 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 
 class GratitudeDisplayCard extends StatelessWidget {
   const GratitudeDisplayCard({Key? key, required this.gem}) : super(key: key);
   final GratitudeEditModel gem;
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: GestureDetector(
@@ -89,7 +94,11 @@ class GratitudeDisplayCard extends StatelessWidget {
                               child: CustomImage(src: gem.imagePaths[index]),
                             )),
                   ),
-                )
+                ),
+              const Align(
+                  alignment: Alignment.bottomRight,
+                  child: CustomText("@Esther Julius",
+                      size: 12, height: 1.3, color: Colors.grey)),
             ],
           ),
         ),

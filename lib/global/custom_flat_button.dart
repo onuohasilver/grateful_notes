@@ -11,13 +11,13 @@ class CustomFlatButton extends StatelessWidget {
     this.icon,
     this.expand = false,
     this.alignment,
-    this.color,
+    this.color, this.bgColor,
   }) : super(key: key);
   final String label;
   final String? icon;
   final MainAxisAlignment? alignment;
   final bool hasBorder, expand;
-  final Color? color;
+  final Color? color,bgColor;
   final Function() onTap;
 
   @override
@@ -27,12 +27,13 @@ class CustomFlatButton extends StatelessWidget {
       style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(153, 48)),
           shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
+          
           side: hasBorder
               ? MaterialStateProperty.all(
                   const BorderSide(color: Colors.grey, width: 2))
               : null,
           splashFactory: NoSplash.splashFactory,
-          backgroundColor: MaterialStateProperty.all(Colors.white)),
+          backgroundColor: MaterialStateProperty.all(bgColor??Colors.white)),
       child: Row(
         mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
         mainAxisAlignment: alignment ??

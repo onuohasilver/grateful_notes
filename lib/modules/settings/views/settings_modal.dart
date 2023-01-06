@@ -7,6 +7,7 @@ import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_controller.dart';
+import 'package:grateful_notes/modules/circles/views/close_circle_modal.dart';
 import 'package:grateful_notes/modules/settings/views/reminder_frequency_modal.dart';
 
 class SettingsModal extends StatelessWidget {
@@ -49,7 +50,11 @@ class SettingsModal extends StatelessWidget {
                 hasBorder: true,
                 expand: true,
                 onTap: () {
-                  ac.logout();
+                  CustomOverlays().showSheet(
+                    height: 280.h,
+                    color: Colors.white,
+                    child: CloseCircleModal(),
+                  );
                 }),
           ),
           const YSpace(12),

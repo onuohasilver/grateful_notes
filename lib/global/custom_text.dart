@@ -14,7 +14,8 @@ class CustomText extends StatelessWidget {
       this.isMoney = false,
       this.overflow,
       this.fontStyle,
-      this.animate = false})
+      this.animate = false,
+      this.decoration})
       : super(key: key);
   final String text;
   final num size;
@@ -26,6 +27,7 @@ class CustomText extends StatelessWidget {
   final FontStyle? fontStyle;
   final bool isMoney;
   final bool animate;
+  final TextDecoration? decoration;
   @override
   Widget build(BuildContext context) {
     return !animate
@@ -34,6 +36,7 @@ class CustomText extends StatelessWidget {
             style: GoogleFonts.inconsolata(
                 fontSize: size.sp,
                 fontWeight: weight,
+                decoration: decoration,
                 color: color,
                 height: height))
         : AnimatedTextKit(

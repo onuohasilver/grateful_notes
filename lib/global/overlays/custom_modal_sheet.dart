@@ -34,7 +34,7 @@ class CustomOverlays {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-              child: BounceInUp(
+              child: SlideInUp(
                 child: Container(
                   height: height.h,
                   color: color,
