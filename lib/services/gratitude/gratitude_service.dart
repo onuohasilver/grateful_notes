@@ -5,6 +5,7 @@ abstract class GratitudeService {
       {required List<String> text,
       required List<String> images,
       required String type,
+      required String privacy,
       required String userid});
 
   Future<ResponseModel> getGratitudes({

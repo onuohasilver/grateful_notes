@@ -13,4 +13,6 @@ class SettingsVariables {
       .read(keys.reminderFrequency,
           ReminderFrequencyModel(frequency: "Daily", hour: 20, minute: 00))
       .slice;
+
+  String get privacy => state.read(keys.privacy, "Open").slice;
 }

@@ -1,0 +1,1 @@
+enum CurrentView { myNotes, myCircle }

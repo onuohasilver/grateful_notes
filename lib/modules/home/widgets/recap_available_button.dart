@@ -55,7 +55,7 @@ class RecapAvailableButton extends StatelessWidget {
                 ),
                 const XSpace(5),
                 CustomText(
-                  'Your Happy Moments Recap for ${rv.currentRecap!.month} is ready!',
+                  'Your Happy Moments Recap for ${rv.currentRecap?.month} is ready!',
                   size: 12,
                   color: Colors.white,
                 ),

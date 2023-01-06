@@ -3,11 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:grateful_notes/core/network/response_model.dart';
 
-
 abstract class Network {
   post({required UrlPath path, required Map<String, dynamic> body});
   get({required UrlPath path});
-  update();
+  update({required UrlPath path, required Map<String, dynamic> body});
   delete();
 }
 
@@ -57,7 +56,21 @@ class NetworkImpl extends Network {
   delete() {}
 
   @override
-  update() {}
+  update({required UrlPath path, required Map<String, dynamic> body}) async {
+    late ResponseModel response;
+    try {
+      await firestore.collection(path.collection).doc(path.id).set(body);
+
+      response = ResponseModel(
+          code: 200, data: {"message": "Post Success"}, success: true);
+    } catch (e) {
+      response = ResponseModel(
+          code: 400,
+          data: {"message": "failed", "error": e.toString()},
+          success: false);
+    }
+    return response;
+  }
 }
 
 class UrlPath {

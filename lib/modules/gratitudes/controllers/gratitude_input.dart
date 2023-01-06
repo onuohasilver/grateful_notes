@@ -16,6 +16,9 @@ class GratitudeInput extends BridgeController {
   onGratitudesChanged(List<GratitudeEditModel> gems) =>
       state.load(_keys.allGratitudes, gems, List<GratitudeEditModel>);
 
+  onCircleGratitudesChanged(List<GratitudeEditModel> gems) =>
+      state.load(_keys.allCircleGratitudes, gems, List<GratitudeEditModel>);
+
   onCurrentStateChanged(LoadingStates ls) =>
       state.load(_keys.currentState, ls, LoadingStates);
 

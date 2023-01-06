@@ -1,3 +1,5 @@
+import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
+import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
@@ -6,17 +8,20 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 
 class GratitudeDisplayCard extends StatelessWidget {
   const GratitudeDisplayCard({Key? key, required this.gem}) : super(key: key);
   final GratitudeEditModel gem;
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: GestureDetector(
         onTap: () => CustomOverlays().showSheet(
-            height: gem.imagePaths.isNotEmpty ? 500 : 250,
+            height: gem.imagePaths.isNotEmpty ? 500 : 350,
             color: secondColorMapper(gem.type),
             child: SizedBox(
               width: double.infinity,
@@ -52,6 +57,12 @@ class GratitudeDisplayCard extends StatelessWidget {
                       align: TextAlign.center,
                     ),
                   ),
+                  if (gem.name != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: CustomText("${gem.name}",
+                          size: 12, height: 1.3, color: Colors.grey),
+                    ),
                 ],
               ),
             )),
@@ -89,7 +100,12 @@ class GratitudeDisplayCard extends StatelessWidget {
                               child: CustomImage(src: gem.imagePaths[index]),
                             )),
                   ),
-                )
+                ),
+              if (gem.name != null)
+                Align(
+                    alignment: Alignment.bottomRight,
+                    child: CustomText("${gem.name}",
+                        size: 12, height: 1.3, color: Colors.grey)),
             ],
           ),
         ),

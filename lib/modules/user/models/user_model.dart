@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:grateful_notes/modules/circles/data/friend_model.dart';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -46,6 +47,11 @@ class UserModel extends Equatable {
       };
 
   bool isMatch(UserModel um) => um == this;
+
+  FriendModel toFriendModel() {
+    return FriendModel(
+        name: username, id: userid, accepted: false, senderId: userid);
+  }
 
   @override
   String toString() {

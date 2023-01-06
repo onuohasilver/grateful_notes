@@ -5,4 +5,5 @@ class UserKeys extends BridgeKeys {
   get user => brKey("User Model");
   get usersearch => brKey("User search result");
   get searchtext => brKey("User search text");
+  get currentState => brKey("Current State");
 }
