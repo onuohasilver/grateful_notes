@@ -19,6 +19,11 @@ class SettingsController extends BridgeController {
   KeyValueStorageService get _ks => const FlutterSecureStorageImpl();
   SettingsKeys get _sk => SettingsKeys();
 
+  setPrivacy(String privacy) {
+    _si.onPrivacyChanged(privacy);
+    _ks.saveString(_sk.privacy, privacy);
+  }
+
   setReminderFrequency(String frequency,
       {TimeOfDay? timeOfDay, String? dayOfWeek}) {
     ReminderFrequencyModel rfm = ReminderFrequencyModel(
@@ -61,6 +66,10 @@ class SettingsController extends BridgeController {
       String? reminderFrequency = await _ks.readString(_sk.reminderFrequency);
       _si.onReminderFrequencyChanged(
           reminderFrequencyModelFromJson(reminderFrequency!));
+    }
+    if (await _ks.hasValue(_sk.privacy)) {
+      String? privacy = await _ks.readString(_sk.privacy);
+      _si.onPrivacyChanged(privacy!);
     }
   }
 

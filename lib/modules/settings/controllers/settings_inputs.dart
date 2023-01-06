@@ -11,6 +11,8 @@ class SettingsInputs extends BridgeController {
 
   onReminderFrequencyChanged(ReminderFrequencyModel value) =>
       state.load(keys.reminderFrequency, value, ReminderFrequencyModel);
+
+  onPrivacyChanged(String value) => state.load(keys.privacy, value, String);
   @override
   void dispose() {}
 

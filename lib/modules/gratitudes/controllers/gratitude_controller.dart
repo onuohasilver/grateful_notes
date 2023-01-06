@@ -12,6 +12,7 @@ import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variable
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
 import 'package:grateful_notes/modules/gratitudes/data/statics.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
+import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
@@ -30,6 +31,7 @@ class GratitudeController extends BridgeController {
   UserVariables get _uv => UserVariables(state);
   SuccessLoadingController get _slc => SuccessLoadingController(state);
   CircleVariables get _cv => CircleVariables(state);
+  SettingsVariables get _sv => SettingsVariables(state);
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
@@ -51,10 +53,11 @@ class GratitudeController extends BridgeController {
                     text: _gv.currentEdit!.texts,
                     images: _gv.currentEdit!.imagePaths,
                     type: _gv.currentEdit!.type,
+                    privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
                     userid: _uv.user!.userid),
             onSuccess: (_) async => {
                   Logger().i("on Success save"),
-                  await getGratitudes(),
+                  // await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
                   _slc.dispose(),
                   Navigate.to(Home())
@@ -100,7 +103,7 @@ class GratitudeController extends BridgeController {
     Logger().d("Fetching Circle gratitudes ${fm.id}");
     List<GratitudeEditModel> notes = [];
     RequestHandler(
-      onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
+      // onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
       request: () => _gs.getGratitudes(userid: fm.id),
       onSuccess: (_) => {
         Logger().d("Fetching the gratitudes $_"),
@@ -113,7 +116,8 @@ class GratitudeController extends BridgeController {
                 .toList()
                 .reversed
                 .toList()),
-            _gi.onCircleGratitudesChanged(notes),
+            _gi.onCircleGratitudesChanged(
+                notes.where((element) => element.privacy == "Open").toList()),
             _gi.onCurrentStateChanged(LoadingStates.done),
           }
         else
@@ -134,6 +138,10 @@ class GratitudeController extends BridgeController {
     List<String> current = _gv.currentEdit!.texts;
     current.last = text;
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(texts: current));
+  }
+
+  addPrivacyToModel(String text) {
+    _gi.onEditModelChanged(_gv.currentEdit!.copyWith(privacy: text));
   }
 
   addImageToModel() async {

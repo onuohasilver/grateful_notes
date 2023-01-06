@@ -12,6 +12,7 @@ class GratitudeServiceImpl extends GratitudeService {
   createGratitude(
       {required List<String> text,
       required List<String> images,
+      required String privacy,
       required String userid,
       required String type}) async {
     DateTime date = DateTime.now();
@@ -22,6 +23,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'imagePaths': images,
           'texts': text,
           'type': type,
+          'Privacy': privacy,
           'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },
