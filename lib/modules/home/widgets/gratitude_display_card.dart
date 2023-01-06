@@ -57,6 +57,12 @@ class GratitudeDisplayCard extends StatelessWidget {
                       align: TextAlign.center,
                     ),
                   ),
+                  if (gem.name != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: CustomText("${gem.name}",
+                          size: 12, height: 1.3, color: Colors.grey),
+                    ),
                 ],
               ),
             )),

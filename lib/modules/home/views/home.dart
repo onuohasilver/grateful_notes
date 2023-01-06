@@ -50,10 +50,9 @@ class Home extends StatelessWidget {
     return BridgeBuilder(
       controllers: [gc, cc],
       initMethods: [
-        () => lsc.animateTo(
-            -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeIn)
+        () => lsc.jumpTo(
+              -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
+            )
       ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
