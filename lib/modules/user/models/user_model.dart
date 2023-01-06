@@ -49,7 +49,8 @@ class UserModel extends Equatable {
   bool isMatch(UserModel um) => um == this;
 
   FriendModel toFriendModel() {
-    return FriendModel(name: username, id: userid, accepted: false);
+    return FriendModel(
+        name: username, id: userid, accepted: false, senderId: userid);
   }
 
   @override

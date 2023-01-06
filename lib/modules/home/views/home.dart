@@ -5,6 +5,7 @@ import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
+import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/state_aware_builder.dart';
@@ -14,6 +15,10 @@ import 'package:grateful_notes/modules/circles/controllers/circle_controller.dar
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
+import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
+import 'package:grateful_notes/modules/home/controllers/home_inputs.dart';
+import 'package:grateful_notes/modules/home/controllers/home_variables.dart';
+import 'package:grateful_notes/modules/home/data/circle_enum.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
@@ -21,7 +26,6 @@ import 'package:grateful_notes/modules/settings/views/settings_modal.dart';
 import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
@@ -39,6 +43,8 @@ class Home extends StatelessWidget {
 
     CircleController cc = CircleController(state);
     UserController uc = UserController(state);
+    HomeInputs hi = HomeInputs(state);
+    HomeVariables hv = HomeVariables(state);
 
     return BridgeBuilder(
       controllers: [gc, cc],
@@ -52,12 +58,12 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              onPressed: () => uc.findUser("dev@gmail.com"),
-              // onPressed: () => CustomOverlays().showSheet(
-              //       height: 600.h,
-              //       color: AppColors.superLightGreen,
-              //       child: const AddNewGratitude(),
-              //     ),
+              // onPressed: () => uc.findUser("dev@gmail.com"),
+              onPressed: () => CustomOverlays().showSheet(
+                    height: 600.h,
+                    color: AppColors.superLightGreen,
+                    child: const AddNewGratitude(),
+                  ),
               shape: const RoundedRectangleBorder(),
               backgroundColor: Colors.black,
               label: const CustomText("Add New", size: 14, color: Colors.white),
@@ -119,8 +125,6 @@ class Home extends StatelessWidget {
                               identifier:
                                   DateTime(2023).add(Duration(days: index)),
                               duration: const Duration(seconds: 1));
-                        } else {
-                          Logger().i("New aa");
                         }
                       }),
                 ),
@@ -131,20 +135,30 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: () {},
-                        child: const CustomText(
+                        onPressed: () =>
+                            hi.onCurrentViewChanged(CurrentView.myNotes),
+                        child: CustomText(
                           "My Notes",
-                          weight: FontWeight.bold,
+                          weight: hv.currentView == CurrentView.myNotes
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                           size: 12,
-                          decoration: TextDecoration.underline,
+                          decoration: hv.currentView == CurrentView.myNotes
+                              ? TextDecoration.underline
+                              : null,
                         )),
                     TextButton(
-                        onPressed: () {},
-                        child: const CustomText(
+                        onPressed: () =>
+                            hi.onCurrentViewChanged(CurrentView.myCircle),
+                        child: CustomText(
                           "My Circle",
-                          // weight: FontWeight.bold,
+                          weight: hv.currentView == CurrentView.myCircle
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                           size: 12,
-                          // decoration: TextDecoration.underline,
+                          decoration: hv.currentView == CurrentView.myCircle
+                              ? TextDecoration.underline
+                              : null,
                         ))
                   ],
                 ),

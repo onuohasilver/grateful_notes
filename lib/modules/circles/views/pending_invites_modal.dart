@@ -6,18 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
-import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/state_aware_builder.dart';
-import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/data/friend_model.dart';
-import 'package:grateful_notes/modules/circles/views/add_new_circle_modal.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:lottie/lottie.dart';
 
-class ViewMyCloseCircleModal extends StatelessWidget {
-  const ViewMyCloseCircleModal({
+class PendingInvitesModal extends StatelessWidget {
+  const PendingInvitesModal({
     Key? key,
   }) : super(key: key);
 
@@ -26,6 +24,7 @@ class ViewMyCloseCircleModal extends StatelessWidget {
     BridgeState state = bridge(context);
     CircleVariables cv = CircleVariables(state);
     CircleController cc = CircleController(state);
+    UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: SizedBox(
@@ -34,26 +33,30 @@ class ViewMyCloseCircleModal extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomText(
-              "My Close Circle",
+              "My Pending Invites",
               size: 18,
               weight: FontWeight.bold,
               height: 1.5,
             ),
             const YSpace(12),
             CustomText(
-                cv.circle.friends.isEmpty
-                    ? "You don't have any one in your circle yet"
-                    : "You have ${5 - cv.circle.friends.length} more space(s) left in your circle",
+                "You have ${cv.circle.friends.where((element) => element.senderId != uv.user!.userid && !element.accepted).length} pending circle invite(s)",
                 height: 1.4,
                 size: 14),
             const YSpace(24),
             Expanded(
-              child: cv.circle.friends.isEmpty
+              child: cv.circle.friends
+                      .where((element) =>
+                          element.senderId != uv.user!.userid &&
+                          !element.accepted)
+                      .isEmpty
                   ? LottieBuilder.asset(const AnimationAssets().astronaut)
                   : ListView(
                       children: [
                         ...cv.circle.friends
-                            .map((e) => CircleMemberNameButton(fm: e))
+                            .where((element) =>
+                                element.senderId != uv.user!.userid)
+                            .map((e) => PendingInvitesButton(fm: e))
                       ],
                     ),
             ),
@@ -68,25 +71,6 @@ class ViewMyCloseCircleModal extends StatelessWidget {
                 ),
                 error:
                     Bounce(child: const Icon(Icons.error, color: Colors.red))),
-            Visibility(
-              visible: cv.circle.friends.length < 5,
-              child: ElasticIn(
-                child: CustomFlatButton(
-                  label: "Add New",
-                  onTap: () {
-                    CustomOverlays().showSheet(
-                      height: 300,
-                      color: Colors.white,
-                      child: const AddNewCircleModal(),
-                    );
-                  },
-                  expand: true,
-                  alignment: MainAxisAlignment.start,
-                  color: Colors.white,
-                  bgColor: Colors.black,
-                ),
-              ),
-            ),
             const YSpace(50),
           ],
         ),
@@ -95,8 +79,8 @@ class ViewMyCloseCircleModal extends StatelessWidget {
   }
 }
 
-class CircleMemberNameButton extends StatelessWidget {
-  const CircleMemberNameButton({
+class PendingInvitesButton extends StatelessWidget {
+  const PendingInvitesButton({
     Key? key,
     required this.fm,
   }) : super(key: key);
@@ -117,14 +101,22 @@ class CircleMemberNameButton extends StatelessWidget {
             const XSpace(10),
             Visibility(
               visible: !fm.accepted,
-              child: Material(
+              child: const Material(
                   color: AppColors.fadedPink,
                   child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: CustomText(fm.accepted ? "" : "Pending", size: 12),
+                    padding: EdgeInsets.all(2.0),
+                    child: CustomText("Pending", size: 12),
                   )),
             ),
             const Spacer(),
+            TextButton(
+                onPressed: () => cc.acceptUserToCircle(fm),
+                child: const CustomText(
+                  "Accept",
+                  size: 15,
+                  color: Colors.green,
+                )),
+            const XSpace(10),
             TextButton(
                 onPressed: () => cc.removeUserFromCircle(fm),
                 child: const CustomText(

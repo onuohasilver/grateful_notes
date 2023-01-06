@@ -23,21 +23,45 @@ class CircleController extends BridgeController {
   addUserToCircle() async {
     Set<FriendModel> friends = _cv.circle.friends.toSet();
     if (friends.length < 5 && _uv.usersearch != null) {
-      friends.add(_uv.usersearch!.toFriendModel());
+      friends.add(
+          _uv.usersearch!.toFriendModel().copyWith(senderId: _uv.user!.userid));
 
       RequestHandler(
           onRequestStart: _ci.onCurrentStateChanged(LoadingStates.loading),
           request: () => _cs.updateCircle(
-                friends: friends.map((e) => e.toJson()).toList(),
-                userid: _uv.user!.userid,
-              ),
+              friends: friends.map((e) => e.toJson()).toList(),
+              userid: _uv.user!.userid),
           onError: (_) => Logger().e(_),
-          onSuccess: (_) => {
+          onSuccess: (_) async => {
                 _ci.onCircleModelChanged(
                     _cv.circle.copyWith(friends: friends.toList())),
+                await findUserAndUpdateCircle(
+                    userid: _cv.circle.friends.first.id),
                 _ci.onCurrentStateChanged(LoadingStates.done)
               }).sendRequest();
     }
+  }
+
+  acceptUserToCircle(FriendModel fm) async {
+    List<FriendModel> friends = _cv.circle.friends;
+    friends.remove(fm);
+    friends.add(fm.copyWith(accepted: true));
+
+    RequestHandler(
+      request: () => _cs.updateCircle(
+          friends: friends.map((e) => e.toJson()).toList(),
+          userid: _uv.user!.userid),
+      onSuccess: (_) async => {
+        _ci.onCircleModelChanged(
+            _cv.circle.copyWith(friends: friends.toList())),
+        await findUserAndUpdateCircle(
+            userid: _cv.circle.friends.first.id,
+            status: true,
+            senderId: fm.senderId),
+        _ci.onCurrentStateChanged(LoadingStates.done),
+      },
+      onError: (_) => Logger().e(_),
+    ).sendRequest();
   }
 
   removeUserFromCircle(FriendModel fm) {
@@ -52,8 +76,13 @@ class CircleController extends BridgeController {
               userid: _uv.user!.userid,
             ),
         onError: (_) => Logger().e(_),
-        onSuccess: (_) => {
+        onSuccess: (_) async => {
               _ci.onCircleModelChanged(_cv.circle.copyWith(friends: friends)),
+              await findUserAndUpdateCircle(
+                  userid: fm.id,
+                  status: false,
+                  remove: true,
+                  senderId: fm.senderId),
               _ci.onCurrentStateChanged(LoadingStates.done)
             }).sendRequest();
   }
@@ -66,6 +95,34 @@ class CircleController extends BridgeController {
               _ci.onCircleModelChanged(CloseCircleModel.fromJson(_.data)),
               Logger().i(_),
             }).sendRequest();
+  }
+
+  findUserAndUpdateCircle(
+      {required String userid,
+      bool status = false,
+      String? senderId,
+      bool remove = false}) {
+    CloseCircleModel ccm = CloseCircleModel.empty();
+    List<FriendModel> friends = [];
+    FriendModel currentFm = FriendModel(
+      senderId: senderId ?? _uv.user!.userid,
+      name: _uv.user!.username,
+      id: _uv.user!.userid,
+      accepted: status,
+    );
+    RequestHandler(
+      request: () => _cs.getCircle(userid: userid),
+      onSuccess: (_) async => {
+        ccm = CloseCircleModel.fromJson(_.data),
+        Logger().i(ccm),
+        friends = ccm.friends,
+        friends.remove(currentFm),
+        if (!remove) friends.add(currentFm),
+        await _cs.updateCircle(
+            friends: friends.map((e) => e.toJson()).toList(), userid: userid),
+      },
+      onError: (_) => Logger().i(_),
+    ).sendRequest();
   }
 
   @override

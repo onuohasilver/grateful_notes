@@ -4,4 +4,5 @@ class HomeKeys extends BridgeKeys {
   HomeKeys() : super('HomeKeys');
 
   get currentDate => brKey('current date');
+  get currentView => brKey("Current View");
 }

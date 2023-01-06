@@ -67,16 +67,21 @@ class AddNewCircleModal extends StatelessWidget {
               ),
             ),
             const YSpace(12),
-            CustomFlatButton(
-                label: "Send Invite",
-                onTap: () {
-                  cc.addUserToCircle();
-                  Navigate.pop();
-                },
-                expand: true,
-                alignment: MainAxisAlignment.start,
-                color: Colors.white,
-                bgColor: Colors.black)
+            Visibility(
+              visible: uv.usersearch != null,
+              child: ElasticIn(
+                child: CustomFlatButton(
+                    label: "Send Invite",
+                    onTap: () {
+                      cc.addUserToCircle();
+                      Navigate.pop();
+                    },
+                    expand: true,
+                    alignment: MainAxisAlignment.start,
+                    color: Colors.white,
+                    bgColor: Colors.black),
+              ),
+            )
           ],
         ),
       ),

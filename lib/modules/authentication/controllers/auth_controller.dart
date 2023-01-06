@@ -102,9 +102,9 @@ class AuthController extends BridgeController {
   }
 
   logout() {
+    Navigate.replaceUntil(const Intro());
     state.close();
     _ks.close();
-    Navigate.replaceUntil(const Intro());
   }
 
   @override

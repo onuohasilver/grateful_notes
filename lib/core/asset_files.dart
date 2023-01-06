@@ -35,4 +35,5 @@ class AnimationAssets {
   get loading => _lottie('loading');
   get done => _lottie("done");
   get write => _lottie("write");
+  get astronaut => _lottie("astronaut");
 }
