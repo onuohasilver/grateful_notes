@@ -11,26 +11,28 @@ String gratitudeEditModelToJson(GratitudeEditModel data) =>
     json.encode(data.toJson());
 
 class GratitudeEditModel {
-  GratitudeEditModel(
-      {required this.texts,
-      required this.imagePaths,
-      required this.date,
-      required this.type});
+  GratitudeEditModel({
+    required this.texts,
+    required this.imagePaths,
+    required this.date,
+    required this.type,
+    this.name,
+  });
 
   final List<String> texts;
   final List<String> imagePaths;
   final DateTime date;
   final String type;
+  final String? name;
 
-  GratitudeEditModel copyWith({
-    List<String>? texts,
-    List<String>? imagePaths,
-  }) =>
+  GratitudeEditModel copyWith(
+          {List<String>? texts, List<String>? imagePaths, String? name}) =>
       GratitudeEditModel(
           type: type,
           texts: texts ?? this.texts,
           imagePaths: imagePaths ?? this.imagePaths,
-          date: DateTime.now());
+          name: name ?? this.name,
+          date: date);
 
   factory GratitudeEditModel.fromJson(Map<String, dynamic> json) =>
       GratitudeEditModel(
@@ -47,11 +49,7 @@ class GratitudeEditModel {
       };
 
   factory GratitudeEditModel.createNew(String type) => GratitudeEditModel(
-        texts: [""],
-        imagePaths: [],
-        date: DateTime.now(),
-        type: type
-      );
+      texts: [""], imagePaths: [], date: DateTime.now(), type: type);
 
   @override
   String toString() {

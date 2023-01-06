@@ -6,6 +6,7 @@ import 'package:grateful_notes/modules/circles/controllers/circle_inputs.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/data/close_circle_model.dart';
 import 'package:grateful_notes/modules/circles/data/friend_model.dart';
+import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/services/circle/circle_service_impl.dart';
 import 'package:logger/logger.dart';
@@ -19,6 +20,7 @@ class CircleController extends BridgeController {
   CircleVariables get _cv => CircleVariables(state);
   CircleInputs get _ci => CircleInputs(state);
   UserVariables get _uv => UserVariables(state);
+  GratitudeController get _gc => GratitudeController(state);
 
   addUserToCircle() async {
     Set<FriendModel> friends = _cv.circle.friends.toSet();
@@ -48,12 +50,15 @@ class CircleController extends BridgeController {
     friends.add(fm.copyWith(accepted: true));
 
     RequestHandler(
+      onRequestStart: _ci.onCurrentStateChanged(LoadingStates.loading),
       request: () => _cs.updateCircle(
           friends: friends.map((e) => e.toJson()).toList(),
           userid: _uv.user!.userid),
       onSuccess: (_) async => {
         _ci.onCircleModelChanged(
             _cv.circle.copyWith(friends: friends.toList())),
+        await getCircle(),
+        _gc.getCircleGratitudes(),
         await findUserAndUpdateCircle(
             userid: _cv.circle.friends.first.id,
             status: true,
@@ -78,6 +83,8 @@ class CircleController extends BridgeController {
         onError: (_) => Logger().e(_),
         onSuccess: (_) async => {
               _ci.onCircleModelChanged(_cv.circle.copyWith(friends: friends)),
+              await getCircle(),
+              _gc.getCircleGratitudes(),
               await findUserAndUpdateCircle(
                   userid: fm.id,
                   status: false,

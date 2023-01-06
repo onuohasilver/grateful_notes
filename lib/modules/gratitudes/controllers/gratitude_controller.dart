@@ -5,6 +5,8 @@ import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
+import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
+import 'package:grateful_notes/modules/circles/data/friend_model.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_input.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
@@ -27,6 +29,7 @@ class GratitudeController extends BridgeController {
   ImageServiceImpl get _is => ImageServiceImpl();
   UserVariables get _uv => UserVariables(state);
   SuccessLoadingController get _slc => SuccessLoadingController(state);
+  CircleVariables get _cv => CircleVariables(state);
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
@@ -86,6 +89,41 @@ class GratitudeController extends BridgeController {
     ).sendRequest();
   }
 
+  getCircleGratitudes() {
+    for (FriendModel friend
+        in _cv.circle.friends.where((element) => element.accepted)) {
+      _fetchCircleGratitudes(friend);
+    }
+  }
+
+  _fetchCircleGratitudes(FriendModel fm) {
+    Logger().d("Fetching Circle gratitudes ${fm.id}");
+    List<GratitudeEditModel> notes = [];
+    RequestHandler(
+      onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
+      request: () => _gs.getGratitudes(userid: fm.id),
+      onSuccess: (_) => {
+        Logger().d("Fetching the gratitudes $_"),
+        if (_.success)
+          {
+            notes = _gv.allCircleGratitudes,
+            notes.addAll(_.data.values
+                .map((e) =>
+                    GratitudeEditModel.fromJson(e).copyWith(name: fm.name))
+                .toList()
+                .reversed
+                .toList()),
+            _gi.onCircleGratitudesChanged(notes),
+            _gi.onCurrentStateChanged(LoadingStates.done),
+          }
+        else
+          {_gi.onCurrentStateChanged(LoadingStates.done)},
+        Logger().i(_gv.allCircleGratitudes)
+      },
+      onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
+    ).sendRequest();
+  }
+
   addNewField() {
     List<String> current = _gv.currentEdit!.texts;
     current.add("");
@@ -124,5 +162,6 @@ class GratitudeController extends BridgeController {
   void initialise() async {
     await Future.delayed(const Duration(seconds: 2));
     await getGratitudes();
+    await getCircleGratitudes();
   }
 }

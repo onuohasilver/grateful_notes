@@ -95,10 +95,11 @@ class GratitudeDisplayCard extends StatelessWidget {
                             )),
                   ),
                 ),
-              const Align(
-                  alignment: Alignment.bottomRight,
-                  child: CustomText("@Esther Julius",
-                      size: 12, height: 1.3, color: Colors.grey)),
+              if (gem.name != null)
+                Align(
+                    alignment: Alignment.bottomRight,
+                    child: CustomText("${gem.name}",
+                        size: 12, height: 1.3, color: Colors.grey)),
             ],
           ),
         ),

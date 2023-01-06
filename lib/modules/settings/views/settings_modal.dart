@@ -51,7 +51,7 @@ class SettingsModal extends StatelessWidget {
                 expand: true,
                 onTap: () {
                   CustomOverlays().showSheet(
-                    height: 350.h,
+                    height: 410.h,
                     color: Colors.white,
                     child: const CloseCircleModal(),
                   );

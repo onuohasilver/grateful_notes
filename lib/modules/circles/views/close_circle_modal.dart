@@ -9,6 +9,7 @@ import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/views/pending_invites_modal.dart';
+import 'package:grateful_notes/modules/circles/views/sent_invites_modal.dart';
 import 'package:grateful_notes/modules/circles/views/view_circle_modal.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 
@@ -66,6 +67,24 @@ class CloseCircleModal extends StatelessWidget {
               expand: true,
               suffix: CustomText(
                 " (${cv.circle.friends.where((element) => element.senderId != uv.user!.userid && !element.accepted).length})"
+                    .toString(),
+                size: 14,
+                color: Colors.red,
+              ),
+              alignment: MainAxisAlignment.start),
+          const YSpace(24),
+          CustomFlatButton(
+              label: "Sent Invites",
+              onTap: () {
+                CustomOverlays().showSheet(
+                    height: 580.h,
+                    color: Colors.white,
+                    child: const SentInvitesModal());
+              },
+              hasBorder: true,
+              expand: true,
+              suffix: CustomText(
+                " (${cv.circle.friends.where((element) => element.senderId == uv.user!.userid && !element.accepted).length})"
                     .toString(),
                 size: 14,
                 color: Colors.red,
