@@ -9,7 +9,7 @@ class Statics {
   ];
 
   static const saveGratitudeColors = [
-    AppColors.fadedYellow,
+    AppColors.lightBlue,
     AppColors.chatreuse,
     AppColors.greyGreen,
     AppColors.green

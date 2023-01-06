@@ -79,6 +79,29 @@ class FirebaseExtended {
 
     return response;
   }
+
+  Future<ResponseModel> findExact({required MatcherPath matcher}) async {
+    late ResponseModel response;
+    log(matcher.toString());
+    try {
+      QuerySnapshot<Map<String, dynamic>> qs;
+      qs = await firestore
+          .collection(matcher.collection)
+          .orderBy(matcher.field)
+          .startAt([matcher.keyword]).endAt(['${matcher.keyword}']).get();
+
+      response = ResponseModel(
+          code: 200,
+          data: {
+            "users": [...qs.docs.map((e) => e.data())]
+          },
+          success: true);
+    } catch (e) {
+      throw (Error.show(e));
+    }
+
+    return response;
+  }
 }
 
 class MatcherPath {

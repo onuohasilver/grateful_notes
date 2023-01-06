@@ -50,12 +50,50 @@ class EditGratitude extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () => gc.addImageToModel(),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.add),
-                            CustomText("Add Photo",
-                                size: 14, weight: FontWeight.bold)
-                          ],
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all()),
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.add),
+                              CustomText("Add Photo",
+                                  size: 14, weight: FontWeight.bold)
+                            ],
+                          ),
+                        ),
+                      ),
+                      const XSpace(10),
+                    ],
+                  ),
+                  const YSpace(12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => gc.addPrivacyToModel(
+                          gv.currentEdit!.privacy! == "Private"
+                              ? "Open"
+                              : "Private",
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all()),
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            children: [
+                              Icon(
+                                  gv.currentEdit!.privacy! == "Private"
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  size: 12),
+                              const YSpace(12),
+                              CustomText(
+                                  gv.currentEdit!.privacy! == "Private"
+                                      ? "Set to Private"
+                                      : "Set to Open",
+                                  size: 14,
+                                  weight: FontWeight.bold)
+                            ],
+                          ),
                         ),
                       ),
                       const XSpace(10),

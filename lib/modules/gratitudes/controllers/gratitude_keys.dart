@@ -6,4 +6,6 @@ class GratitudeKeys extends BridgeKeys {
 
   get currentEdit => brKey("Current Edit");
   get allGratitudes => brKey("All Gratitudes");
+
+  get allCircleGratitudes => brKey("All Circle Gratitudes");
 }

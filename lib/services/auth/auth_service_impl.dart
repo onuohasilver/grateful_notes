@@ -1,3 +1,4 @@
+import 'package:grateful_notes/core/network/api.dart';
 import 'package:grateful_notes/core/network/firebase_extended.dart';
 import 'package:grateful_notes/core/network/network_core.dart';
 import 'package:grateful_notes/core/network/response_model.dart';
@@ -13,7 +14,7 @@ class AuthServiceImpl extends AuthService {
       required String username,
       required String id}) async {
     return await network.post(
-      path: UrlPath("users", id),
+      path: UrlPath(Api().users, id),
       body: {
         "id": id,
         "email": email,
