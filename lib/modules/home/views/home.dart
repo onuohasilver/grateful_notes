@@ -5,16 +5,15 @@ import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/asset_files.dart';
-import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/state_aware_builder.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
+import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
-import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
@@ -37,8 +36,10 @@ class Home extends StatelessWidget {
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
 
+    CircleController cc = CircleController(state);
+
     return BridgeBuilder(
-      controllers: [gc],
+      controllers: [gc, cc],
       initMethods: [
         () => lsc.animateTo(
             -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
@@ -49,13 +50,12 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              // onPressed: () => CircleServiceImpl()
-              //     .updateCircle(friends: ["Emmanuel"], userid: uv.user!.userid),
-              onPressed: () => CustomOverlays().showSheet(
-                    height: 600.h,
-                    color: AppColors.superLightGreen,
-                    child: const AddNewGratitude(),
-                  ),
+              onPressed: () => cc.removeUserFromCircle(),
+              // onPressed: () => CustomOverlays().showSheet(
+              //       height: 600.h,
+              //       color: AppColors.superLightGreen,
+              //       child: const AddNewGratitude(),
+              //     ),
               shape: const RoundedRectangleBorder(),
               backgroundColor: Colors.black,
               label: const CustomText("Add New", size: 14, color: Colors.white),

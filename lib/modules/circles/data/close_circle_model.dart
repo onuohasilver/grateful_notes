@@ -13,7 +13,7 @@ String closeCircleModelToJson(CloseCircleModel data) =>
 class CloseCircleModel {
   CloseCircleModel({required this.friends});
 
-  final List<dynamic> friends;
+  final List<String> friends;
 
   CloseCircleModel copyWith({
     List<String>? friends,
@@ -22,12 +22,14 @@ class CloseCircleModel {
         friends: friends ?? this.friends,
       );
 
-  factory CloseCircleModel.fromJson(Map<String, dynamic> json) =>
+  factory CloseCircleModel.fromJson(Map<dynamic, dynamic> json) =>
       CloseCircleModel(
-        friends: List<dynamic>.from(json["friends"].map((x) => x)),
+        friends: List<String>.from(json["friends"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "friends": List<dynamic>.from(friends.map((x) => x)),
+        "friends": List<String>.from(friends.map((x) => x)),
       };
+
+  factory CloseCircleModel.empty() => CloseCircleModel(friends: []);
 }
