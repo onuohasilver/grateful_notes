@@ -21,7 +21,9 @@ class UserInputs extends BridgeController {
       state.load(_keys.currentState, ls, LoadingStates);
 
   @override
-  void dispose() {}
+  void dispose() {
+    state.closeKeyList([_keys.usersearch]);
+  }
 
   @override
   void initialise() {}

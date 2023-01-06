@@ -21,9 +21,9 @@ class CircleController extends BridgeController {
   UserVariables get _uv => UserVariables(state);
 
   addUserToCircle() async {
-    List<FriendModel> friends = _cv.circle.friends;
-    if (friends.length < 5) {
-      friends.add(const FriendModel(accepted: false, id: "", name: "Edet"));
+    Set<FriendModel> friends = _cv.circle.friends.toSet();
+    if (friends.length < 5 && _uv.usersearch != null) {
+      friends.add(_uv.usersearch!.toFriendModel());
 
       RequestHandler(
           onRequestStart: _ci.onCurrentStateChanged(LoadingStates.loading),
@@ -33,7 +33,8 @@ class CircleController extends BridgeController {
               ),
           onError: (_) => Logger().e(_),
           onSuccess: (_) => {
-                _ci.onCircleModelChanged(_cv.circle.copyWith(friends: friends)),
+                _ci.onCircleModelChanged(
+                    _cv.circle.copyWith(friends: friends.toList())),
                 _ci.onCurrentStateChanged(LoadingStates.done)
               }).sendRequest();
     }

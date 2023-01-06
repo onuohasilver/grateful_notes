@@ -2,6 +2,7 @@ import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
@@ -75,6 +76,14 @@ class CircleMemberNameButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(fm.name, size: 18),
+            const XSpace(10),
+            Material(
+                color: AppColors.fadedPink,
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: CustomText(fm.accepted ? "" : "Pending", size: 12),
+                )),
+            const Spacer(),
             TextButton(
                 onPressed: () => cc.removeUserFromCircle(fm),
                 child: const CustomText(
