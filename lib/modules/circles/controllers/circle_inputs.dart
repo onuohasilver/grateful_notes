@@ -1,7 +1,7 @@
 import 'package:bridgestate/bridges.dart';
+import 'package:grateful_notes/core/utilities/loading_states.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_keys.dart';
 import 'package:grateful_notes/modules/circles/data/close_circle_model.dart';
-import 'package:grateful_notes/modules/circles/views/close_circle_modal.dart';
 
 class CircleInputs extends BridgeController {
   final BridgeState state;
@@ -12,6 +12,9 @@ class CircleInputs extends BridgeController {
 
   onCircleModelChanged(CloseCircleModel ccm) =>
       state.load(keys.circleModel, ccm, CloseCircleModel);
+      
+  onCurrentStateChanged(LoadingStates ls) =>
+      state.load(keys.currentState, ls, LoadingStates);
 
   @override
   void dispose() {}

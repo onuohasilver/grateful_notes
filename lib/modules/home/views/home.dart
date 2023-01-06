@@ -18,6 +18,7 @@ import 'package:grateful_notes/modules/home/widgets/date_button.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
 import 'package:grateful_notes/modules/settings/views/settings_modal.dart';
+import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -37,6 +38,7 @@ class Home extends StatelessWidget {
     GratitudeVariables gv = GratitudeVariables(state);
 
     CircleController cc = CircleController(state);
+    UserController uc = UserController(state);
 
     return BridgeBuilder(
       controllers: [gc, cc],
@@ -50,7 +52,7 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              onPressed: () => cc.removeUserFromCircle(),
+              onPressed: () => uc.findUser("dev@gmail.com"),
               // onPressed: () => CustomOverlays().showSheet(
               //       height: 600.h,
               //       color: AppColors.superLightGreen,

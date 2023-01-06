@@ -4,4 +4,5 @@ class CircleKeys extends BridgeKeys {
   CircleKeys() : super('CircleKeys');
 
   get circleModel => brKey("CircleModel");
+  get currentState => brKey("Current State");
 }
