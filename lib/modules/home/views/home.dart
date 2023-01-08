@@ -50,6 +50,7 @@ class Home extends StatelessWidget {
     return BridgeBuilder(
       controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
+        () => cc.initialise(),
         () => lsc.jumpTo(
               -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
             )

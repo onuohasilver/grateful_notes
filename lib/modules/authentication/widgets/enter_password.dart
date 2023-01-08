@@ -11,7 +11,7 @@ import 'package:grateful_notes/modules/authentication/controllers/auth_variables
 class EnterPassword extends StatelessWidget {
   const EnterPassword({
     Key? key,
-    this.label = "add 6 secret letters for your password",
+    this.label = "add at least 6 secret letters for your password",
   }) : super(key: key);
   final String label;
 

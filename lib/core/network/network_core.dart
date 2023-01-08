@@ -42,7 +42,7 @@ class NetworkImpl extends Network {
           await firestore.collection(path.collection).doc(path.id).get();
       log(snapshot.data().toString());
       response =
-          ResponseModel(code: 200, data: snapshot.data()!, success: true);
+          ResponseModel(code: 200, data: snapshot.data() ?? {}, success: true);
     } catch (e) {
       response = ResponseModel(
           code: 400,
