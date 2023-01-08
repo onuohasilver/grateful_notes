@@ -1,6 +1,6 @@
 class Api {
   final Environment env;
-  Api({this.env = Environment.prod});
+  Api({this.env = Environment.dev});
 
   baseUrl(String url) {
     switch (env) {

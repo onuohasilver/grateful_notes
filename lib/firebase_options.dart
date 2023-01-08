@@ -62,12 +62,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBaAYvQjuH2b4Ee49kt6M1cfESQy3OUEDE',
-    appId: '1:915947266058:ios:99db42ce3e2a5ea2d73ff3',
+    appId: '1:915947266058:ios:13b30db82d293d02d73ff3',
     messagingSenderId: '915947266058',
     projectId: 'grateful-notes',
     storageBucket: 'grateful-notes.appspot.com',
-    iosClientId: '915947266058-7pfqpbt92och1oc326oop4spls1rdgo4.apps.googleusercontent.com',
-    iosBundleId: 'com.obinna.gratefulNotes',
+    iosClientId: '915947266058-8ibc7m4h05sv9lq4803s578qidgc3r9q.apps.googleusercontent.com',
+    iosBundleId: 'com.happy.notes',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
