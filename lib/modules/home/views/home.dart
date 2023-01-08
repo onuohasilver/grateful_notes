@@ -31,9 +31,9 @@ import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 class Home extends StatelessWidget {
   final GroupedItemScrollController isc = GroupedItemScrollController();
   final GroupedItemScrollController isc1 = GroupedItemScrollController();
-
   final ScrollController lsc = ScrollController();
-  Home({super.key});
+  Home({super.key, this.callInitMethods = true});
+  final bool callInitMethods;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
     HomeVariables hv = HomeVariables(state);
 
     return BridgeBuilder(
-      controllers: [gc, cc],
+      controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
         () => lsc.jumpTo(
               -68.0 * DateTime(2023).difference(DateTime.now()).inDays,

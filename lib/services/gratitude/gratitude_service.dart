@@ -8,7 +8,5 @@ abstract class GratitudeService {
       required String privacy,
       required String userid});
 
-  Future<ResponseModel> getGratitudes({
-    required String userid,
-  });
+  Future<ResponseModel> getGratitudes({required String userid});
 }

@@ -57,9 +57,8 @@ class Intro extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Pulse(
-                          infinite: true,
-                          child: SvgPicture.asset(const IconAssets().target),
-                        ),
+                            infinite: true,
+                            child: SvgPicture.asset(const IconAssets().target)),
                         const YSpace(10),
                         const CustomText("Tap here",
                             size: 8, color: Colors.white)
