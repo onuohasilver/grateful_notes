@@ -25,6 +25,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'texts': text,
           'type': type,
           'Privacy': privacy,
+          'delete': false,
           'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },
@@ -46,6 +47,7 @@ class GratitudeServiceImpl extends GratitudeService {
       required String privacy,
       required String id,
       required String date,
+      required bool delete,
       required String userid}) async {
     return await network.post(
       path: UrlPath(Api().notes, userid),
@@ -55,15 +57,19 @@ class GratitudeServiceImpl extends GratitudeService {
           'texts': text,
           'type': type,
           'Privacy': privacy,
-          'date': date
+          'date': date,
+          'delete': delete
         }
       },
     );
   }
 
   @override
-  Future<ResponseModel> deleteGratitude({required String id}) async {
-    return await firebaseExtended.findAndDelete(
-        matcher: MatcherPath(Api().notes, "keyword", id));
+  Future<ResponseModel> deleteGratitude(
+      {required String id, required String userid}) async {
+    return await network.post(
+      path: UrlPath(Api().notes, userid),
+      body: {id: null},
+    );
   }
 }

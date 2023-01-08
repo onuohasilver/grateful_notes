@@ -16,6 +16,10 @@ abstract class GratitudeService {
       required String type,
       required String privacy,
       required String userid,
+      required bool delete,
       required String date,
       required String id});
+
+  Future<ResponseModel> deleteGratitude(
+      {required String id, required String userid});
 }

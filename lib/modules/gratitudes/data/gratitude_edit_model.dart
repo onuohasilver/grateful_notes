@@ -16,6 +16,7 @@ class GratitudeEditModel {
       required this.imagePaths,
       required this.date,
       required this.type,
+      required this.delete,
       this.name,
       required this.id,
       required this.privacy});
@@ -27,11 +28,13 @@ class GratitudeEditModel {
   final String? name;
   final String? privacy;
   final String id;
+  final bool delete;
 
   GratitudeEditModel copyWith(
           {List<String>? texts,
           List<String>? imagePaths,
           String? name,
+          bool? delete,
           String? privacy}) =>
       GratitudeEditModel(
           type: type,
@@ -40,12 +43,14 @@ class GratitudeEditModel {
           name: name ?? this.name,
           id: id,
           privacy: privacy ?? this.privacy,
+          delete: delete ?? this.delete,
           date: date);
 
   factory GratitudeEditModel.fromJson(Map<String, dynamic> json, String id) =>
       GratitudeEditModel(
           type: json['type'],
           id: id,
+          delete: json['delete'] ?? false,
           privacy: json['Privacy'] ?? "Open",
           texts: List<String>.from(json["texts"].map((x) => x)),
           imagePaths: List<String>.from(json["imagePaths"].map((x) => x)),
@@ -56,6 +61,7 @@ class GratitudeEditModel {
         "date": date,
         "id": id,
         "privacy": privacy,
+        "delete": delete,
         "texts": List<dynamic>.from(texts.map((x) => x)),
         "imagePaths": List<dynamic>.from(imagePaths.map((x) => x)),
       };
@@ -66,6 +72,7 @@ class GratitudeEditModel {
       date: DateTime.now(),
       type: type,
       id: "",
+      delete: false,
       privacy: "Open");
 
   @override

@@ -65,7 +65,7 @@ class MyCircleNotes extends StatelessWidget {
               itemBuilder: (context, GratitudeEditModel gem) => ElasticIn(
                 duration: Duration(
                     milliseconds: 100 * gv.allCircleGratitudes.indexOf(gem)),
-                child: GratitudeDisplayCard(gem: gem, allowEdit: false),
+                child: GratitudeDisplayCard(gem: gem),
               ),
             ),
     );

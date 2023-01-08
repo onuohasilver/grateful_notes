@@ -79,6 +79,7 @@ class GratitudeController extends BridgeController {
         if (_.success)
           {
             _gi.onGratitudesChanged(_.data.values
+                .where((element) => !element['delete'])
                 .map((e) => GratitudeEditModel.fromJson(
                     e, _.data.keys.firstWhere((key) => _.data[key] == e)))
                 .toList()
@@ -103,21 +104,24 @@ class GratitudeController extends BridgeController {
           type: gem.type,
           privacy: gem.privacy!,
           userid: _uv.user!.userid,
-          date: gem.date.toIso8601String()),
+          date: gem.date.toIso8601String(),
+          delete: gem.delete),
       onSuccess: (_) =>
           {Logger().i("Success"), getGratitudes(showloading: false)},
       onError: (_) => Logger().i("Error"),
     ).sendRequest();
   }
 
-  // deleteGratitude(GratitudeEditModel gem) {
-  //   RequestHandler(
-  //     request: () => _gs.deleteGratitude(id: gem.id),
-  //     onSuccess: (_) =>
-  //         {Logger().i("Success"), getGratitudes(showloading: false)},
-  //     onError: (_) => Logger().i("Error"),
-  //   ).sendRequest();
-  // }
+  deleteGratitude(GratitudeEditModel gem) {
+    RequestHandler(
+      request: () => _gs.deleteGratitude(id: gem.id, userid: _uv.user!.userid),
+      onSuccess: (_) => {
+        Logger().i("Success$_"),
+        getGratitudes()
+      },
+      onError: (_) => Logger().i("Error"),
+    ).sendRequest();
+  }
 
   getCircleGratitudes() {
     for (FriendModel friend
@@ -138,6 +142,7 @@ class GratitudeController extends BridgeController {
           {
             notes = _gv.allCircleGratitudes,
             notes.addAll(_.data.values
+                .where((element) => !element['delete'])
                 .map((e) => GratitudeEditModel.fromJson(
                         e, _.data.keys.firstWhere((key) => _.data[key] == e))
                     .copyWith(name: fm.name))
