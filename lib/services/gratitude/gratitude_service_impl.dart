@@ -60,4 +60,10 @@ class GratitudeServiceImpl extends GratitudeService {
       },
     );
   }
+
+  @override
+  Future<ResponseModel> deleteGratitude({required String id}) async {
+    return await firebaseExtended.findAndDelete(
+        matcher: MatcherPath(Api().notes, "keyword", id));
+  }
 }

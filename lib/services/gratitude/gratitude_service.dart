@@ -17,6 +17,5 @@ abstract class GratitudeService {
       required String privacy,
       required String userid,
       required String date,
-      required String id
-      });
+      required String id});
 }

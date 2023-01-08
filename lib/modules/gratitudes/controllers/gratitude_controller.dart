@@ -110,6 +110,15 @@ class GratitudeController extends BridgeController {
     ).sendRequest();
   }
 
+  // deleteGratitude(GratitudeEditModel gem) {
+  //   RequestHandler(
+  //     request: () => _gs.deleteGratitude(id: gem.id),
+  //     onSuccess: (_) =>
+  //         {Logger().i("Success"), getGratitudes(showloading: false)},
+  //     onError: (_) => Logger().i("Error"),
+  //   ).sendRequest();
+  // }
+
   getCircleGratitudes() {
     for (FriendModel friend
         in _cv.circle.friends.where((element) => element.accepted)) {

@@ -95,7 +95,7 @@ class GratitudeDisplayCardModal extends StatelessWidget {
     return GestureDetector(
       onDoubleTap: () => {
         if (allowEdit)
-          gc.updateGratitude(gem.copyWith(
+          gc.deleteGratitude(gem.copyWith(
               privacy: gem.privacy == "Private" ? "Open" : "Private")),
       },
       child: SizedBox(

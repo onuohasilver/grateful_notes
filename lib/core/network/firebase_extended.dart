@@ -137,6 +137,25 @@ class FirebaseExtended {
 
     return response;
   }
+
+  Future<ResponseModel> findAndDelete({required MatcherPath matcher}) async {
+    late ResponseModel response;
+    log(matcher.toString());
+    try {
+      // QuerySnapshot<Map<String, dynamic>> qs;
+      await firestore
+          .collection(matcher.collection)
+          .doc(matcher.field)
+          .delete();
+
+      response = ResponseModel(
+          code: 200, data: {"delete": "Succesful"}, success: true);
+    } catch (e) {
+      throw (Error.show(e));
+    }
+
+    return response;
+  }
 }
 
 class MatcherPath {
