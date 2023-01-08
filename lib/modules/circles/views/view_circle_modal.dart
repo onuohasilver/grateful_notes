@@ -51,6 +51,7 @@ class ViewMyCloseCircleModal extends StatelessWidget {
               child: cv.circle.friends.isEmpty
                   ? LottieBuilder.asset(const AnimationAssets().astronaut)
                   : ListView(
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ...cv.circle.friends
                             .map((e) => CircleMemberNameButton(fm: e))

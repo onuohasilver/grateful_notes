@@ -57,10 +57,10 @@ class GratitudeController extends BridgeController {
                     userid: _uv.user!.userid),
             onSuccess: (_) async => {
                   Logger().i("on Success save"),
-                  // await getGratitudes(),
+                  await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
                   _slc.dispose(),
-                  Navigate.to(Home())
+                  Navigate.to(Home(callInitMethods: false))
                 },
             // onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
