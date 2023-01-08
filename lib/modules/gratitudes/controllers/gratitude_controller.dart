@@ -62,23 +62,25 @@ class GratitudeController extends BridgeController {
                   _slc.dispose(),
                   Navigate.to(Home(callInitMethods: false))
                 },
-            // onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();
   }
 
-  getGratitudes() {
+  getGratitudes({bool showloading = true}) {
     Logger().d("Fetching the gratitudes ${_uv.user?.userid}");
     RequestHandler(
-      onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
+      onRequestStart: showloading
+          ? () => _gi.onCurrentStateChanged(LoadingStates.loading)
+          : () {},
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
         Logger().d("Fetching the gratitudes $_"),
         if (_.success)
           {
             _gi.onGratitudesChanged(_.data.values
-                .map((e) => GratitudeEditModel.fromJson(e))
+                .map((e) => GratitudeEditModel.fromJson(
+                    e, _.data.keys.firstWhere((key) => _.data[key] == e)))
                 .toList()
                 .reversed
                 .toList()),
@@ -89,6 +91,22 @@ class GratitudeController extends BridgeController {
         Logger().i(_gv.allGratitudes)
       },
       onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
+    ).sendRequest();
+  }
+
+  updateGratitude(GratitudeEditModel gem) {
+    RequestHandler(
+      request: () => _gs.updateGratitude(
+          id: gem.id,
+          text: gem.texts,
+          images: gem.imagePaths,
+          type: gem.type,
+          privacy: gem.privacy!,
+          userid: _uv.user!.userid,
+          date: gem.date.toIso8601String()),
+      onSuccess: (_) =>
+          {Logger().i("Success"), getGratitudes(showloading: false)},
+      onError: (_) => Logger().i("Error"),
     ).sendRequest();
   }
 
@@ -111,8 +129,9 @@ class GratitudeController extends BridgeController {
           {
             notes = _gv.allCircleGratitudes,
             notes.addAll(_.data.values
-                .map((e) =>
-                    GratitudeEditModel.fromJson(e).copyWith(name: fm.name))
+                .map((e) => GratitudeEditModel.fromJson(
+                        e, _.data.keys.firstWhere((key) => _.data[key] == e))
+                    .copyWith(name: fm.name))
                 .toList()
                 .reversed
                 .toList()),

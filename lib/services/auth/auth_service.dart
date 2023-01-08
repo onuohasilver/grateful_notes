@@ -16,4 +16,6 @@ abstract class AuthService {
     required String email,
     required String password,
   });
+
+  forgotPassword({required String email});
 }

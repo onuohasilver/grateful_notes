@@ -2,14 +2,18 @@ import 'dart:developer';
 
 import 'package:bridgestate/state/bridge_controller.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
+import 'package:flutter/material.dart';
 import 'package:grateful_notes/core/network/request_handler.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
+import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_input.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_keys.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
+import 'package:grateful_notes/modules/authentication/data/statics.dart';
+import 'package:grateful_notes/modules/authentication/views/forgot_password_success.dart';
 import 'package:grateful_notes/modules/authentication/views/intro.dart';
 import 'package:grateful_notes/modules/authentication/widgets/enter_password.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
@@ -52,21 +56,50 @@ class AuthController extends BridgeController {
   //data.
   Future signin() async {
     RequestHandler(
-            onRequestStart: () => Navigate.to(
-                  SuccessLoading(texts: signInTexts, colors: signUpColors),
-                ),
-            request: () => _as.signin(email: _av.email, password: _av.password),
-            onSuccess: (_) async => {
-                  Logger().i(_),
-                  await _uc.getuser(_.data['id']),
-                  await Future.delayed(const Duration(seconds: 2)),
-                  _ks.saveString(_ak.username, _.data['id']),
-                  _slc.dispose(),
-                  Navigate.replaceUntil(Home())
-                },
-            onError: (_) => Navigate.replace(ErrorScreen(
-                errorMessage: _.data['error'].toString().split("]").last)))
-        .sendRequest();
+        onRequestStart: () => Navigate.to(
+              SuccessLoading(texts: signInTexts, colors: signUpColors),
+            ),
+        request: () => _as.signin(email: _av.email, password: _av.password),
+        onSuccess: (_) async => {
+              Logger().i(_),
+              await _uc.getuser(_.data['id']),
+              await Future.delayed(const Duration(seconds: 2)),
+              _ks.saveString(_ak.username, _.data['id']),
+              _slc.dispose(),
+              Navigate.replaceUntil(Home())
+            },
+        onError: (_) => Navigate.replace(ErrorScreen(
+              errorMessage: _.data['error'].toString().split("]").last,
+              secondary: _.data['error']
+                      .toString()
+                      .split("]")
+                      .last
+                      .contains("password")
+                  ? GestureDetector(
+                      onTap: () => forgotPassword(),
+                      child: const CustomText("Reset my password",
+                          size: 14,
+                          color: Colors.white,
+                          decoration: TextDecoration.underline),
+                    )
+                  : null,
+            ))).sendRequest();
+  }
+
+  Future forgotPassword() async {
+    RequestHandler(
+      onRequestStart: () => Navigate.replace(
+        const SuccessLoading(
+            texts: AuthStatics.forgotPasswordTexts,
+            colors: AuthStatics.forgotPasswordColors),
+      ),
+      request: () => _as.forgotPassword(email: _av.email),
+      onSuccess: (_) async => {
+        await Future.delayed(const Duration(seconds: 5)),
+        Navigate.replace(const ForgotPasswordSuccess())
+      },
+      onError: (_) => Logger().i("New"),
+    ).sendRequest();
   }
 
   Future _createUserProfile(String id) async {

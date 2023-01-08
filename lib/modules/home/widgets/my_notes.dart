@@ -59,7 +59,7 @@ class MyNotes extends StatelessWidget {
               itemBuilder: (context, GratitudeEditModel gem) => ElasticIn(
                 duration:
                     Duration(milliseconds: 100 * gv.allGratitudes.indexOf(gem)),
-                child: GratitudeDisplayCard(gem: gem),
+                child: GratitudeDisplayCard(gem: gem, allowEdit: true),
               ),
             ),
     );

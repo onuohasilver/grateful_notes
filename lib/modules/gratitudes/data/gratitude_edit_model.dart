@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-GratitudeEditModel gratitudeEditModelFromJson(String str) =>
-    GratitudeEditModel.fromJson(json.decode(str));
+// GratitudeEditModel gratitudeEditModelFromJson(String str) =>
+// GratitudeEditModel.fromJson(json.decode(str));
 
 String gratitudeEditModelToJson(GratitudeEditModel data) =>
     json.encode(data.toJson());
@@ -17,6 +17,7 @@ class GratitudeEditModel {
       required this.date,
       required this.type,
       this.name,
+      required this.id,
       required this.privacy});
 
   final List<String> texts;
@@ -25,6 +26,7 @@ class GratitudeEditModel {
   final String type;
   final String? name;
   final String? privacy;
+  final String id;
 
   GratitudeEditModel copyWith(
           {List<String>? texts,
@@ -36,12 +38,14 @@ class GratitudeEditModel {
           texts: texts ?? this.texts,
           imagePaths: imagePaths ?? this.imagePaths,
           name: name ?? this.name,
+          id: id,
           privacy: privacy ?? this.privacy,
           date: date);
 
-  factory GratitudeEditModel.fromJson(Map<String, dynamic> json) =>
+  factory GratitudeEditModel.fromJson(Map<String, dynamic> json, String id) =>
       GratitudeEditModel(
           type: json['type'],
+          id: id,
           privacy: json['Privacy'] ?? "Open",
           texts: List<String>.from(json["texts"].map((x) => x)),
           imagePaths: List<String>.from(json["imagePaths"].map((x) => x)),
@@ -50,6 +54,7 @@ class GratitudeEditModel {
   Map<String, dynamic> toJson() => {
         "type": type,
         "date": date,
+        "id": id,
         "privacy": privacy,
         "texts": List<dynamic>.from(texts.map((x) => x)),
         "imagePaths": List<dynamic>.from(imagePaths.map((x) => x)),
@@ -60,6 +65,7 @@ class GratitudeEditModel {
       imagePaths: [],
       date: DateTime.now(),
       type: type,
+      id: "",
       privacy: "Open");
 
   @override

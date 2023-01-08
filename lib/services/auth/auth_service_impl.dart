@@ -35,4 +35,9 @@ class AuthServiceImpl extends AuthService {
   signin({required String email, required String password}) async {
     return await firebaseExtended.emailSignIn(email: email, password: password);
   }
+
+  @override
+  forgotPassword({required String email}) async {
+    return await firebaseExtended.forgotPassword(email: email);
+  }
 }
