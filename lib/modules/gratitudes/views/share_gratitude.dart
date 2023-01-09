@@ -68,20 +68,30 @@ class ShareGratitude extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 38.0.h),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: GestureDetector(
-                      onTap: () async {
-                        gc.shareGratitude(ssc);
-                      },
-                      child: const CustomText(
-                        "Tap Here to share",
-                        size: 18,
-                        decoration: TextDecoration.underline,
-                        weight: FontWeight.bold,
-                        color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Material(
+                        child: CustomText("Swipe Screen to change color",
+                            size: 12),
                       ),
-                    ),
+                      const YSpace(70),
+                      Material(
+                        color: Colors.transparent,
+                        child: GestureDetector(
+                          onTap: () async {
+                            gc.shareGratitude(ssc);
+                          },
+                          child: const CustomText(
+                            "Tap Here to share",
+                            size: 18,
+                            decoration: TextDecoration.underline,
+                            weight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -157,7 +167,7 @@ class ShareableGratitudePicture extends StatelessWidget {
                   ),
                 ),
                 const YSpace(20),
-                Spin(
+                FadeIn(
                   child: Container(
                     height: 300,
                     margin: EdgeInsets.symmetric(horizontal: 25.w),
@@ -178,7 +188,7 @@ class ShareableGratitudePicture extends StatelessWidget {
                               children: List.generate(
                                   gem.imagePaths.length,
                                   (index) => Container(
-                                        color: Colors.black,
+                                        // color: Colors.black,
                                         margin: const EdgeInsets.only(right: 7),
                                         width: 120,
                                         height: 129,
