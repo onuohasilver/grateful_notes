@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
+import 'package:grateful_notes/modules/circles/views/add_new_circle_modal.dart';
 import 'package:grateful_notes/modules/circles/views/pending_invites_modal.dart';
 import 'package:grateful_notes/modules/circles/views/sent_invites_modal.dart';
 import 'package:grateful_notes/modules/circles/views/view_circle_modal.dart';
@@ -89,7 +91,27 @@ class CloseCircleModal extends StatelessWidget {
                 size: 14,
                 color: Colors.red,
               ),
-              alignment: MainAxisAlignment.start)
+              alignment: MainAxisAlignment.start),
+          const YSpace(24),
+          Visibility(
+            visible: cv.circle.friends.length < 5,
+            child: ElasticIn(
+              child: CustomFlatButton(
+                label: "Add New",
+                onTap: () {
+                  CustomOverlays().showSheet(
+                    height: 300,
+                    color: Colors.white,
+                    child: const AddNewCircleModal(),
+                  );
+                },
+                expand: true,
+                alignment: MainAxisAlignment.start,
+                color: Colors.white,
+                bgColor: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
     );

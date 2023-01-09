@@ -1,4 +1,5 @@
 import 'package:bridgestate/bridges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
@@ -147,8 +148,8 @@ class EditGratitude extends StatelessWidget {
                                 margin: const EdgeInsets.only(right: 7),
                                 width: 130,
                                 height: 189,
-                                child: Image.network(
-                                    gv.currentEdit!.stickers![index]),
+                                child: CachedNetworkImage(
+                                    imageUrl: gv.currentEdit!.stickers![index]),
                               )),
                     ),
                   // SizedBox(
