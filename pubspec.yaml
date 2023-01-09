@@ -47,6 +47,7 @@ dependencies:
   path_provider: ^2.0.11
   share_plus: ^6.3.0
   cube_transition_plus: ^2.0.1
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:
