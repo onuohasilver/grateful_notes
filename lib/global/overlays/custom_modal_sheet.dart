@@ -5,9 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
+import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/main.dart';
 
 class CustomOverlays {
+  showSnackBar(String text,
+      {Duration duration = const Duration(milliseconds: 700)}) {
+    BuildContext context = navigatorKey.currentContext!;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.black,
+      duration: duration,
+      content: CustomText(text,
+          weight: FontWeight.bold, color: Colors.white, size: 14),
+    ));
+  }
+
   showPopup(child) {
     showDialog(
         context: navigatorKey.currentContext!,

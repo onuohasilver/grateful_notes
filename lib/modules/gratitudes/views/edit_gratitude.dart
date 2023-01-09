@@ -5,6 +5,7 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
+import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/widgets/custom_text_area.dart';
@@ -44,6 +45,44 @@ class EditGratitude extends StatelessWidget {
                               autofocus: true,
                             ))
                         .toList(),
+                  const YSpace(12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => CustomOverlays().showSheet(
+                          height: 400,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                              children: const [
+                                CustomText("Select Sticker",
+                                    size: 18,
+                                    weight: FontWeight.bold,
+                                    height: 1.5),
+                              ],
+                            ),
+                          ),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all()),
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.add),
+                              CustomText(
+                                "Add Sticker",
+                                size: 14,
+                                weight: FontWeight.bold,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const XSpace(10),
+                    ],
+                  ),
                   const YSpace(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

@@ -83,7 +83,7 @@ class RecapController extends BridgeController {
   @override
   void initialise() {
     createNew();
-    int month = DateTime.now().subtract(const Duration(days: 0)).month;
+    int month = DateTime.now().subtract(const Duration(days: 30)).month;
     getNumberOfMoments(month);
     getMostCommonWord(month);
     getMostCommonType(month);

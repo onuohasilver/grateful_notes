@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/custom_text.dart';
+import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
@@ -80,15 +81,8 @@ class MyNotes extends StatelessWidget {
                               privacy: gem.privacy == "Private"
                                   ? "Open"
                                   : "Private")),
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            backgroundColor: Colors.black,
-                            duration: const Duration(milliseconds: 700),
-                            content: CustomText(
-                                "Privacy changed to ${gem.privacy == "Private" ? "Open" : "Private"}",
-                                weight: FontWeight.bold,
-                                color: Colors.white,
-                                size: 14),
-                          ))
+                          CustomOverlays().showSnackBar(
+                              "Privacy changed to ${gem.privacy == "Private" ? "Open" : "Private"}")
                         },
                         backgroundColor: Colors.white,
                         foregroundColor: colorMapper(gem.type),
@@ -102,15 +96,13 @@ class MyNotes extends StatelessWidget {
                     // A motion is a widget used to control how the pane animates.
                     motion: const ScrollMotion(),
 
-                    // A pane can dismiss the Slidable.
-                    // dismissible: DismissiblePane(onDismissed: () {}),
-
-                    // All actions are defined in the children parameter.
                     children: [
-                      // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
-                        onPressed: (context) =>
-                            {gc.updateGratitude(gem.copyWith(delete: true))},
+                        onPressed: (context) => {
+                          CustomOverlays().showSnackBar("Deleting..",
+                              duration: const Duration(milliseconds: 1400)),
+                          gc.updateGratitude(gem.copyWith(delete: true))
+                        },
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.red,
                         icon: Icons.delete,
