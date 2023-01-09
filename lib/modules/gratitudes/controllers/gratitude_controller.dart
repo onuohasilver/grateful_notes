@@ -18,6 +18,7 @@ import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
 import 'package:grateful_notes/services/images/image_service_impl.dart';
 import 'package:logger/logger.dart';
+import 'package:screenshot/screenshot.dart';
 
 class GratitudeController extends BridgeController {
   final BridgeState state;
@@ -43,7 +44,8 @@ class GratitudeController extends BridgeController {
           texts: Statics.saveGratitudeTexts,
           colors: Statics.saveGratitudeColors),
     );
-    await _uploadImages();
+    if (_gv.currentEdit!.stickers!.isEmpty) await _uploadImages();
+
     RequestHandler(
             onRequestStart: () async => {},
             request: () =>
@@ -51,34 +53,40 @@ class GratitudeController extends BridgeController {
                 // Logger().i("Success savsse"),
                 _gs.createGratitude(
                     text: _gv.currentEdit!.texts,
-                    images: _gv.currentEdit!.imagePaths,
+                    images: _gv.currentEdit!.stickers!.isEmpty
+                        ? _gv.currentEdit!.imagePaths
+                        : _gv.currentEdit!.stickers!,
                     type: _gv.currentEdit!.type,
                     privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
                     userid: _uv.user!.userid),
             onSuccess: (_) async => {
                   Logger().i("on Success save"),
-                  // await getGratitudes(),
+                  await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
                   _slc.dispose(),
-                  Navigate.to(Home())
+                  Navigate.to(Home(callInitMethods: false))
                 },
-            // onRequestEnd: () => _slc.dispose(),
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
         .sendRequest();
   }
 
-  getGratitudes() {
+  getGratitudes({bool showloading = true}) {
     Logger().d("Fetching the gratitudes ${_uv.user?.userid}");
     RequestHandler(
-      onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
+      onRequestStart: showloading
+          ? () => _gi.onCurrentStateChanged(LoadingStates.loading)
+          : () {},
       request: () => _gs.getGratitudes(userid: _uv.user!.userid),
       onSuccess: (_) => {
         Logger().d("Fetching the gratitudes $_"),
         if (_.success)
           {
             _gi.onGratitudesChanged(_.data.values
-                .map((e) => GratitudeEditModel.fromJson(e))
+                .where((element) =>
+                    element['delete'] == null ? true : !element['delete'])
+                .map((e) => GratitudeEditModel.fromJson(
+                    e, _.data.keys.firstWhere((key) => _.data[key] == e)))
                 .toList()
                 .reversed
                 .toList()),
@@ -89,6 +97,31 @@ class GratitudeController extends BridgeController {
         Logger().i(_gv.allGratitudes)
       },
       onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
+    ).sendRequest();
+  }
+
+  updateGratitude(GratitudeEditModel gem) {
+    RequestHandler(
+      request: () => _gs.updateGratitude(
+          id: gem.id,
+          text: gem.texts,
+          images: gem.imagePaths,
+          type: gem.type,
+          privacy: gem.privacy!,
+          userid: _uv.user!.userid,
+          date: gem.date.toIso8601String(),
+          delete: gem.delete),
+      onSuccess: (_) =>
+          {Logger().i("Success"), getGratitudes(showloading: false)},
+      onError: (_) => Logger().i("Error"),
+    ).sendRequest();
+  }
+
+  deleteGratitude(GratitudeEditModel gem) {
+    RequestHandler(
+      request: () => _gs.deleteGratitude(id: gem.id, userid: _uv.user!.userid),
+      onSuccess: (_) => {Logger().i("Success$_"), getGratitudes()},
+      onError: (_) => Logger().i("Error"),
     ).sendRequest();
   }
 
@@ -111,8 +144,11 @@ class GratitudeController extends BridgeController {
           {
             notes = _gv.allCircleGratitudes,
             notes.addAll(_.data.values
-                .map((e) =>
-                    GratitudeEditModel.fromJson(e).copyWith(name: fm.name))
+                .where((element) =>
+                    element['delete'] == null ? true : !element['delete'])
+                .map((e) => GratitudeEditModel.fromJson(
+                        e, _.data.keys.firstWhere((key) => _.data[key] == e))
+                    .copyWith(name: fm.name))
                 .toList()
                 .reversed
                 .toList()),
@@ -126,6 +162,15 @@ class GratitudeController extends BridgeController {
       },
       onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
     ).sendRequest();
+  }
+
+  shareGratitude(ScreenshotController ssc) async {
+    _gi.onCurrentStateChanged(LoadingStates.loading);
+    Logger().e(_gv.currentState);
+    await _is.shareScreenshot(ssc).then((value) => {
+          _gi.onCurrentStateChanged(LoadingStates.done),
+          Logger().e(_gv.currentState)
+        });
   }
 
   addNewField() {
@@ -152,6 +197,14 @@ class GratitudeController extends BridgeController {
     _gi.onEditModelChanged(
         _gv.currentEdit!.copyWith(imagePaths: current.take(2).toList()));
     Logger().i(_gv.currentEdit);
+  }
+
+  addStickerToModel(String sticker) async {
+    List<String> current = [...(_gv.currentEdit!.stickers ?? [])];
+    current.add(sticker);
+    Logger().i(sticker);
+    _gi.onEditModelChanged(
+        _gv.currentEdit!.copyWith(stickers: current.take(2).toList()));
   }
 
   _uploadImages() async {

@@ -3,6 +3,7 @@ import 'package:bridgestate/state/bridge_builder.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
+import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/core/utilities/colors.dart';
 import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
@@ -11,10 +12,9 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:lottie/lottie.dart';
 
-class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({Key? key, required this.errorMessage, this.secondary})
-      : super(key: key);
-  final String errorMessage;
+class ForgotPasswordSuccess extends StatelessWidget {
+  const ForgotPasswordSuccess({Key? key, this.secondary}) : super(key: key);
+
   final Widget? secondary;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ErrorScreen extends StatelessWidget {
         controllers: const [],
         dispose: true,
         child: FlowerBackdrop(
-            color: AppColors.deepRed,
+            color: AppColors.green,
             child: Column(
               children: [
                 Container(
@@ -37,14 +37,13 @@ class ErrorScreen extends StatelessWidget {
                       const YSpace(80),
                       Pulse(
                         infinite: true,
-                        child: LottieBuilder.network(
-                          'https://assets5.lottiefiles.com/packages/lf20_ddxv3rxw.json',
-                          height: 70,
-                        ),
+                        child: LottieBuilder.asset(const AnimationAssets().done,
+                            height: 100),
                       ),
                       const YSpace(12),
-                      Center(
-                        child: CustomText(errorMessage,
+                      const Center(
+                        child: CustomText(
+                            "We have successfully sent the email to you, now check your email and follow the link to change your password",
                             size: 20,
                             align: TextAlign.center,
                             color: Colors.white,
@@ -52,9 +51,8 @@ class ErrorScreen extends StatelessWidget {
                       ),
                       const YSpace(20),
                       CustomFlatButton(
-                          label: "Retry", onTap: () => Navigate.pop()),
+                          label: "Go back", onTap: () => Navigate.pop()),
                       const YSpace(30),
-                      if (secondary != null) secondary!
                     ],
                   ),
                 ),

@@ -1,13 +1,16 @@
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/display/custom_image.dart';
+import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/widgets/custom_text_area.dart';
+import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
 
 class EditGratitude extends StatelessWidget {
   const EditGratitude({super.key, required this.header});
@@ -17,6 +20,7 @@ class EditGratitude extends StatelessWidget {
     BridgeState state = bridge(context);
     GratitudeVariables gv = GratitudeVariables(state);
     GratitudeController gc = GratitudeController(state);
+
     return SizedBox(
       height: 600.h,
       child: Stack(
@@ -45,25 +49,59 @@ class EditGratitude extends StatelessWidget {
                             ))
                         .toList(),
                   const YSpace(12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () => gc.addImageToModel(),
-                        child: Container(
-                          decoration: BoxDecoration(border: Border.all()),
-                          padding: const EdgeInsets.all(4),
-                          child: Row(
-                            children: const [
-                              Icon(Icons.add),
-                              CustomText("Add Photo",
-                                  size: 14, weight: FontWeight.bold)
-                            ],
+                  Visibility(
+                    visible: gv.currentEdit!.stickers!.isEmpty,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () => gc.addImageToModel(),
+                          child: Container(
+                            decoration: BoxDecoration(border: Border.all()),
+                            padding: const EdgeInsets.all(4),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.add),
+                                CustomText("Add Photo",
+                                    size: 14, weight: FontWeight.bold)
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const XSpace(10),
-                    ],
+                        const XSpace(10),
+                      ],
+                    ),
+                  ),
+                  const YSpace(12),
+                  Visibility(
+                    visible: gv.currentEdit!.imagePaths.isEmpty,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () => CustomOverlays().showSheet(
+                            height: 400,
+                            color: Colors.white,
+                            child: const StickerModal(),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(border: Border.all()),
+                            padding: const EdgeInsets.all(4),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.add),
+                                CustomText(
+                                  "Add Sticker",
+                                  size: 14,
+                                  weight: FontWeight.bold,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const XSpace(10),
+                      ],
+                    ),
                   ),
                   const YSpace(12),
                   Row(
@@ -100,6 +138,26 @@ class EditGratitude extends StatelessWidget {
                     ],
                   ),
                   const YSpace(12),
+                  if (gv.currentEdit!.stickers!.isNotEmpty)
+                    Row(
+                      children: List.generate(
+                          gv.currentEdit!.stickers!.length,
+                          (index) => Container(
+                                color: Colors.transparent,
+                                margin: const EdgeInsets.only(right: 7),
+                                width: 130,
+                                height: 189,
+                                child: Image.network(
+                                    gv.currentEdit!.stickers![index]),
+                              )),
+                    ),
+                  // SizedBox(
+                  //   width: 200.w,
+                  //   height: 189,
+                  //   child: Row(
+
+                  //   ),
+                  // ),
                   if (gv.currentEdit!.imagePaths.isNotEmpty)
                     SizedBox(
                       width: 375.w,
@@ -139,6 +197,50 @@ class EditGratitude extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class StickerModal extends StatelessWidget {
+  const StickerModal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+    SettingsVariables sv = SettingsVariables(state);
+    GratitudeController gc = GratitudeController(state);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
+        height: 400,
+        child: Column(
+          children: [
+            const CustomText("Select Sticker",
+                size: 18, weight: FontWeight.bold, height: 1.5),
+            Expanded(
+              child: GridView.builder(
+                  padding: const EdgeInsets.only(bottom: 140),
+                  itemCount: sv.config!.stickers!.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => {
+                        gc.addStickerToModel(sv.config!.stickers![index]!),
+                        Navigate.pop()
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: CustomImage(src: sv.config!.stickers![index]!),
+                      ),
+                    );
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }

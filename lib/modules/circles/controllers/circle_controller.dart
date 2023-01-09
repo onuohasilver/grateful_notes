@@ -99,6 +99,7 @@ class CircleController extends BridgeController {
         request: () => _cs.getCircle(userid: _uv.user!.userid),
         onError: (_) => Logger().e(_),
         onSuccess: (_) => {
+              Logger().e("New$_"),
               _ci.onCircleModelChanged(CloseCircleModel.fromJson(_.data)),
               Logger().i(_),
             }).sendRequest();

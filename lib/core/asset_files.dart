@@ -13,6 +13,7 @@ class ImageAssets {
   get shape5 => _png("shape5");
   get shape6 => _png("shape6");
   get blob1 => _png("blob1");
+  get happy1 => _png("Group 9(1)");
 }
 
 class IconAssets {

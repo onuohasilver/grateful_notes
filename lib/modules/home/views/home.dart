@@ -31,9 +31,9 @@ import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 class Home extends StatelessWidget {
   final GroupedItemScrollController isc = GroupedItemScrollController();
   final GroupedItemScrollController isc1 = GroupedItemScrollController();
-
   final ScrollController lsc = ScrollController();
-  Home({super.key});
+  Home({super.key, this.callInitMethods = true});
+  final bool callInitMethods;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +41,16 @@ class Home extends StatelessWidget {
     UserVariables uv = UserVariables(state);
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
-
     CircleController cc = CircleController(state);
     UserController uc = UserController(state);
+
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
 
     return BridgeBuilder(
-      controllers: [gc, cc],
+      controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
+        () => cc.initialise(),
         () => lsc.jumpTo(
               -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
             )
@@ -58,7 +59,7 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              // onPressed: () => uc.findUser("dev@gmail.com"),
+              // onPressed: () => Navigate.to(const ShareGratitude()),
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,

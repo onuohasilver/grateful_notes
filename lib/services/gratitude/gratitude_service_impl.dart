@@ -1,6 +1,7 @@
 import 'package:grateful_notes/core/network/api.dart';
 import 'package:grateful_notes/core/network/firebase_extended.dart';
 import 'package:grateful_notes/core/network/network_core.dart';
+import 'package:grateful_notes/core/network/response_model.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:logger/logger.dart';
 
@@ -24,6 +25,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'texts': text,
           'type': type,
           'Privacy': privacy,
+          'delete': false,
           'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },
@@ -35,5 +37,39 @@ class GratitudeServiceImpl extends GratitudeService {
   @override
   getGratitudes({required String userid}) async {
     return await network.get(path: UrlPath(Api().notes, userid));
+  }
+
+  @override
+  Future<ResponseModel> updateGratitude(
+      {required List<String> text,
+      required List<String> images,
+      required String type,
+      required String privacy,
+      required String id,
+      required String date,
+      required bool delete,
+      required String userid}) async {
+    return await network.post(
+      path: UrlPath(Api().notes, userid),
+      body: {
+        id: {
+          'imagePaths': images,
+          'texts': text,
+          'type': type,
+          'Privacy': privacy,
+          'date': date,
+          'delete': delete
+        }
+      },
+    );
+  }
+
+  @override
+  Future<ResponseModel> deleteGratitude(
+      {required String id, required String userid}) async {
+    return await network.post(
+      path: UrlPath(Api().notes, userid),
+      body: {id: null},
+    );
   }
 }

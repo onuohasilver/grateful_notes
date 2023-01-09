@@ -32,7 +32,7 @@ class RecapModel {
           String? timeOfDay,
           String? month}) =>
       RecapModel(
-        type: type??this.type,
+          type: type ?? this.type,
           mostCommonWord: mostCommonWord ?? this.mostCommonWord,
           numberOfMoments: numberOfMoments ?? this.numberOfMoments,
           timeOfDay: timeOfDay ?? this.timeOfDay,
@@ -59,7 +59,6 @@ class RecapModel {
         "numberOfMoments": numberOfMoments,
         "timeOfDay": timeOfDay,
         "month": month,
-        "type":""
-
+        "type": ""
       };
 }

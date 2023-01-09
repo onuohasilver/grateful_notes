@@ -6,4 +6,5 @@ class SettingsKeys extends BridgeKeys {
   get reminderFrequency => brKey("Reminder Frequency");
 
   get privacy => brKey("Privacy");
+  get config => brKey("Config Data");
 }

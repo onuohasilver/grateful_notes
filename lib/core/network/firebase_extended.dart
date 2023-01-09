@@ -49,6 +49,20 @@ class FirebaseExtended {
     return response;
   }
 
+  Future<ResponseModel> forgotPassword({required String email}) async {
+    late ResponseModel response;
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      response = ResponseModel(
+          code: 200,
+          data: {"message": "User created successfully"},
+          success: true);
+    } catch (e) {
+      throw (Error.show(e));
+    }
+    return response;
+  }
+
   Future<ResponseModel> findWhere(
       {required MatcherPath matcher, MatcherPath? matcher2}) async {
     late ResponseModel response;
@@ -96,6 +110,46 @@ class FirebaseExtended {
             "users": [...qs.docs.map((e) => e.data())]
           },
           success: true);
+    } catch (e) {
+      throw (Error.show(e));
+    }
+
+    return response;
+  }
+
+  Future<ResponseModel> findAndUpdate(
+      {required MatcherPath matcher,
+      required Map<String, dynamic> data}) async {
+    late ResponseModel response;
+    log(matcher.toString());
+    try {
+      // QuerySnapshot<Map<String, dynamic>> qs;
+      await firestore
+          .collection(matcher.collection)
+          .doc(matcher.field)
+          .update(data);
+
+      response = ResponseModel(
+          code: 200, data: {"update": "Succesful"}, success: true);
+    } catch (e) {
+      throw (Error.show(e));
+    }
+
+    return response;
+  }
+
+  Future<ResponseModel> findAndDelete({required MatcherPath matcher}) async {
+    late ResponseModel response;
+    log(matcher.toString());
+    try {
+      // QuerySnapshot<Map<String, dynamic>> qs;
+      await firestore
+          .collection(matcher.collection)
+          .doc(matcher.field)
+          .delete();
+
+      response = ResponseModel(
+          code: 200, data: {"delete": "Succesful"}, success: true);
     } catch (e) {
       throw (Error.show(e));
     }

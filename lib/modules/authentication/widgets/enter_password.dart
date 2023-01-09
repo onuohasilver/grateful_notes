@@ -11,7 +11,7 @@ import 'package:grateful_notes/modules/authentication/controllers/auth_variables
 class EnterPassword extends StatelessWidget {
   const EnterPassword({
     Key? key,
-    this.label = "add 6 secret letters for your password",
+    this.label = "add at least 6 secret letters for your password",
   }) : super(key: key);
   final String label;
 
@@ -29,12 +29,12 @@ class EnterPassword extends StatelessWidget {
           CustomText(label, size: 20, color: Colors.white),
           const YSpace(31),
           TextField(
-            keyboardType: TextInputType.visiblePassword,
-            autofocus: true,
-            obscureText: true,
-            style: GoogleFonts.inconsolata(color: Colors.white),
-            onChanged: (value) => ai.onPasswordChanged(value),
-          ),
+              keyboardType: TextInputType.visiblePassword,
+              autofocus: true,
+              obscureText: true,
+              style: GoogleFonts.inconsolata(color: Colors.white),
+              onChanged: (value) => ai.onPasswordChanged(value)),
+          const YSpace(10),
           const YSpace(250),
           Align(
             alignment: Alignment.bottomRight,
@@ -45,7 +45,9 @@ class EnterPassword extends StatelessWidget {
                       {label.contains('secret') ? ac.signup() : ac.signin()},
                   icon: const Icon(Icons.arrow_forward)),
             ),
-          )
+          ),
+          const YSpace(10),
+          
         ],
       ),
     );

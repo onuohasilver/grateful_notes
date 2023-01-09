@@ -13,9 +13,8 @@ class CircleServiceImpl extends CircleService {
   Future<ResponseModel> updateCircle(
       {required List<Map> friends, required String userid}) async {
     Logger().i("Tapped");
-    return await network.post(path: UrlPath(Api().closeCircle, userid), body: {
-      "friends": friends
-    });
+    return await network.post(
+        path: UrlPath(Api().closeCircle, userid), body: {"friends": friends});
   }
 
   @override
