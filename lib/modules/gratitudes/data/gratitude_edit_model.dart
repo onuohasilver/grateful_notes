@@ -17,12 +17,14 @@ class GratitudeEditModel {
       required this.date,
       required this.type,
       required this.delete,
+      this.stickers,
       this.name,
       required this.id,
       required this.privacy});
 
   final List<String> texts;
   final List<String> imagePaths;
+  final List<String>? stickers;
   final DateTime date;
   final String type;
   final String? name;
@@ -35,6 +37,7 @@ class GratitudeEditModel {
           List<String>? imagePaths,
           String? name,
           bool? delete,
+          List<String>? stickers,
           String? privacy}) =>
       GratitudeEditModel(
           type: type,
@@ -43,6 +46,7 @@ class GratitudeEditModel {
           name: name ?? this.name,
           id: id,
           privacy: privacy ?? this.privacy,
+          stickers: stickers ?? this.stickers,
           delete: delete ?? this.delete,
           date: date);
 
@@ -50,6 +54,7 @@ class GratitudeEditModel {
       GratitudeEditModel(
           type: json['type'],
           id: id,
+          stickers: json["stickers"] ?? [],
           delete: json['delete'] ?? false,
           privacy: json['Privacy'] ?? "Open",
           texts: List<String>.from(json["texts"].map((x) => x)),
@@ -70,6 +75,7 @@ class GratitudeEditModel {
       texts: [""],
       imagePaths: [],
       date: DateTime.now(),
+      stickers: [],
       type: type,
       id: "",
       delete: false,

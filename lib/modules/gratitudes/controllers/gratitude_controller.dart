@@ -44,7 +44,8 @@ class GratitudeController extends BridgeController {
           texts: Statics.saveGratitudeTexts,
           colors: Statics.saveGratitudeColors),
     );
-    await _uploadImages();
+    if (_gv.currentEdit!.stickers!.isEmpty) await _uploadImages();
+
     RequestHandler(
             onRequestStart: () async => {},
             request: () =>
@@ -52,7 +53,9 @@ class GratitudeController extends BridgeController {
                 // Logger().i("Success savsse"),
                 _gs.createGratitude(
                     text: _gv.currentEdit!.texts,
-                    images: _gv.currentEdit!.imagePaths,
+                    images: _gv.currentEdit!.stickers!.isEmpty
+                        ? _gv.currentEdit!.imagePaths
+                        : _gv.currentEdit!.stickers!,
                     type: _gv.currentEdit!.type,
                     privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
                     userid: _uv.user!.userid),
@@ -194,6 +197,14 @@ class GratitudeController extends BridgeController {
     _gi.onEditModelChanged(
         _gv.currentEdit!.copyWith(imagePaths: current.take(2).toList()));
     Logger().i(_gv.currentEdit);
+  }
+
+  addStickerToModel(String sticker) async {
+    List<String> current = [...(_gv.currentEdit!.stickers ?? [])];
+    current.add(sticker);
+    Logger().i(sticker);
+    _gi.onEditModelChanged(
+        _gv.currentEdit!.copyWith(stickers: current.take(2).toList()));
   }
 
   _uploadImages() async {
