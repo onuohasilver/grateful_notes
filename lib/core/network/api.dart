@@ -15,6 +15,7 @@ class Api {
   get users => baseUrl("users");
   get notes => baseUrl("notes");
   get closeCircle => baseUrl("close_circle");
+  get config => "config";
 }
 
 enum Environment { dev, staging, prod }

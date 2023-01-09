@@ -54,7 +54,7 @@ class GratitudeDisplayCard extends StatelessWidget {
                     children: List.generate(
                         gem.imagePaths.length,
                         (index) => Container(
-                              color: Colors.black,
+                              color: Colors.transparent,
                               margin: const EdgeInsets.only(right: 7),
                               width: 120,
                               height: 129,
@@ -114,7 +114,7 @@ class GratitudeDisplayCardModal extends StatelessWidget {
                   children: List.generate(
                       gem.imagePaths.length,
                       (index) => Container(
-                            color: Colors.black,
+                            color: Colors.transparent,
                             margin: const EdgeInsets.only(right: 7),
                             width: 180,
                             height: 189,

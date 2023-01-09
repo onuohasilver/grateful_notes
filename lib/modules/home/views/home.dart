@@ -41,9 +41,9 @@ class Home extends StatelessWidget {
     UserVariables uv = UserVariables(state);
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
-
     CircleController cc = CircleController(state);
     UserController uc = UserController(state);
+
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
 

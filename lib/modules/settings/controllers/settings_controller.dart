@@ -2,12 +2,17 @@ import 'package:bridgestate/state/bridge_controller.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:grateful_notes/core/network/request_handler.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_inputs.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_keys.dart';
+import 'package:grateful_notes/modules/settings/data/config_model.dart';
 import 'package:grateful_notes/modules/settings/data/reminder_frequency_model.dart';
+import 'package:grateful_notes/services/config/config_service.dart';
+import 'package:grateful_notes/services/config/config_service_impl.dart';
 import 'package:grateful_notes/services/local_storage/key_storage.dart';
 import 'package:grateful_notes/services/local_storage/key_value_storage_service.dart';
 import 'package:grateful_notes/services/notifications/notification_service_impl.dart';
+import 'package:logger/logger.dart';
 
 class SettingsController extends BridgeController {
   final BridgeState state;
@@ -18,6 +23,7 @@ class SettingsController extends BridgeController {
   SettingsInputs get _si => SettingsInputs(state);
   KeyValueStorageService get _ks => const FlutterSecureStorageImpl();
   SettingsKeys get _sk => SettingsKeys();
+  ConfigService get _cs => ConfigServiceImpl();
 
   setPrivacy(String privacy) {
     _si.onPrivacyChanged(privacy);
@@ -73,11 +79,21 @@ class SettingsController extends BridgeController {
     }
   }
 
+  loadConfig() async {
+    RequestHandler(
+      request: () => _cs.getConfigData(),
+      onSuccess: (_) => _si.onConfigDataChanged(
+          ConfigModel.fromJson(_.data as Map<String, dynamic>)),
+      onError: (_) => Logger().e(_),
+    ).sendRequest();
+  }
+
   @override
   void dispose() {}
 
   @override
   void initialise() {
+    loadConfig();
     loadSettings();
   }
 }
