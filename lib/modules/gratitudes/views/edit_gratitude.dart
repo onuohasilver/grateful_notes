@@ -50,64 +50,11 @@ class EditGratitude extends StatelessWidget {
                             ))
                         .toList(),
                   const YSpace(12),
-                  Visibility(
-                    visible: gv.currentEdit!.stickers!.isEmpty,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () => gc.addImageToModel(),
-                          child: Container(
-                            decoration: BoxDecoration(border: Border.all()),
-                            padding: const EdgeInsets.all(4),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.add),
-                                CustomText("Add Photo",
-                                    size: 14, weight: FontWeight.bold)
-                              ],
-                            ),
-                          ),
-                        ),
-                        const XSpace(10),
-                      ],
-                    ),
-                  ),
-                  const YSpace(12),
-                  Visibility(
-                    visible: gv.currentEdit!.imagePaths.isEmpty,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () => CustomOverlays().showSheet(
-                            height: 400,
-                            color: Colors.white,
-                            child: const StickerModal(),
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(border: Border.all()),
-                            padding: const EdgeInsets.all(4),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.add),
-                                CustomText(
-                                  "Add Sticker",
-                                  size: 14,
-                                  weight: FontWeight.bold,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        const XSpace(10),
-                      ],
-                    ),
-                  ),
+
                   const YSpace(12),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      const XSpace(10),
                       GestureDetector(
                         onTap: () => gc.addPrivacyToModel(
                           gv.currentEdit!.privacy! == "Private"
@@ -136,6 +83,55 @@ class EditGratitude extends StatelessWidget {
                         ),
                       ),
                       const XSpace(10),
+                      Visibility(
+                        visible: gv.currentEdit!.imagePaths.isEmpty,
+                        child: GestureDetector(
+                          onTap: () => CustomOverlays().showSheet(
+                            height: 400,
+                            color: Colors.white,
+                            child: const StickerModal(),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(border: Border.all()),
+                            padding: const EdgeInsets.all(4),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.add, size: 12),
+                                CustomText(
+                                  "Add Sticker",
+                                  size: 14,
+                                  weight: FontWeight.bold,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const XSpace(10),
+                      Visibility(
+                        visible: gv.currentEdit!.stickers!.isEmpty,
+                        child: GestureDetector(
+                          onTap: () => gc.addImageToModel(),
+                          child: Container(
+                            decoration: BoxDecoration(border: Border.all()),
+                            padding: const EdgeInsets.all(4),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.add, size: 12),
+                                CustomText("Add Photo",
+                                    size: 14, weight: FontWeight.bold)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const YSpace(12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      XSpace(10),
                     ],
                   ),
                   const YSpace(12),
