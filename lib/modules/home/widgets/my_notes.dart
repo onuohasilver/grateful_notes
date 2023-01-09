@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:grateful_notes/core/asset_files.dart';
+import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
+import 'package:grateful_notes/modules/gratitudes/views/share_gratitude.dart';
 import 'package:grateful_notes/modules/home/widgets/gratitude_display_card.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
@@ -71,12 +73,7 @@ class MyNotes extends StatelessWidget {
                     // A motion is a widget used to control how the pane animates.
                     motion: const ScrollMotion(),
 
-                    // A pane can dismiss the Slidable.
-                    // dismissible: DismissiblePane(onDismissed: () {}),
-
-                    // All actions are defined in the children parameter.
                     children: [
-                      // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
                         onPressed: (context) => {
                           gc.updateGratitude(gem.copyWith(
@@ -93,8 +90,8 @@ class MyNotes extends StatelessWidget {
                                 size: 14),
                           ))
                         },
-                        backgroundColor: colorMapper(gem.type),
-                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.white,
+                        foregroundColor: colorMapper(gem.type),
                         icon: Icons.visibility_outlined,
                         label: 'Update Privacy',
                       ),
@@ -114,15 +111,17 @@ class MyNotes extends StatelessWidget {
                       SlidableAction(
                         onPressed: (context) =>
                             {gc.updateGratitude(gem.copyWith(delete: true))},
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.red,
                         icon: Icons.delete,
                         label: 'Delete',
                       ),
                       SlidableAction(
-                        onPressed: (context) {},
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
+                        onPressed: (_) => Navigate.to(
+                          ShareGratitude(gem: gem),
+                        ),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         icon: Icons.share,
                         label: 'Share',
                       ),

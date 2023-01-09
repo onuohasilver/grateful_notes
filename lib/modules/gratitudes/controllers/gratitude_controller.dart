@@ -18,6 +18,7 @@ import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
 import 'package:grateful_notes/services/images/image_service_impl.dart';
 import 'package:logger/logger.dart';
+import 'package:screenshot/screenshot.dart';
 
 class GratitudeController extends BridgeController {
   final BridgeState state;
@@ -79,7 +80,8 @@ class GratitudeController extends BridgeController {
         if (_.success)
           {
             _gi.onGratitudesChanged(_.data.values
-                .where((element) => !element['delete'])
+                .where((element) =>
+                    element['delete'] == null ? true : !element['delete'])
                 .map((e) => GratitudeEditModel.fromJson(
                     e, _.data.keys.firstWhere((key) => _.data[key] == e)))
                 .toList()
@@ -115,10 +117,7 @@ class GratitudeController extends BridgeController {
   deleteGratitude(GratitudeEditModel gem) {
     RequestHandler(
       request: () => _gs.deleteGratitude(id: gem.id, userid: _uv.user!.userid),
-      onSuccess: (_) => {
-        Logger().i("Success$_"),
-        getGratitudes()
-      },
+      onSuccess: (_) => {Logger().i("Success$_"), getGratitudes()},
       onError: (_) => Logger().i("Error"),
     ).sendRequest();
   }
@@ -142,7 +141,8 @@ class GratitudeController extends BridgeController {
           {
             notes = _gv.allCircleGratitudes,
             notes.addAll(_.data.values
-                .where((element) => !element['delete'])
+                .where((element) =>
+                    element['delete'] == null ? true : !element['delete'])
                 .map((e) => GratitudeEditModel.fromJson(
                         e, _.data.keys.firstWhere((key) => _.data[key] == e))
                     .copyWith(name: fm.name))
@@ -159,6 +159,15 @@ class GratitudeController extends BridgeController {
       },
       onError: (_) => _gi.onCurrentStateChanged(LoadingStates.error),
     ).sendRequest();
+  }
+
+  shareGratitude(ScreenshotController ssc) async {
+    _gi.onCurrentStateChanged(LoadingStates.loading);
+    Logger().e(_gv.currentState);
+    await _is.shareScreenshot(ssc).then((value) => {
+          _gi.onCurrentStateChanged(LoadingStates.done),
+          Logger().e(_gv.currentState)
+        });
   }
 
   addNewField() {

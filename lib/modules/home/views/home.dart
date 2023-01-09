@@ -59,7 +59,7 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              // onPressed: () => uc.findUser("dev@gmail.com"),
+              // onPressed: () => Navigate.to(const ShareGratitude()),
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,
