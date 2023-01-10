@@ -21,26 +21,23 @@ class ImageServiceImpl extends ImageService {
   Future<ResponseModel> uploadToDB(images) async {
     List<String> imageUrls = [];
     Logger().i("message");
-    for (var element in images) {
-      Logger().i(element);
-      await _cloudinary
-          .uploadFile(CloudinaryFile.fromFile(element))
-          .then((value) => imageUrls.add(value.secureUrl));
-    }
+
+    await _cloudinary
+        .uploadFiles(images.map((e) => CloudinaryFile.fromFile(e)).toList())
+        .then((value) =>
+            imageUrls.addAll(value.map((e) => e.secureUrl).toList()));
+
     return ResponseModel(data: {'images': imageUrls}, success: true, code: 200);
   }
 
   @override
   Future<void> shareScreenshot(ScreenshotController ssc) async {
-    final directory = (await getApplicationDocumentsDirectory())
-        .path; //from path_provide package
+    final directory = (await getApplicationDocumentsDirectory()).path;
     String fileName =
         "Happy Notes ${DateTime.now().microsecondsSinceEpoch}.png";
     String path = directory;
     await ssc
-        .captureAndSave(path, //set path where screenshot will be saved
-            pixelRatio: 6.4,
-            fileName: fileName)
+        .captureAndSave(path, pixelRatio: 6.4, fileName: fileName)
         .then((value) => Share.shareXFiles([XFile(value!)]));
   }
 }
