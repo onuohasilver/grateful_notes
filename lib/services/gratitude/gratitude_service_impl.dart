@@ -16,6 +16,7 @@ class GratitudeServiceImpl extends GratitudeService {
       required String privacy,
       required String userid,
       required String type,
+      int? audioDuration,
       String? audio}) async {
     DateTime date = DateTime.now();
     var notes = await network.post(
@@ -28,6 +29,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'Privacy': privacy,
           'delete': false,
           'audio': audio,
+          'audioDuration': audioDuration,
           'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },
@@ -49,6 +51,8 @@ class GratitudeServiceImpl extends GratitudeService {
       required String privacy,
       required String id,
       required String date,
+      String? audio,
+      int? audioDuration,
       required bool delete,
       required String userid}) async {
     return await network.post(
@@ -60,7 +64,9 @@ class GratitudeServiceImpl extends GratitudeService {
           'type': type,
           'Privacy': privacy,
           'date': date,
-          'delete': delete
+          'delete': delete,
+          'audio': audio,
+          'audioDuration': audioDuration,
         }
       },
     );

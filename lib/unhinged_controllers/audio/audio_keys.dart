@@ -7,4 +7,6 @@ class AudioKeys extends BridgeKeys {
   get timeStartedRecording => brKey("Time Started recording");
   get currentAudio => brKey("AudioCurrent");
   get isPlaying => brKey("Is Playing");
+  get currentBeingPlayed => brKey("CcurrentBeingPlayed");
+  get currentAudioTimeStamp => brKey("Current audio time stamp");
 }

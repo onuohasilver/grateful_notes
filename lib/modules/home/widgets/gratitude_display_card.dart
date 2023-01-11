@@ -1,3 +1,4 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
@@ -50,28 +51,66 @@ class GratitudeDisplayCard extends StatelessWidget {
               CustomText(gem.texts.first, size: 14, height: 1.3),
               const YSpace(12),
               if (gem.audio != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Row(
-                    children: [
-                      auv.isPlaying
-                          ? Container(
-                              padding: const EdgeInsets.all(8),
-                              child: GestureDetector(
-                                onTap: () => auc.pauseAudio(),
-                                child: const Icon(Icons.pause),
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(8),
-                              child: GestureDetector(
-                                onTap: () => auc.playAudio(
-                                    source: "url", url: gem.audio),
-                                child: const Icon(Icons.play_arrow),
-                              ),
-                            ),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 350,
+                            child: StreamBuilder<Duration>(
+                                stream: auc.getDurationState(),
+                                builder: (context, snapshot) {
+                                  final duration = snapshot.data;
+                                  final progress = duration ?? Duration.zero;
+                                  return ProgressBar(
+                                    progress:
+                                        Duration(seconds: progress.inSeconds),
+                                    total:
+                                        Duration(seconds: gem.audioDuration!),
+                                    progressBarColor: Colors.black,
+                                    baseBarColor: Colors.grey.withOpacity(0.24),
+                                    thumbColor: Colors.black,
+                                    barHeight: 3.0,
+                                    thumbRadius: 5.0,
+                                    onSeek: (duration) {
+                                      print(
+                                          'User selected a new time: $duration');
+                                    },
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        height: 50,
+                        alignment: Alignment.topCenter,
+                        child: auv.isPlaying &&
+                                auv.currentlyBeingPlayed == gem.audio
+                            ? Container(
+                                padding: const EdgeInsets.all(8),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () => auc.pauseAudio(),
+                                    child: const Icon(Icons.pause),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.all(8),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () => auc.playAudio(
+                                        source: "url", url: gem.audio),
+                                    child:
+                                        const Icon(Icons.play_arrow, size: 30),
+                                  ),
+                                ),
+                              )),
+                  ],
                 ),
               if (gem.imagePaths.isNotEmpty)
                 SizedBox(
@@ -114,7 +153,6 @@ class GratitudeDisplayCardModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
-
     GratitudeController gc = GratitudeController(state);
     AudioVariables auv = AudioVariables(state);
     AudioController auc = AudioController(state);

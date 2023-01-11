@@ -16,8 +16,14 @@ class AudioInputs extends BridgeController {
   onTimeRecordingChanged(DateTime? timeOfDay) =>
       state.load(keys.timeStartedRecording, timeOfDay, DateTime);
 
+  onCurrentAudioTimeStampChanged(int seconds) =>
+      state.load(keys.currentAudioTimeStamp, seconds, int);
+
   onCurrentAudioChanged(String? audio) =>
       state.load(keys.currentAudio, audio, String);
+
+  onCurrentBeingPlayedChanged(String? audio) =>
+      state.load(keys.currentBeingPlayed, audio, String);
 
   @override
   void dispose() {}

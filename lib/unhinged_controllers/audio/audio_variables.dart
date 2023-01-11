@@ -15,5 +15,10 @@ class AudioVariables {
 
   String? get currentAudio => state.read(keys.currentAudio, null).slice;
 
-  bool get isPlaying => state.read(keys.isPlaying, false   ).slice;
+  String get currentlyBeingPlayed =>
+      state.read(keys.currentBeingPlayed, "initial").slice;
+  int get currentAudioTimeStamp =>
+      state.read(keys.currentAudioTimeStamp, 0).slice;
+
+  bool get isPlaying => state.read(keys.isPlaying, false).slice;
 }

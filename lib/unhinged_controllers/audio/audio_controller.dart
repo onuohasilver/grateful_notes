@@ -13,6 +13,10 @@ class AudioController extends BridgeController {
   AudioInputs get _aui => AudioInputs(state);
   AudioVariables get _auv => AudioVariables(state);
 
+  Stream<Duration> getDurationState() {
+    return _aus.player.onPositionChanged;
+  }
+
   record() async {
     _aui.onRecordingStateChanged(true);
     _aui.onTimeRecordingChanged(DateTime.now());
@@ -21,7 +25,9 @@ class AudioController extends BridgeController {
 
   Future<String> stopRecord() async {
     _aui.onRecordingStateChanged(true);
-    _aui.onTimeRecordingChanged(null);
+    // _aui.onTimeRecordingChanged(null);
+    _aui.onCurrentAudioTimeStampChanged(
+        DateTime.now().difference(_auv.timeStartedRecording!).inSeconds);
     String path = await _aus.stop();
     _aui.onCurrentAudioChanged(path);
 
@@ -30,12 +36,18 @@ class AudioController extends BridgeController {
 
   playAudio({String source = 'dfs', String? url}) {
     _aus.play(source: source, url: url ?? _auv.currentAudio!);
+    _aui.onCurrentBeingPlayedChanged(url);
     _aui.onPlayStateChanged(true);
   }
 
   pauseAudio() {
     _aus.pause();
     _aui.onPlayStateChanged(false);
+    _aui.onCurrentBeingPlayedChanged("");
+  }
+
+  getPercentage() {
+    _aus.getPercentage();
   }
 
   uploadToDB() async {
@@ -63,4 +75,15 @@ extension CopyDuration on Duration {
   format() {
     return toString().split('.').first.padLeft(8, "0");
   }
+}
+
+class DurationState {
+  const DurationState({
+    required this.progress,
+    required this.buffered,
+    required this.total,
+  });
+  final Duration progress;
+  final Duration buffered;
+  final Duration total;
 }

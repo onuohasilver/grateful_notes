@@ -20,6 +20,7 @@ class GratitudeEditModel {
       this.stickers,
       this.name,
       this.audio,
+      this.audioDuration,
       required this.id,
       required this.privacy});
 
@@ -32,6 +33,7 @@ class GratitudeEditModel {
   final String? privacy;
   final String id;
   final String? audio;
+  final int? audioDuration;
   final bool delete;
 
   GratitudeEditModel copyWith(
@@ -40,10 +42,12 @@ class GratitudeEditModel {
           String? name,
           bool? delete,
           String? audio,
+          int? audioDuration,
           List<String>? stickers,
           String? privacy}) =>
       GratitudeEditModel(
           type: type,
+          audioDuration: audioDuration ?? this.audioDuration,
           texts: texts ?? this.texts,
           imagePaths: imagePaths ?? this.imagePaths,
           name: name ?? this.name,
@@ -58,6 +62,7 @@ class GratitudeEditModel {
       GratitudeEditModel(
           type: json['type'],
           id: id,
+          audioDuration: json['audioDuration'],
           audio: json['audio'],
           stickers: json["stickers"] ?? [],
           delete: json['delete'] ?? false,
@@ -73,6 +78,7 @@ class GratitudeEditModel {
         "audio": audio,
         "privacy": privacy,
         "delete": delete,
+        "audioDuration": audioDuration,
         "texts": List<dynamic>.from(texts.map((x) => x)),
         "imagePaths": List<dynamic>.from(imagePaths.map((x) => x)),
       };
@@ -84,6 +90,7 @@ class GratitudeEditModel {
       stickers: [],
       type: type,
       id: "",
+      audioDuration: null,
       delete: false,
       audio: null,
       privacy: "Open");

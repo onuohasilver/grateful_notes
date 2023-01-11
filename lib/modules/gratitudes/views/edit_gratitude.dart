@@ -2,7 +2,6 @@ import 'package:bridgestate/bridges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
@@ -11,10 +10,10 @@ import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/widgets/custom_text_area.dart';
-import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
+import 'package:grateful_notes/modules/gratitudes/widgets/recording_modal.dart';
+import 'package:grateful_notes/modules/gratitudes/widgets/sticker_modal.dart';
 import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
 import 'package:grateful_notes/unhinged_controllers/audio/audio_variables.dart';
-import 'package:lottie/lottie.dart';
 
 class EditGratitude extends StatelessWidget {
   const EditGratitude({super.key, required this.header});
@@ -93,21 +92,17 @@ class EditGratitude extends StatelessWidget {
                         visible: gv.currentEdit!.imagePaths.isEmpty,
                         child: GestureDetector(
                           onTap: () => CustomOverlays().showSheet(
-                            height: 400,
-                            color: Colors.white,
-                            child: const StickerModal(),
-                          ),
+                              height: 400,
+                              color: Colors.white,
+                              child: const StickerModal()),
                           child: Container(
                             decoration: BoxDecoration(border: Border.all()),
                             padding: const EdgeInsets.all(4),
                             child: Row(
                               children: const [
                                 Icon(Icons.add, size: 12),
-                                CustomText(
-                                  "Add Sticker",
-                                  size: 14,
-                                  weight: FontWeight.bold,
-                                )
+                                CustomText("Add Sticker",
+                                    size: 14, weight: FontWeight.bold)
                               ],
                             ),
                           ),
@@ -249,104 +244,6 @@ class EditGratitude extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class AudioRecordingModal extends StatelessWidget {
-  const AudioRecordingModal({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    BridgeState state = bridge(context);
-
-    AudioVariables auv = AudioVariables(state);
-    AudioController auc = AudioController(state);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomText(
-              "Recording",
-              size: 18,
-              weight: FontWeight.bold,
-            ),
-            const YSpace(10),
-            LottieBuilder.network(
-              "https://assets8.lottiefiles.com/packages/lf20_jguzhokp.json",
-              height: 100,
-            ),
-            const YSpace(10),
-            if (auv.timeStartedRecording != null)
-              StreamBuilder(
-                  stream: Stream.periodic(const Duration(seconds: 1)),
-                  builder: (context, snapshot) {
-                    return Text(
-                        "${DateTime.now().difference(auv.timeStartedRecording!).format()}");
-                  }),
-            const YSpace(10),
-            CustomFlatButton(
-              label: "Stop",
-              // bgColor: Colors.red,
-              hasBorder: true,
-              onTap: () {
-                Navigate.pop();
-                auc.stopRecord();
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class StickerModal extends StatelessWidget {
-  const StickerModal({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    BridgeState state = bridge(context);
-    SettingsVariables sv = SettingsVariables(state);
-    GratitudeController gc = GratitudeController(state);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: SizedBox(
-        height: 400,
-        child: Column(
-          children: [
-            const CustomText("Select Sticker",
-                size: 18, weight: FontWeight.bold, height: 1.5),
-            Expanded(
-              child: GridView.builder(
-                  padding: const EdgeInsets.only(bottom: 140),
-                  itemCount: sv.config!.stickers!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => {
-                        gc.addStickerToModel(sv.config!.stickers![index]!),
-                        Navigate.pop()
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: CustomImage(src: sv.config!.stickers![index]!),
-                      ),
-                    );
-                  }),
-            )
-          ],
-        ),
       ),
     );
   }

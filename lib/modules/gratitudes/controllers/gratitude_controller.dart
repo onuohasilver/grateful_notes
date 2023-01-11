@@ -55,18 +55,16 @@ class GratitudeController extends BridgeController {
     if (_auv.currentAudio != null) await addAudioToModel();
     RequestHandler(
             onRequestStart: () async => {},
-            request: () =>
-
-                // Logger().i("Success savsse"),
-                _gs.createGratitude(
-                    text: _gv.currentEdit!.texts,
-                    images: _gv.currentEdit!.stickers!.isEmpty
-                        ? _gv.currentEdit!.imagePaths
-                        : _gv.currentEdit!.stickers!,
-                    audio: _gv.currentEdit!.audio,
-                    type: _gv.currentEdit!.type,
-                    privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
-                    userid: _uv.user!.userid),
+            request: () => _gs.createGratitude(
+                text: _gv.currentEdit!.texts,
+                images: _gv.currentEdit!.stickers!.isEmpty
+                    ? _gv.currentEdit!.imagePaths
+                    : _gv.currentEdit!.stickers!,
+                audio: _gv.currentEdit!.audio,
+                type: _gv.currentEdit!.type,
+                privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
+                audioDuration: _gv.currentEdit!.audioDuration,
+                userid: _uv.user!.userid),
             onSuccess: (_) async => {
                   Logger().i("on Success save"),
                   await getGratitudes(),
@@ -114,6 +112,8 @@ class GratitudeController extends BridgeController {
           id: gem.id,
           text: gem.texts,
           images: gem.imagePaths,
+          audio: gem.audio,
+          audioDuration: gem.audioDuration,
           type: gem.type,
           privacy: gem.privacy!,
           userid: _uv.user!.userid,
@@ -218,6 +218,8 @@ class GratitudeController extends BridgeController {
   addAudioToModel() async {
     await _auc.uploadToDB();
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(audio: _auv.currentAudio));
+    _gi.onEditModelChanged(
+        _gv.currentEdit!.copyWith(audioDuration: _auv.currentAudioTimeStamp));
   }
 
   _uploadImages() async {

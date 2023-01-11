@@ -75,6 +75,10 @@ class AudioServiceImpl extends AudioService {
     player.play(path);
   }
 
+  Stream<Duration> getPercentage() {
+    return player.onPositionChanged;
+  }
+
   @override
   Future<ResponseModel> uploadToDB(audio) async {
     // List<String> imageUrls = [];
