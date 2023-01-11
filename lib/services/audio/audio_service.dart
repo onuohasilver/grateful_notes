@@ -3,5 +3,6 @@ abstract class AudioService {
   record();
   stop();
   pause();
-  play();
+  play({required String source,required String url});
+  uploadToDB(String audio);
 }

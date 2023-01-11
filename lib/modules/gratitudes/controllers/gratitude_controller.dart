@@ -14,10 +14,11 @@ import 'package:grateful_notes/modules/gratitudes/data/statics.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
-import 'package:grateful_notes/services/audio/audio_service_impl.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
 import 'package:grateful_notes/services/images/image_service_impl.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_variables.dart';
 import 'package:logger/logger.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -34,7 +35,9 @@ class GratitudeController extends BridgeController {
   SuccessLoadingController get _slc => SuccessLoadingController(state);
   CircleVariables get _cv => CircleVariables(state);
   SettingsVariables get _sv => SettingsVariables(state);
-  AudioServiceImpl get _aus => AudioServiceImpl();
+  AudioVariables get _auv => AudioVariables(state);
+
+  AudioController get _auc => AudioController(state);
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
@@ -46,8 +49,10 @@ class GratitudeController extends BridgeController {
           texts: Statics.saveGratitudeTexts,
           colors: Statics.saveGratitudeColors),
     );
-    if (_gv.currentEdit!.stickers!.isEmpty) await _uploadImages();
-
+    if (_gv.currentEdit!.stickers!.isEmpty) {
+      await _uploadImages();
+    }
+    if (_auv.currentAudio != null) await addAudioToModel();
     RequestHandler(
             onRequestStart: () async => {},
             request: () =>
@@ -58,6 +63,7 @@ class GratitudeController extends BridgeController {
                     images: _gv.currentEdit!.stickers!.isEmpty
                         ? _gv.currentEdit!.imagePaths
                         : _gv.currentEdit!.stickers!,
+                    audio: _gv.currentEdit!.audio,
                     type: _gv.currentEdit!.type,
                     privacy: _gv.currentEdit!.privacy ?? _sv.privacy,
                     userid: _uv.user!.userid),
@@ -210,15 +216,8 @@ class GratitudeController extends BridgeController {
   }
 
   addAudioToModel() async {
-    await _aus.record();
-  }
-
-  stopAudio() async {
-    await _aus.stop();
-  }
-
-  playAudio() {
-    _aus.play();
+    await _auc.uploadToDB();
+    _gi.onEditModelChanged(_gv.currentEdit!.copyWith(audio: _auv.currentAudio));
   }
 
   _uploadImages() async {

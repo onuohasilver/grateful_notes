@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:grateful_notes/core/network/response_model.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,7 +14,9 @@ class AudioServiceImpl extends AudioService {
   // final _recordingSession = FlutterSoundRecorder();
 
   final recorder = Record();
-  final player = AudioPlayer();
+  final player = AudioPlayer(playerId: "identier");
+  final CloudinaryPublic _cloudinary =
+      CloudinaryPublic('afroify', 'grateful_notes', cache: true);
 
   @override
   initialise() async {
@@ -22,10 +26,12 @@ class AudioServiceImpl extends AudioService {
   }
 
   @override
-  pause() {}
+  pause() {
+    player.pause();
+  }
 
   @override
-  record() async {
+  Future record() async {
     initialise();
     if (await recorder.hasPermission()) {
       Directory path = await getApplicationDocumentsDirectory();
@@ -34,7 +40,7 @@ class AudioServiceImpl extends AudioService {
         path.createSync();
       }
       await recorder.start(
-        path: '${path.path}/myFile.m4a',
+        path: '${path.path}/${DateTime.now().toIso8601String()}.m4a',
         encoder: AudioEncoder.aacLc,
         bitRate: 128000,
       );
@@ -50,13 +56,35 @@ class AudioServiceImpl extends AudioService {
   }
 
   @override
-  stop() async {
-    await recorder.stop().then((value) => Logger().i(value));
+  Future<String> stop() async {
+    String path = '';
+    player.stop();
+    await recorder.stop().then((value) => path = value!);
+    return path;
   }
 
   @override
-  play() async {
-    Directory path = await getApplicationDocumentsDirectory();
-    player.play(DeviceFileSource('${path.path}/myFile.m4a'));
+  play({required String source, required String url}) async {
+    late Source path;
+    if (source == "dfs") {
+      path = DeviceFileSource(url);
+    } else {
+      path = UrlSource(url);
+    }
+    Logger().i(path);
+    player.play(path);
+  }
+
+  @override
+  Future<ResponseModel> uploadToDB(audio) async {
+    // List<String> imageUrls = [];
+    String path = "";
+    // Logger().i("message");
+
+    await _cloudinary
+        .uploadFile(CloudinaryFile.fromFile(audio))
+        .then((value) => path = value.secureUrl);
+
+    return ResponseModel(data: {'audio': path}, success: true, code: 200);
   }
 }

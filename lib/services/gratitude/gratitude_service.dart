@@ -6,6 +6,7 @@ abstract class GratitudeService {
       required List<String> images,
       required String type,
       required String privacy,
+      String? audio,
       required String userid});
 
   Future<ResponseModel> getGratitudes({required String userid});

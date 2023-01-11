@@ -10,6 +10,8 @@ import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/data/gratitude_edit_model.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_variables.dart';
 
 class GratitudeDisplayCard extends StatelessWidget {
   const GratitudeDisplayCard({Key? key, required this.gem}) : super(key: key);
@@ -20,6 +22,8 @@ class GratitudeDisplayCard extends StatelessWidget {
     BridgeState state = bridge(context);
     UserVariables uv = UserVariables(state);
     GratitudeController gc = GratitudeController(state);
+    AudioVariables auv = AudioVariables(state);
+    AudioController auc = AudioController(state);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: GestureDetector(
@@ -45,6 +49,30 @@ class GratitudeDisplayCard extends StatelessWidget {
               const YSpace(5),
               CustomText(gem.texts.first, size: 14, height: 1.3),
               const YSpace(12),
+              if (gem.audio != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Row(
+                    children: [
+                      auv.isPlaying
+                          ? Container(
+                              padding: const EdgeInsets.all(8),
+                              child: GestureDetector(
+                                onTap: () => auc.pauseAudio(),
+                                child: const Icon(Icons.pause),
+                              ),
+                            )
+                          : Container(
+                              padding: const EdgeInsets.all(8),
+                              child: GestureDetector(
+                                onTap: () => auc.playAudio(
+                                    source: "url", url: gem.audio),
+                                child: const Icon(Icons.play_arrow),
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
               if (gem.imagePaths.isNotEmpty)
                 SizedBox(
                   width: 375.w,
@@ -88,6 +116,8 @@ class GratitudeDisplayCardModal extends StatelessWidget {
     BridgeState state = bridge(context);
 
     GratitudeController gc = GratitudeController(state);
+    AudioVariables auv = AudioVariables(state);
+    AudioController auc = AudioController(state);
 
     return SizedBox(
       width: double.infinity,

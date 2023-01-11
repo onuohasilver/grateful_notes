@@ -12,6 +12,9 @@ import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controll
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/widgets/custom_text_area.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_variables.dart';
+import 'package:lottie/lottie.dart';
 
 class EditGratitude extends StatelessWidget {
   const EditGratitude({super.key, required this.header});
@@ -21,6 +24,9 @@ class EditGratitude extends StatelessWidget {
     BridgeState state = bridge(context);
     GratitudeVariables gv = GratitudeVariables(state);
     GratitudeController gc = GratitudeController(state);
+
+    AudioVariables auv = AudioVariables(state);
+    AudioController auc = AudioController(state);
 
     return SizedBox(
       height: 600.h,
@@ -129,15 +135,14 @@ class EditGratitude extends StatelessWidget {
                       Visibility(
                         visible: gv.currentEdit!.texts.first == "",
                         child: GestureDetector(
-                          onTap: () =>
-                              // gc.addAudioToModel(),
-                              // gc.stopAudio(),
-                              // gc.playAudio(),
-                              CustomOverlays().showSheet(
-                            height: 200.h,
-                            child: const AudioRecordingModal(),
-                            color: Colors.white,
-                          ),
+                          onTap: () => {
+                            auc.record(),
+                            CustomOverlays().showSheet(
+                              height: 400.h,
+                              child: const AudioRecordingModal(),
+                              color: Colors.white,
+                            ),
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.black,
@@ -155,6 +160,29 @@ class EditGratitude extends StatelessWidget {
                     ],
                   ),
                   const YSpace(12),
+                  if (auv.currentAudio != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        children: [
+                          auv.isPlaying
+                              ? Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: GestureDetector(
+                                    onTap: () => auc.pauseAudio(),
+                                    child: const Icon(Icons.pause),
+                                  ),
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: GestureDetector(
+                                    onTap: () => auc.playAudio(),
+                                    child: const Icon(Icons.play_arrow),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: const [
@@ -233,16 +261,48 @@ class AudioRecordingModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BridgeState state = bridge(context);
+
+    AudioVariables auv = AudioVariables(state);
+    AudioController auc = AudioController(state);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Column(
-        children: const [
-          CustomText(
-            "Recording",
-            size: 18,
-            weight: FontWeight.bold,
-          )
-        ],
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CustomText(
+              "Recording",
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            const YSpace(10),
+            LottieBuilder.network(
+              "https://assets8.lottiefiles.com/packages/lf20_jguzhokp.json",
+              height: 100,
+            ),
+            const YSpace(10),
+            if (auv.timeStartedRecording != null)
+              StreamBuilder(
+                  stream: Stream.periodic(const Duration(seconds: 1)),
+                  builder: (context, snapshot) {
+                    return Text(
+                        "${DateTime.now().difference(auv.timeStartedRecording!).format()}");
+                  }),
+            const YSpace(10),
+            CustomFlatButton(
+              label: "Stop",
+              // bgColor: Colors.red,
+              hasBorder: true,
+              onTap: () {
+                Navigate.pop();
+                auc.stopRecord();
+              },
+            )
+          ],
+        ),
       ),
     );
   }

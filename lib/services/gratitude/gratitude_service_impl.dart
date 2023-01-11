@@ -15,7 +15,8 @@ class GratitudeServiceImpl extends GratitudeService {
       required List<String> images,
       required String privacy,
       required String userid,
-      required String type}) async {
+      required String type,
+      String? audio}) async {
     DateTime date = DateTime.now();
     var notes = await network.post(
       path: UrlPath(Api().notes, userid),
@@ -26,6 +27,7 @@ class GratitudeServiceImpl extends GratitudeService {
           'type': type,
           'Privacy': privacy,
           'delete': false,
+          'audio': audio,
           'date': DateTime(date.year, date.month, date.day).toIso8601String()
         }
       },

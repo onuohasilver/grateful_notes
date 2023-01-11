@@ -25,6 +25,7 @@ import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart'
 import 'package:grateful_notes/modules/settings/views/settings_modal.dart';
 import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
@@ -43,10 +44,9 @@ class Home extends StatelessWidget {
     GratitudeVariables gv = GratitudeVariables(state);
     CircleController cc = CircleController(state);
     UserController uc = UserController(state);
-
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
-
+    AudioController auc = AudioController(state);
     return BridgeBuilder(
       controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
@@ -59,7 +59,7 @@ class Home extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              // onPressed: () => Navigate.to(const ShareGratitude()),
+              // onPressed: () => auc.uploadToDB(),
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,
