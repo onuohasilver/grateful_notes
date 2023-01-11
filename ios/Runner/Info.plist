@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Happy Notes uses the gallery to pick images to add to posts</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to access to the microphone to record notes</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Happy Notes uses the gallery to pick images to add to posts</string>
 	<key>UILaunchStoryboardName</key>

@@ -48,9 +48,9 @@ dependencies:
   share_plus: ^6.3.0
   cube_transition_plus: ^2.0.1
   cached_network_image: ^3.2.1
-  flutter_sound: ^9.2.13
-  assets_audio_player: ^3.0.6
   permission_handler: ^10.2.0
+  record: ^4.4.4
+  audioplayers: ^1.2.0
 
 dev_dependencies:
   flutter_test:

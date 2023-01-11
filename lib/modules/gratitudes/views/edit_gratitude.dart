@@ -125,6 +125,33 @@ class EditGratitude extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const XSpace(10),
+                      Visibility(
+                        visible: gv.currentEdit!.texts.first == "",
+                        child: GestureDetector(
+                          onTap: () =>
+                              // gc.addAudioToModel(),
+                              // gc.stopAudio(),
+                              // gc.playAudio(),
+                              CustomOverlays().showSheet(
+                            height: 200.h,
+                            child: const AudioRecordingModal(),
+                            color: Colors.white,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(1000)),
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.mic, size: 24, color: Colors.white),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const YSpace(12),
@@ -192,6 +219,28 @@ class EditGratitude extends StatelessWidget {
                 },
               ),
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class AudioRecordingModal extends StatelessWidget {
+  const AudioRecordingModal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: Column(
+        children: const [
+          CustomText(
+            "Recording",
+            size: 18,
+            weight: FontWeight.bold,
           )
         ],
       ),

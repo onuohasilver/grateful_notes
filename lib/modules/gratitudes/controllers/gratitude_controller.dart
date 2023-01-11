@@ -14,6 +14,7 @@ import 'package:grateful_notes/modules/gratitudes/data/statics.dart';
 import 'package:grateful_notes/modules/home/views/home.dart';
 import 'package:grateful_notes/modules/settings/controllers/settings_variables.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
+import 'package:grateful_notes/services/audio/audio_service_impl.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service.dart';
 import 'package:grateful_notes/services/gratitude/gratitude_service_impl.dart';
 import 'package:grateful_notes/services/images/image_service_impl.dart';
@@ -33,6 +34,7 @@ class GratitudeController extends BridgeController {
   SuccessLoadingController get _slc => SuccessLoadingController(state);
   CircleVariables get _cv => CircleVariables(state);
   SettingsVariables get _sv => SettingsVariables(state);
+  AudioServiceImpl get _aus => AudioServiceImpl();
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
@@ -205,6 +207,18 @@ class GratitudeController extends BridgeController {
     Logger().i(sticker);
     _gi.onEditModelChanged(
         _gv.currentEdit!.copyWith(stickers: current.take(2).toList()));
+  }
+
+  addAudioToModel() async {
+    await _aus.record();
+  }
+
+  stopAudio() async {
+    await _aus.stop();
+  }
+
+  playAudio() {
+    _aus.play();
   }
 
   _uploadImages() async {

@@ -3,4 +3,5 @@ abstract class AudioService {
   record();
   stop();
   pause();
+  play();
 }
