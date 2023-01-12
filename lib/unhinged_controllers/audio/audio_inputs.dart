@@ -26,7 +26,9 @@ class AudioInputs extends BridgeController {
       state.load(keys.currentBeingPlayed, audio, String);
 
   @override
-  void dispose() {}
+  void dispose() {
+    
+  }
 
   @override
   void initialise() {}

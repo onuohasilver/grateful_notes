@@ -51,9 +51,8 @@ class Home extends StatelessWidget {
       controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
         () => cc.initialise(),
-        () => lsc.jumpTo(
-              -68.0 * DateTime(2023).difference(DateTime.now()).inDays,
-            )
+        () =>
+            lsc.jumpTo(-68.0 * DateTime(2023).difference(DateTime.now()).inDays)
       ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -63,6 +62,7 @@ class Home extends StatelessWidget {
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,
+                    onClose: () => auc.dispose(),
                     child: const AddNewGratitude(),
                   ),
               shape: const RoundedRectangleBorder(),

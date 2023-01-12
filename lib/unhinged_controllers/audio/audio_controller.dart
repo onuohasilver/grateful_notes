@@ -2,6 +2,7 @@ import 'package:bridgestate/bridges.dart';
 import 'package:grateful_notes/core/network/request_handler.dart';
 import 'package:grateful_notes/services/audio/audio_service_impl.dart';
 import 'package:grateful_notes/unhinged_controllers/audio/audio_inputs.dart';
+import 'package:grateful_notes/unhinged_controllers/audio/audio_keys.dart';
 import 'package:grateful_notes/unhinged_controllers/audio/audio_variables.dart';
 import 'package:logger/logger.dart';
 
@@ -63,6 +64,9 @@ class AudioController extends BridgeController {
   @override
   void dispose() {
     _aui.onPlayStateChanged(false);
+    state.closeKeyList([
+      ...state.data.keys.where((element) => element.contains(AudioKeys().name))
+    ]);
   }
 
   @override

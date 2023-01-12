@@ -1,3 +1,4 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:bridgestate/bridges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -205,6 +206,30 @@ class EditGratitude extends StatelessWidget {
 
                   //   ),
                   // ),
+                  Expanded(
+                    child: SizedBox(
+                      width: 350,
+                      child: StreamBuilder<Duration>(
+                          stream: auc.getDurationState(),
+                          builder: (context, snapshot) {
+                            final duration = snapshot.data;
+                            final progress = duration ?? Duration.zero;
+                            return ProgressBar(
+                              progress: Duration(seconds: progress.inSeconds),
+                              total: Duration(
+                                  seconds: gv.currentEdit!.audioDuration!),
+                              progressBarColor: Colors.black,
+                              baseBarColor: Colors.grey.withOpacity(0.24),
+                              thumbColor: Colors.black,
+                              barHeight: 3.0,
+                              thumbRadius: 5.0,
+                              onSeek: (duration) {
+                                // Logger().i('User selected a new time: $duration');
+                              },
+                            );
+                          }),
+                    ),
+                  ),
                   if (gv.currentEdit!.imagePaths.isNotEmpty)
                     SizedBox(
                       width: 375.w,

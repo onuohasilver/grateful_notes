@@ -32,6 +32,7 @@ class CustomOverlays {
       {required double height,
       required Color color,
       required child,
+      Function()? onClose,
       bool popPrevious = false}) {
     if (popPrevious) Navigate.pop();
     showModalBottomSheet(
@@ -74,6 +75,6 @@ class CustomOverlays {
           ),
         );
       },
-    );
+    ).then((value) => onClose?.call());
   }
 }
