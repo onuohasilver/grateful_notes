@@ -56,7 +56,6 @@ class EditGratitude extends StatelessWidget {
                             ))
                         .toList(),
                   const YSpace(12),
-
                   const YSpace(12),
                   Row(
                     children: [
@@ -128,28 +127,25 @@ class EditGratitude extends StatelessWidget {
                         ),
                       ),
                       const XSpace(10),
-                      Visibility(
-                        visible: gv.currentEdit!.texts.first == "",
-                        child: GestureDetector(
-                          onTap: () => {
-                            auc.record(),
-                            CustomOverlays().showSheet(
-                              height: 400.h,
-                              child: const AudioRecordingModal(),
-                              color: Colors.white,
-                            ),
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(1000)),
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.mic, size: 24, color: Colors.white),
-                              ],
-                            ),
+                      GestureDetector(
+                        onTap: () => {
+                          auc.record(),
+                          CustomOverlays().showSheet(
+                            height: 400.h,
+                            child: const AudioRecordingModal(),
+                            color: Colors.white,
+                          ),
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(1000)),
+                          padding: const EdgeInsets.all(5),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.mic, size: 24, color: Colors.white),
+                            ],
                           ),
                         ),
                       ),
@@ -199,15 +195,8 @@ class EditGratitude extends StatelessWidget {
                                     imageUrl: gv.currentEdit!.stickers![index]),
                               )),
                     ),
-                  // SizedBox(
-                  //   width: 200.w,
-                  //   height: 189,
-                  //   child: Row(
-
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: SizedBox(
+                  if (gv.currentEdit!.audioDuration != null)
+                    SizedBox(
                       width: 350,
                       child: StreamBuilder<Duration>(
                           stream: auc.getDurationState(),
@@ -229,7 +218,6 @@ class EditGratitude extends StatelessWidget {
                             );
                           }),
                     ),
-                  ),
                   if (gv.currentEdit!.imagePaths.isNotEmpty)
                     SizedBox(
                       width: 375.w,
