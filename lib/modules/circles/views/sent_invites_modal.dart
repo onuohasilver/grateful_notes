@@ -24,7 +24,7 @@ class SentInvitesModal extends StatelessWidget {
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
     CircleVariables cv = CircleVariables(state);
-    CircleController cc = CircleController(state);
+
     UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),

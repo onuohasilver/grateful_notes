@@ -7,7 +7,6 @@ import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
-import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/views/add_new_circle_modal.dart';
 import 'package:grateful_notes/modules/circles/views/pending_invites_modal.dart';
@@ -24,7 +23,7 @@ class CloseCircleModal extends StatelessWidget {
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
     CircleVariables cv = CircleVariables(state);
-    CircleController cc = CircleController(state);
+
     UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -68,8 +67,7 @@ class CloseCircleModal extends StatelessWidget {
               hasBorder: true,
               expand: true,
               suffix: CustomText(
-                " (${cv.circle.friends.where((element) => element.senderId != uv.user!.userid && !element.accepted).length})"
-                    .toString(),
+                " (${cv.circle.friends.where((element) => element.senderId != uv.user!.userid && !element.accepted).length})",
                 size: 14,
                 color: Colors.red,
               ),

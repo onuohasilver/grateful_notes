@@ -23,7 +23,6 @@ import 'package:grateful_notes/modules/home/widgets/my_circles_notes.dart';
 import 'package:grateful_notes/modules/home/widgets/my_notes.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_available_button.dart';
 import 'package:grateful_notes/modules/settings/views/settings_modal.dart';
-import 'package:grateful_notes/modules/user/controllers/user_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/unhinged_controllers/audio/audio_controller.dart';
 import 'package:lottie/lottie.dart';
@@ -43,22 +42,22 @@ class Home extends StatelessWidget {
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
     CircleController cc = CircleController(state);
-    UserController uc = UserController(state);
+
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
     AudioController auc = AudioController(state);
+
     return BridgeBuilder(
       controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
         () => cc.initialise(),
         () =>
-            lsc.jumpTo(-68.0 * DateTime(2023).difference(DateTime.now()).inDays)
+            lsc.jumpTo(-67.6 * DateTime(2023).difference(DateTime.now()).inDays)
       ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
-              // onPressed: () => auc.uploadToDB(),
               onPressed: () => CustomOverlays().showSheet(
                     height: 600.h,
                     color: AppColors.superLightGreen,
