@@ -25,7 +25,7 @@ class _ReminderFrequencyModalState extends State<ReminderFrequencyModal> {
   @override
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
-    // SettingsInputs si = SettingsInputs(state);
+
     SettingsController sc = SettingsController(state);
     SettingsVariables sv = SettingsVariables(state);
     return Padding(

@@ -27,7 +27,7 @@ dependencies:
   firebase_auth: ^4.1.4
   bot_toast: ^4.0.3
   lottie: ^1.4.2
-  logger: ^1.1.0
+  logger: ^1.4.0
   animated_text_kit: ^4.2.2
   cloudinary_public: ^0.20.0
   intl: ^0.17.0

@@ -26,7 +26,6 @@ class RequestHandler {
   Future<void> sendRequest() async {
     if (removeFocus) FocusManager.instance.primaryFocus?.unfocus();
     try {
-      // if (showProgress) BotToast.showLoading();
       await onRequestStart?.call();
       ResponseModel result = await request.call();
 
@@ -36,16 +35,13 @@ class RequestHandler {
         onError(e);
         return;
       }
-      // Logger().i
-
-      // log(request.toString());
       Logger().e(e.toString());
       onError(ResponseModel(code: 400, data: {"data": "fail"}, success: false));
       onRequestEnd?.call();
     } finally {
       log("Network Call Terminated >> > Request Ended::");
-      // onRequestEnd?.call();
+      onRequestEnd?.call();
     }
-    onRequestEnd?.call();
+    // onRequestEnd?.call();
   }
 }
