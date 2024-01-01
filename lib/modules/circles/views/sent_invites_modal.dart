@@ -56,7 +56,8 @@ class SentInvitesModal extends StatelessWidget {
                       children: [
                         ...cv.circle.friends
                             .where((element) =>
-                                element.senderId == uv.user!.userid)
+                                element.senderId == uv.user!.userid &&
+                                !element.accepted)
                             .map((e) => CircleMemberNameButton(fm: e))
                       ],
                     ),

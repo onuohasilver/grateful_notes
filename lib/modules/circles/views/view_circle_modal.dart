@@ -11,6 +11,7 @@ import 'package:grateful_notes/global/display/state_aware_builder.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/data/friend_model.dart';
+import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:lottie/lottie.dart';
 
 class ViewMyCloseCircleModal extends StatelessWidget {
@@ -23,6 +24,7 @@ class ViewMyCloseCircleModal extends StatelessWidget {
     BridgeState state = bridge(context);
     CircleVariables cv = CircleVariables(state);
     CircleController cc = CircleController(state);
+    UserVariables uv = UserVariables(state);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: SizedBox(
@@ -38,19 +40,20 @@ class ViewMyCloseCircleModal extends StatelessWidget {
             ),
             const YSpace(12),
             CustomText(
-                cv.circle.friends.isEmpty
+                cv.circle.friends.where((fm) => fm.accepted).isEmpty
                     ? "You don't have any one in your circle yet"
-                    : "You have ${5 - cv.circle.friends.length} more space(s) left in your circle",
+                    : "You have ${5 - cv.circle.friends.where((fm) => fm.accepted).length} more space(s) left in your circle",
                 height: 1.4,
                 size: 14),
             const YSpace(24),
             Expanded(
-              child: cv.circle.friends.isEmpty
+              child: cv.circle.friends.where((fm) => fm.accepted).isEmpty
                   ? LottieBuilder.asset(const AnimationAssets().astronaut)
                   : ListView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ...cv.circle.friends
+                            .where((element) => element.accepted)
                             .map((e) => CircleMemberNameButton(fm: e))
                       ],
                     ),

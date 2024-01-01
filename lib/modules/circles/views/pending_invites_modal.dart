@@ -68,8 +68,9 @@ class PendingInvitesModal extends StatelessWidget {
                     height: 100,
                   ),
                 ),
-                error:
-                    Bounce(child: const Icon(Icons.error, color: Colors.red))),
+                error: Bounce(
+                    infinite: true,
+                    child: const Icon(Icons.error, color: Colors.red))),
             const YSpace(50),
           ],
         ),

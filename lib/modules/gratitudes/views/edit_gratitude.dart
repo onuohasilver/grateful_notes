@@ -30,104 +30,106 @@ class EditGratitude extends StatelessWidget {
 
     return SizedBox(
       height: 600.h,
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 600.h,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: CustomText(
-                      title(header),
-                      size: 20,
-                      height: 1.5,
-                      weight: FontWeight.bold,
-                    ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: CustomText(
+                    title(header),
+                    size: 20,
+                    height: 1.5,
+                    weight: FontWeight.bold,
                   ),
-                  const YSpace(12),
-                  if (gv.currentEdit != null)
-                    ...gv.currentEdit!.texts
-                        .map((e) => CustomTextArea(
-                              onChanged: gc.addTextToModel,
-                              autofocus: true,
-                            ))
-                        .toList(),
-                  const YSpace(12),
-                  const YSpace(12),
-                  Row(
-                    children: [
-                      const XSpace(10),
-                      GestureDetector(
-                        onTap: () => gc.addPrivacyToModel(
-                          gv.currentEdit!.privacy! == "Private"
-                              ? "Open"
-                              : "Private",
+                ),
+                const YSpace(12),
+                if (gv.currentEdit != null)
+                  ...gv.currentEdit!.texts
+                      .map((e) => CustomTextArea(
+                            onChanged: gc.addTextToModel,
+                            autofocus: true,
+                          ))
+                      .toList(),
+                const YSpace(12),
+                const YSpace(12),
+                Row(
+                  children: [
+                    const XSpace(10),
+                    GestureDetector(
+                      onTap: () => gc.addPrivacyToModel(
+                        gv.currentEdit!.privacy! == "Private"
+                            ? "Open"
+                            : "Private",
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(border: Border.all()),
+                        padding: const EdgeInsets.all(4),
+                        child: Row(
+                          children: [
+                            Icon(
+                                gv.currentEdit!.privacy! == "Private"
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                size: 12),
+                            const XSpace(5),
+                            CustomText(
+                                gv.currentEdit!.privacy! == "Private"
+                                    ? "Private"
+                                    : "Open",
+                                size: 14,
+                                weight: FontWeight.bold)
+                          ],
                         ),
+                      ),
+                    ),
+                    const XSpace(10),
+                    Visibility(
+                      visible: gv.currentEdit!.imagePaths.isEmpty,
+                      child: GestureDetector(
+                        onTap: () => CustomOverlays().showSheet(
+                            height: 400,
+                            color: Colors.white,
+                            child: const StickerModal()),
                         child: Container(
                           decoration: BoxDecoration(border: Border.all()),
                           padding: const EdgeInsets.all(4),
-                          child: Row(
+                          child: const Row(
                             children: [
-                              Icon(
-                                  gv.currentEdit!.privacy! == "Private"
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                  size: 12),
-                              const YSpace(12),
-                              CustomText(
-                                  gv.currentEdit!.privacy! == "Private"
-                                      ? "Set to Private"
-                                      : "Set to Open",
-                                  size: 14,
-                                  weight: FontWeight.bold)
+                              Icon(Icons.add, size: 12),
+                              XSpace(5),
+                              CustomText("Sticker",
+                                  size: 14, weight: FontWeight.bold)
                             ],
                           ),
                         ),
                       ),
-                      const XSpace(10),
-                      Visibility(
-                        visible: gv.currentEdit!.imagePaths.isEmpty,
-                        child: GestureDetector(
-                          onTap: () => CustomOverlays().showSheet(
-                              height: 400,
-                              color: Colors.white,
-                              child: const StickerModal()),
-                          child: Container(
-                            decoration: BoxDecoration(border: Border.all()),
-                            padding: const EdgeInsets.all(4),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.add, size: 12),
-                                CustomText("Add Sticker",
-                                    size: 14, weight: FontWeight.bold)
-                              ],
-                            ),
+                    ),
+                    const XSpace(10),
+                    Visibility(
+                      visible: gv.currentEdit!.stickers!.isEmpty,
+                      child: GestureDetector(
+                        onTap: () => gc.addImageToModel(),
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all()),
+                          padding: const EdgeInsets.all(4),
+                          child: const Row(
+                            children: [
+                              Icon(Icons.add, size: 12),
+                              XSpace(5),
+                              CustomText("Photo",
+                                  size: 14, weight: FontWeight.bold)
+                            ],
                           ),
                         ),
                       ),
-                      const XSpace(10),
-                      Visibility(
-                        visible: gv.currentEdit!.stickers!.isEmpty,
-                        child: GestureDetector(
-                          onTap: () => gc.addImageToModel(),
-                          child: Container(
-                            decoration: BoxDecoration(border: Border.all()),
-                            padding: const EdgeInsets.all(4),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.add, size: 12),
-                                CustomText("Add Photo",
-                                    size: 14, weight: FontWeight.bold)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const XSpace(10),
-                      GestureDetector(
+                    ),
+                    const XSpace(10),
+                    Visibility(
+                      visible: false,
+                      child: GestureDetector(
                         onTap: () => {
                           auc.record(),
                           CustomOverlays().showSheet(
@@ -142,87 +144,96 @@ class EditGratitude extends StatelessWidget {
                               border: Border.all(),
                               borderRadius: BorderRadius.circular(1000)),
                           padding: const EdgeInsets.all(5),
-                          child: Row(
-                            children: const [
+                          child: const Row(
+                            children: [
                               Icon(Icons.mic, size: 24, color: Colors.white),
                             ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const YSpace(12),
-                  if (auv.currentAudio != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Row(
-                        children: [
-                          auv.isPlaying
-                              ? Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: GestureDetector(
-                                    onTap: () => auc.pauseAudio(),
-                                    child: const Icon(Icons.pause),
-                                  ),
-                                )
-                              : Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: GestureDetector(
-                                    onTap: () => auc.playAudio(),
-                                    child: const Icon(Icons.play_arrow),
-                                  ),
+                    ),
+                  ],
+                ),
+                const YSpace(12),
+                if (auv.currentAudio != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        auv.isPlaying
+                            ? Container(
+                                padding: const EdgeInsets.all(8),
+                                child: GestureDetector(
+                                  onTap: () => auc.pauseAudio(),
+                                  child: const Icon(Icons.pause),
                                 ),
-                        ],
-                      ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.all(8),
+                                child: GestureDetector(
+                                  onTap: () => auc.playAudio(),
+                                  child: const Icon(Icons.play_arrow),
+                                ),
+                              ),
+                      ],
                     ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      XSpace(10),
-                    ],
                   ),
-                  const YSpace(12),
-                  if (gv.currentEdit!.stickers!.isNotEmpty)
-                    Row(
-                      children: List.generate(
-                          gv.currentEdit!.stickers!.length,
-                          (index) => Container(
-                                color: Colors.transparent,
-                                margin: const EdgeInsets.only(right: 7),
-                                width: 130,
-                                height: 189,
-                                child: CachedNetworkImage(
-                                    imageUrl: gv.currentEdit!.stickers![index]),
-                              )),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    XSpace(10),
+                  ],
+                ),
+                const YSpace(12),
+                if (gv.currentEdit!.stickers!.isNotEmpty)
+                  Row(
+                    children: List.generate(
+                        gv.currentEdit!.stickers!.length,
+                        (index) => Container(
+                              color: Colors.transparent,
+                              margin: const EdgeInsets.only(right: 7),
+                              width: 130,
+                              height: 189,
+                              child: CachedNetworkImage(
+                                  imageUrl: gv.currentEdit!.stickers![index]),
+                            )),
+                  ),
+                if (gv.currentEdit!.audioDuration != null)
+                  SizedBox(
+                    width: 350,
+                    child: StreamBuilder<Duration>(
+                        stream: auc.getDurationState(),
+                        builder: (context, snapshot) {
+                          final duration = snapshot.data;
+                          final progress = duration ?? Duration.zero;
+                          return ProgressBar(
+                            progress: Duration(seconds: progress.inSeconds),
+                            total: Duration(
+                                seconds: gv.currentEdit!.audioDuration!),
+                            progressBarColor: Colors.black,
+                            baseBarColor: Colors.grey.withOpacity(0.24),
+                            thumbColor: Colors.black,
+                            barHeight: 3.0,
+                            thumbRadius: 5.0,
+                            onSeek: (duration) {
+                              // Logger().i('User selected a new time: $duration');
+                            },
+                          );
+                        }),
+                  ),
+                if (gv.currentEdit!.imagePaths.isNotEmpty)
+                  GestureDetector(
+                    onTap: () => print(
+                      [
+                        'object',
+                        gv.currentEdit!.imagePaths.length,
+                      ],
                     ),
-                  if (gv.currentEdit!.audioDuration != null)
-                    SizedBox(
-                      width: 350,
-                      child: StreamBuilder<Duration>(
-                          stream: auc.getDurationState(),
-                          builder: (context, snapshot) {
-                            final duration = snapshot.data;
-                            final progress = duration ?? Duration.zero;
-                            return ProgressBar(
-                              progress: Duration(seconds: progress.inSeconds),
-                              total: Duration(
-                                  seconds: gv.currentEdit!.audioDuration!),
-                              progressBarColor: Colors.black,
-                              baseBarColor: Colors.grey.withOpacity(0.24),
-                              thumbColor: Colors.black,
-                              barHeight: 3.0,
-                              thumbRadius: 5.0,
-                              onSeek: (duration) {
-                                // Logger().i('User selected a new time: $duration');
-                              },
-                            );
-                          }),
-                    ),
-                  if (gv.currentEdit!.imagePaths.isNotEmpty)
-                    SizedBox(
-                      width: 375.w,
+                    child: SizedBox(
+                      width: double.infinity,
                       height: 189,
                       child: ListView(
+                        padding: const EdgeInsets.only(left: 12),
                         scrollDirection: Axis.horizontal,
                         children: List.generate(
                             gv.currentEdit!.imagePaths.length,
@@ -236,27 +247,23 @@ class EditGratitude extends StatelessWidget {
                                 )),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0) +
-                  const EdgeInsets.only(bottom: 50),
+                  const EdgeInsets.only(bottom: 50, top: 20),
               child: CustomFlatButton(
                 label: "Save",
                 hasBorder: true,
                 expand: true,
                 onTap: () {
                   gc.saveGratitude();
-                  // gc.getGratitudes();
                 },
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

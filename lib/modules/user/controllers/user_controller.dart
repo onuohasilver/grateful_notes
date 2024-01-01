@@ -20,7 +20,6 @@ class UserController extends BridgeController {
     RequestHandler(
       request: () => _us.getuser(userid: userid),
       onSuccess: (_) => {
-        // Logger().i(_),
         _ui.onUsermodelChanged(
             UserModel.fromJson(_.data as Map<String, dynamic>)),
       },

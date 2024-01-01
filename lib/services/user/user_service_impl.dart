@@ -15,6 +15,6 @@ class UserServiceImpl implements UserService {
   @override
   Future<ResponseModel> finduser({required String email}) async {
     return await _firebaseExtended.findExact(
-        matcher: MatcherPath(Api().users, email.toLowerCase(), 'email'));
+        matcher: MatcherPath(Api().users, email.toLowerCase(), 'username'));
   }
 }

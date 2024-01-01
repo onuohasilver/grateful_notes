@@ -123,7 +123,6 @@ class FirebaseExtended {
     late ResponseModel response;
     log(matcher.toString());
     try {
-      // QuerySnapshot<Map<String, dynamic>> qs;
       await firestore
           .collection(matcher.collection)
           .doc(matcher.field)
@@ -142,7 +141,6 @@ class FirebaseExtended {
     late ResponseModel response;
     log(matcher.toString());
     try {
-      // QuerySnapshot<Map<String, dynamic>> qs;
       await firestore
           .collection(matcher.collection)
           .doc(matcher.field)

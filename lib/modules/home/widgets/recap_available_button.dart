@@ -2,10 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grateful_notes/core/asset_files.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_text.dart';
-import 'package:grateful_notes/global/display/custom_image.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/home/widgets/recap_dialog.dart';
@@ -24,7 +22,7 @@ class RecapAvailableButton extends StatelessWidget {
     RecapVariables rv = RecapVariables(state);
     GratitudeVariables gv = GratitudeVariables(state);
     return Visibility(
-      visible: DateTime.now().day < 10 &&
+      visible: DateTime.now().day > 5 &&
           gv.allGratitudes
               .where((element) =>
                   element.date.month ==
@@ -43,16 +41,16 @@ class RecapAvailableButton extends StatelessWidget {
             child: Row(
               children: [
                 const XSpace(15),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Swing(
-                    infinite: true,
-                    duration: const Duration(seconds: 4),
-                    child: CustomImage(
-                      src: const IconAssets().confetti,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(4.0),
+                //   child: Swing(
+                //     infinite: true,
+                //     duration: const Duration(seconds: 4),
+                //     child: CustomImage(
+                //       src: const IconAssets().confetti,
+                //     ),
+                //   ),
+                // ),
                 const XSpace(5),
                 CustomText(
                   'Your Happy Moments Recap for ${rv.currentRecap?.month} is ready!',

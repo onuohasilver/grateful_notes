@@ -54,7 +54,7 @@ class MyNotes extends StatelessWidget {
           : StickyGroupedListView(
               itemScrollController: isc,
               order: StickyGroupedListOrder.DESC,
-              physics: const ClampingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               elements: gv.allGratitudes.reversed.toList(),
               elementIdentifier: (GratitudeEditModel gem) => gem.date,
               groupBy: (GratitudeEditModel gem) =>
@@ -87,7 +87,7 @@ class MyNotes extends StatelessWidget {
                         backgroundColor: Colors.white,
                         foregroundColor: colorMapper(gem.type),
                         icon: Icons.visibility_outlined,
-                        label: 'Update Privacy',
+                        label: gem.privacy == "Private" ? "Open" : "Private",
                       ),
                     ],
                   ),

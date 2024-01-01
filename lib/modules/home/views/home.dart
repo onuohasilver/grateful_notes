@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
                   ),
               shape: const RoundedRectangleBorder(),
               backgroundColor: Colors.black,
-              label: const CustomText("Add New", size: 14, color: Colors.white),
+              label: const CustomText("Add", size: 14, color: Colors.white),
               icon: Roulette(child: const Icon(Icons.add))),
         ),
         body: FlowerBackdrop(
@@ -144,8 +144,9 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: () =>
-                            hi.onCurrentViewChanged(CurrentView.myNotes),
+                        onPressed: () => {
+                              hi.onCurrentViewChanged(CurrentView.myNotes),
+                            },
                         child: CustomText(
                           "My Notes",
                           weight: hv.currentView == CurrentView.myNotes
@@ -157,8 +158,10 @@ class Home extends StatelessWidget {
                               : null,
                         )),
                     TextButton(
-                        onPressed: () =>
-                            hi.onCurrentViewChanged(CurrentView.myCircle),
+                        onPressed: () => {
+                              hi.onCurrentViewChanged(CurrentView.myCircle),
+                              cc.getCircle()
+                            },
                         child: CustomText(
                           "My Circle",
                           weight: hv.currentView == CurrentView.myCircle
@@ -195,23 +198,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
-// class KamelToast {
-//   KamelToast();
-
-//   static error(String message) async {
-//     BuildContext context = navigatorKey.currentContext!;
-//     OverlayEntry overlayEntry;
-
-//     overlayEntry = OverlayEntry(
-//         builder: (context) => Container(
-//               key: UniqueKey(),
-//               child: const Text("data"),
-//             ));
-// // check if widget with key 'error_toast' exists in the widget tree
-//     Logger().i(overlayEntry);
-//     Overlay.of(context)?.insert(overlayEntry);
-
-//     Timer(const Duration(seconds: 3), () => overlayEntry.remove());
-//   }
-// }

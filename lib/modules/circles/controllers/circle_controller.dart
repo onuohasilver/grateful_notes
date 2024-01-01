@@ -25,8 +25,9 @@ class CircleController extends BridgeController {
   addUserToCircle() async {
     Set<FriendModel> friends = _cv.circle.friends.toSet();
     if (friends.length < 5 && _uv.usersearch != null) {
-      friends.add(
-          _uv.usersearch!.toFriendModel().copyWith(senderId: _uv.user!.userid));
+      FriendModel fm =
+          _uv.usersearch!.toFriendModel().copyWith(senderId: _uv.user!.userid);
+      friends.add(fm);
 
       RequestHandler(
           onRequestStart: _ci.onCurrentStateChanged(LoadingStates.loading),
@@ -37,8 +38,8 @@ class CircleController extends BridgeController {
           onSuccess: (_) async => {
                 _ci.onCircleModelChanged(
                     _cv.circle.copyWith(friends: friends.toList())),
-                await findUserAndUpdateCircle(
-                    userid: _cv.circle.friends.first.id),
+                Logger().i([_cv.circle.friends, 'fi.ends']),
+                await findUserAndUpdateCircle(userid: fm.id),
                 _ci.onCurrentStateChanged(LoadingStates.done)
               }).sendRequest();
     }
@@ -60,9 +61,7 @@ class CircleController extends BridgeController {
         await getCircle(),
         _gc.getCircleGratitudes(),
         await findUserAndUpdateCircle(
-            userid: _cv.circle.friends.first.id,
-            status: true,
-            senderId: fm.senderId),
+            userid: fm.senderId, status: true, senderId: fm.senderId),
         _ci.onCurrentStateChanged(LoadingStates.done),
       },
       onError: (_) => Logger().e(_),
@@ -118,11 +117,12 @@ class CircleController extends BridgeController {
       id: _uv.user!.userid,
       accepted: status,
     );
+    Logger().i(currentFm.toJson(), ccm.toJson());
     RequestHandler(
       request: () => _cs.getCircle(userid: userid),
       onSuccess: (_) async => {
+        Logger().i(['message', _]),
         ccm = CloseCircleModel.fromJson(_.data),
-        Logger().i(ccm),
         friends = ccm.friends,
         friends.remove(currentFm),
         if (!remove) friends.add(currentFm),

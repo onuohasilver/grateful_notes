@@ -26,7 +26,7 @@ class AddNewCircleModal extends StatelessWidget {
     UserVariables uv = UserVariables(state);
     UserInputs ui = UserInputs(state);
     return BridgeBuilder(
-      controllers: [ui],
+      controllers: [ui, cc],
       dispose: true,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
