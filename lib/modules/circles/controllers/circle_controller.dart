@@ -9,6 +9,7 @@ import 'package:grateful_notes/modules/circles/data/friend_model.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/user/controllers/user_variables.dart';
 import 'package:grateful_notes/services/circle/circle_service_impl.dart';
+import 'package:grateful_notes/unhinged_controllers/push_notifications/onesignal_controller.dart';
 import 'package:logger/logger.dart';
 
 class CircleController extends BridgeController {
@@ -21,14 +22,14 @@ class CircleController extends BridgeController {
   CircleInputs get _ci => CircleInputs(state);
   UserVariables get _uv => UserVariables(state);
   GratitudeController get _gc => GratitudeController(state);
-
+  OneSignalController get _osc => OneSignalController();
   addUserToCircle() async {
     Set<FriendModel> friends = _cv.circle.friends.toSet();
     if (friends.length < 5 && _uv.usersearch != null) {
       FriendModel fm =
           _uv.usersearch!.toFriendModel().copyWith(senderId: _uv.user!.userid);
       friends.add(fm);
-
+      Logger().e(fm);
       RequestHandler(
           onRequestStart: _ci.onCurrentStateChanged(LoadingStates.loading),
           request: () => _cs.updateCircle(
@@ -38,9 +39,10 @@ class CircleController extends BridgeController {
           onSuccess: (_) async => {
                 _ci.onCircleModelChanged(
                     _cv.circle.copyWith(friends: friends.toList())),
-                Logger().i([_cv.circle.friends, 'fi.ends']),
                 await findUserAndUpdateCircle(userid: fm.id),
-                _ci.onCurrentStateChanged(LoadingStates.done)
+                _ci.onCurrentStateChanged(LoadingStates.done),
+                _osc.notify(fm.notificationId,
+                    '${_uv.user?.username} has just sent you an invite to join their circle')
               }).sendRequest();
     }
   }
@@ -63,6 +65,8 @@ class CircleController extends BridgeController {
         await findUserAndUpdateCircle(
             userid: fm.senderId, status: true, senderId: fm.senderId),
         _ci.onCurrentStateChanged(LoadingStates.done),
+        _osc.notify(fm.notificationId,
+            '${_uv.user?.username} has just accepted you into their circle')
       },
       onError: (_) => Logger().e(_),
     ).sendRequest();
@@ -89,12 +93,14 @@ class CircleController extends BridgeController {
                   status: false,
                   remove: true,
                   senderId: fm.senderId),
-              _ci.onCurrentStateChanged(LoadingStates.done)
+              _ci.onCurrentStateChanged(LoadingStates.done),
+              _osc.notify(fm.notificationId,
+                  '${_uv.user?.username} has just removed you from their circle')
             }).sendRequest();
   }
 
-  getCircle() {
-    RequestHandler(
+  Future getCircle() async {
+    await RequestHandler(
         request: () => _cs.getCircle(userid: _uv.user!.userid),
         onError: (_) => Logger().e(_),
         onSuccess: (_) => {
@@ -115,6 +121,7 @@ class CircleController extends BridgeController {
       senderId: senderId ?? _uv.user!.userid,
       name: _uv.user!.username,
       id: _uv.user!.userid,
+      notificationId: _uv.user!.notificationid,
       accepted: status,
     );
     Logger().i(currentFm.toJson(), ccm.toJson());
@@ -131,6 +138,14 @@ class CircleController extends BridgeController {
       },
       onError: (_) => Logger().i(_),
     ).sendRequest();
+  }
+
+  notifyFriends() {
+    for (FriendModel friend
+        in _cv.circle.friends.where((element) => element.accepted)) {
+      _osc.notify(friend.notificationId,
+          '${_uv.user?.username} has just added a new note');
+    }
   }
 
   @override

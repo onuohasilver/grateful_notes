@@ -7,6 +7,7 @@ import 'package:grateful_notes/global/custom_text.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_controller.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_input.dart';
 import 'package:grateful_notes/modules/authentication/controllers/auth_variables.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EnterPassword extends StatelessWidget {
   const EnterPassword({
@@ -33,8 +34,21 @@ class EnterPassword extends StatelessWidget {
               autofocus: true,
               obscureText: true,
               style: GoogleFonts.inconsolata(color: Colors.white),
+              decoration: Decorations.textBorder,
+              cursorColor: Colors.white,
               onChanged: (value) => ai.onPasswordChanged(value)),
           const YSpace(10),
+          GestureDetector(
+            child: const CustomText(
+              'View our Privacy Policy',
+              size: 12,
+              color: Colors.white,
+              decoration: TextDecoration.underline,
+            ),
+            onTap: () {
+              launchUrl(Uri.parse("https://google.com"));
+            },
+          ),
           const YSpace(250),
           Align(
             alignment: Alignment.bottomRight,
@@ -43,11 +57,13 @@ class EnterPassword extends StatelessWidget {
               child: IconButton(
                   onPressed: () =>
                       {label.contains('secret') ? ac.signup() : ac.signin()},
-                  icon: const Icon(Icons.arrow_forward)),
+                  icon: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  )),
             ),
           ),
           const YSpace(10),
-          
         ],
       ),
     );

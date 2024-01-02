@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:bridgestate/state/bridge_state/bridge_methods.dart';
 import 'package:bridgestate/state/bridge_state/bridge_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
@@ -47,7 +46,7 @@ class CloseCircleModal extends StatelessWidget {
                   "View Circle  (${cv.circle.friends.where((element) => element.accepted).length})",
               onTap: () {
                 CustomOverlays().showSheet(
-                  height: 580.h,
+                  height: 650,
                   color: Colors.white,
                   child: const ViewMyCloseCircleModal(),
                 );
@@ -60,7 +59,7 @@ class CloseCircleModal extends StatelessWidget {
               label: "Pending Invites",
               onTap: () {
                 CustomOverlays().showSheet(
-                    height: 580.h,
+                    height: 650,
                     color: Colors.white,
                     child: const PendingInvitesModal());
               },
@@ -77,7 +76,7 @@ class CloseCircleModal extends StatelessWidget {
               label: "Sent Invites",
               onTap: () {
                 CustomOverlays().showSheet(
-                    height: 580.h,
+                    height: 650,
                     color: Colors.white,
                     child: const SentInvitesModal());
               },
@@ -92,13 +91,15 @@ class CloseCircleModal extends StatelessWidget {
               alignment: MainAxisAlignment.start),
           const YSpace(24),
           Visibility(
-            visible: cv.circle.friends.length < 5,
+            visible:
+                cv.circle.friends.where((element) => element.accepted).length <
+                    5,
             child: ElasticIn(
               child: CustomFlatButton(
                 label: "Add New",
                 onTap: () {
                   CustomOverlays().showSheet(
-                    height: 300,
+                    height: 400,
                     color: Colors.white,
                     child: const AddNewCircleModal(),
                   );

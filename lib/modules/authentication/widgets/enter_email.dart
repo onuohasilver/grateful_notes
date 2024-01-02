@@ -31,7 +31,9 @@ class EnterEmail extends StatelessWidget {
             autofocus: true,
             onChanged: (value) => ai.onEmailChanged(value),
             keyboardType: TextInputType.emailAddress,
+            cursorColor: Colors.white,
             style: GoogleFonts.inconsolata(color: Colors.white),
+            decoration: Decorations.textBorder,
           ),
           const YSpace(250),
           Align(
@@ -46,7 +48,10 @@ class EnterEmail extends StatelessWidget {
                           label: label.contains("and your")
                               ? "add 6 secret letters for your password"
                               : "and your password?")),
-                  icon: const Icon(Icons.arrow_forward)),
+                  icon: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  )),
             ),
           )
         ],

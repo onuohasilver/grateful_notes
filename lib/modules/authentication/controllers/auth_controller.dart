@@ -22,7 +22,9 @@ import 'package:grateful_notes/modules/user/controllers/user_inputs.dart';
 import 'package:grateful_notes/modules/user/models/user_model.dart';
 import 'package:grateful_notes/services/auth/auth_service_impl.dart';
 import 'package:grateful_notes/services/local_storage/key_storage.dart';
+import 'package:grateful_notes/unhinged_controllers/push_notifications/onesignal_controller.dart';
 import 'package:logger/logger.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class AuthController extends BridgeController {
   final BridgeState state;
@@ -36,6 +38,7 @@ class AuthController extends BridgeController {
   UserController get _uc => UserController(state);
   SuccessLoadingController get _slc => SuccessLoadingController(state);
   FlutterSecureStorageImpl get _ks => const FlutterSecureStorageImpl();
+  OneSignalController get _ocs => OneSignalController();
 
   Future signup() async {
     RequestHandler(
@@ -46,6 +49,7 @@ class AuthController extends BridgeController {
             onSuccess: (_) async => {
                   await _createUserProfile(_.data['id']),
                   _ks.saveString(_ak.username, _.data['id']),
+                  _ocs.setCurrentUser(_.data['id'])
                 },
             onError: (_) => Navigate.replace(ErrorScreen(
                 errorMessage: _.data['error'].toString().split("]").last)))
@@ -66,6 +70,7 @@ class AuthController extends BridgeController {
               await Future.delayed(const Duration(seconds: 2)),
               _ks.saveString(_ak.username, _.data['id']),
               _slc.dispose(),
+              _ocs.setCurrentUser(_.data['id']),
               Navigate.replaceUntil(Home())
             },
         onError: (_) => Navigate.replace(ErrorScreen(
@@ -104,12 +109,19 @@ class AuthController extends BridgeController {
 
   Future _createUserProfile(String id) async {
     RequestHandler(
-      request: () =>
-          _as.createProfile(email: _av.email, username: _av.username, id: id),
+      request: () => _as.createProfile(
+          email: _av.email,
+          username: _av.username,
+          id: id,
+          notificationid: OneSignal.User.pushSubscription.id ?? 'unavailable'),
       onSuccess: (_) async => {
         {
-          _ui.onUsermodelChanged(
-              UserModel(email: _av.email, username: _av.username, userid: id)),
+          Logger().i(OneSignal.User.pushSubscription.id ?? 'unavailable'),
+          _ui.onUsermodelChanged(UserModel(
+              email: _av.email,
+              username: _av.username,
+              userid: id,
+              notificationid: OneSignal.User.pushSubscription.id ?? 'none')),
           await Future.delayed(const Duration(seconds: 6)),
           Navigate.replaceUntil(Home()),
           _slc.dispose()
@@ -137,6 +149,7 @@ class AuthController extends BridgeController {
   logout() {
     Navigate.replaceUntil(const Intro());
     state.close();
+    _ocs.clearUser();
     _ks.close();
   }
 

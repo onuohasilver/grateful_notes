@@ -12,45 +12,51 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel extends Equatable {
-  const UserModel({
-    required this.email,
-    required this.username,
-    required this.userid,
-  });
+  const UserModel(
+      {required this.email,
+      required this.username,
+      required this.userid,
+      required this.notificationid});
 
   final String email;
   final String username;
   final String userid;
+  final String notificationid;
 
-  UserModel copyWith({
-    String? name,
-    String? email,
-    String? username,
-    String? userid,
-  }) =>
+  UserModel copyWith(
+          {String? name,
+          String? email,
+          String? username,
+          String? userid,
+          String? notificationid}) =>
       UserModel(
-        email: email ?? this.email,
-        username: username ?? this.username,
-        userid: userid ?? this.userid,
-      );
+          email: email ?? this.email,
+          username: username ?? this.username,
+          userid: userid ?? this.userid,
+          notificationid: notificationid ?? this.notificationid);
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        email: json["email"],
-        username: json["username"],
-        userid: json["id"],
-      );
+      email: json["email"],
+      username: json["username"],
+      userid: json["id"],
+      notificationid: json['notificationId'] ?? "");
 
   Map<String, dynamic> toJson() => {
         "email": email,
         "username": username,
         "id": userid,
+        "notificationId": notificationid
       };
 
   bool isMatch(UserModel um) => um == this;
 
   FriendModel toFriendModel() {
     return FriendModel(
-        name: username, id: userid, accepted: false, senderId: userid);
+        name: username,
+        id: userid,
+        accepted: false,
+        senderId: userid,
+        notificationId: notificationid);
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bridgestate/bridges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/global/box_sizing.dart';
 import 'package:grateful_notes/global/custom_flat_button.dart';
 import 'package:grateful_notes/global/custom_text.dart';
@@ -46,7 +45,7 @@ class SettingsModal extends StatelessWidget {
                   ),
                   onTap: () {
                     CustomOverlays().showSheet(
-                      height: 380.h,
+                      height: 450,
                       color: Colors.white,
                       child: const ReminderFrequencyModal(),
                     );
@@ -61,7 +60,7 @@ class SettingsModal extends StatelessWidget {
                   expand: true,
                   onTap: () {
                     CustomOverlays().showSheet(
-                      height: 500.h,
+                      height: 550,
                       color: Colors.white,
                       child: const CloseCircleModal(),
                     );
@@ -81,7 +80,7 @@ class SettingsModal extends StatelessWidget {
                   ),
                   onTap: () {
                     CustomOverlays().showSheet(
-                      height: 350.h,
+                      height: 400,
                       color: Colors.white,
                       child: const PrivacyModal(),
                     );

@@ -5,6 +5,7 @@ import 'package:grateful_notes/core/utilities/navigator.dart';
 import 'package:grateful_notes/global/display/error_screen.dart';
 import 'package:grateful_notes/global/display/success_loading.dart';
 import 'package:grateful_notes/global/display/success_loading_controller/success_loading_controller.dart';
+import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
 import 'package:grateful_notes/modules/circles/data/friend_model.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_input.dart';
@@ -38,6 +39,7 @@ class GratitudeController extends BridgeController {
   AudioVariables get _auv => AudioVariables(state);
 
   AudioController get _auc => AudioController(state);
+  CircleController get _cc => CircleController(state);
 
   ///Initializes a new gratitude edit model
   createNew(String type) =>
@@ -53,6 +55,7 @@ class GratitudeController extends BridgeController {
       await _uploadImages();
     }
     if (_auv.currentAudio != null) await addAudioToModel();
+
     RequestHandler(
             onRequestStart: () async => {},
             request: () => _gs.createGratitude(
@@ -70,6 +73,8 @@ class GratitudeController extends BridgeController {
                   await getGratitudes(),
                   await Future.delayed(const Duration(seconds: 6)),
                   _slc.dispose(),
+                  if ((_gv.currentEdit!.privacy ?? _sv.privacy) == "Open")
+                    {_cc.notifyFriends()},
                   Navigate.to(Home(callInitMethods: false))
                 },
             onError: (_) => Navigate.replace(ErrorScreen(
@@ -133,16 +138,19 @@ class GratitudeController extends BridgeController {
     ).sendRequest();
   }
 
-  getCircleGratitudes() {
+  getCircleGratitudes() async {
+    // _gi.onCurrentStateChanged(LoadingStates.loading);
+    _gi.onCircleGratitudesChanged([]);
     for (FriendModel friend
         in _cv.circle.friends.where((element) => element.accepted)) {
-      _fetchCircleGratitudes(friend);
+      await _fetchCircleGratitudes(friend);
     }
   }
 
   _fetchCircleGratitudes(FriendModel fm) {
     Logger().d("Fetching Circle gratitudes ${fm.id}");
     List<GratitudeEditModel> notes = [];
+
     RequestHandler(
       // onRequestStart: () => _gi.onCurrentStateChanged(LoadingStates.loading),
       request: () => _gs.getGratitudes(userid: fm.id),
@@ -150,7 +158,7 @@ class GratitudeController extends BridgeController {
         Logger().d("Fetching the gratitudes $_"),
         if (_.success)
           {
-            notes = _gv.allCircleGratitudes,
+            notes = _gv.allCircleGratitudes.toSet().toList(),
             notes.addAll(_.data.values
                 .where((element) =>
                     element['delete'] == null ? true : !element['delete'])
@@ -188,7 +196,8 @@ class GratitudeController extends BridgeController {
   }
 
   addTextToModel(String text) {
-    List<String> current = _gv.currentEdit!.texts;
+    List<String> current = [..._gv.currentEdit!.texts];
+
     current.last = text;
     _gi.onEditModelChanged(_gv.currentEdit!.copyWith(texts: current));
   }
@@ -198,13 +207,29 @@ class GratitudeController extends BridgeController {
   }
 
   addImageToModel() async {
-    List<String> current = _gv.currentEdit!.imagePaths;
+    Logger().i('curren');
+    List<String> current = [..._gv.currentEdit!.imagePaths];
+    Logger().i(current);
     await _is
         .getImagesFromDevice()
         .then((value) => current.addAll([...value.map((e) => e.path)]));
     _gi.onEditModelChanged(
         _gv.currentEdit!.copyWith(imagePaths: current.take(2).toList()));
     Logger().i(_gv.currentEdit);
+  }
+
+  removeImageFromModel(String image) async {
+    List<String> current = [..._gv.currentEdit!.imagePaths];
+    current.remove(image);
+    _gi.onEditModelChanged(
+        _gv.currentEdit!.copyWith(imagePaths: current.take(2).toList()));
+  }
+
+  removeStickerFromModel(String image) async {
+    List<String> current = [...(_gv.currentEdit!.stickers ?? [])];
+    current.remove(image);
+    _gi.onEditModelChanged(
+        _gv.currentEdit!.copyWith(stickers: current.take(2).toList()));
   }
 
   addStickerToModel(String sticker) async {

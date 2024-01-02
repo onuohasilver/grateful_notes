@@ -22,7 +22,7 @@ class RecapAvailableButton extends StatelessWidget {
     RecapVariables rv = RecapVariables(state);
     GratitudeVariables gv = GratitudeVariables(state);
     return Visibility(
-      visible: DateTime.now().day > 5 &&
+      visible: DateTime.now().day < 5 &&
           gv.allGratitudes
               .where((element) =>
                   element.date.month ==

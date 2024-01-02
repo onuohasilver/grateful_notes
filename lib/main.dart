@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grateful_notes/modules/notifications/controllers/notification_controller.dart';
+import 'package:grateful_notes/unhinged_controllers/push_notifications/onesignal_controller.dart';
 
 import 'firebase_options.dart';
 import 'modules/authentication/views/intro.dart';
@@ -14,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   NotificationController().initialise();
-
+  OneSignalController().initialise();
   runApp(const GratefulNotes());
 }
 

@@ -70,7 +70,7 @@ class EditGratitude extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                                gv.currentEdit!.privacy! == "Private"
+                                gv.currentEdit?.privacy! == "Private"
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 size: 12),
@@ -186,17 +186,36 @@ class EditGratitude extends StatelessWidget {
                 ),
                 const YSpace(12),
                 if (gv.currentEdit!.stickers!.isNotEmpty)
-                  Row(
-                    children: List.generate(
-                        gv.currentEdit!.stickers!.length,
-                        (index) => Container(
-                              color: Colors.transparent,
-                              margin: const EdgeInsets.only(right: 7),
-                              width: 130,
-                              height: 189,
-                              child: CachedNetworkImage(
-                                  imageUrl: gv.currentEdit!.stickers![index]),
-                            )),
+                  SizedBox(
+                    height: 189,
+                    child: Row(
+                      children: List.generate(
+                          gv.currentEdit!.stickers!.length,
+                          (index) => Stack(
+                                children: [
+                                  Container(
+                                    color: Colors.transparent,
+                                    margin: const EdgeInsets.only(right: 7),
+                                    width: 130,
+                                    height: 189,
+                                    child: CachedNetworkImage(
+                                        imageUrl:
+                                            gv.currentEdit!.stickers![index]),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: GestureDetector(
+                                      onTap: () => gc.removeStickerFromModel(
+                                          gv.currentEdit!.stickers![index]),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
+                    ),
                   ),
                 if (gv.currentEdit!.audioDuration != null)
                   SizedBox(
@@ -222,30 +241,37 @@ class EditGratitude extends StatelessWidget {
                         }),
                   ),
                 if (gv.currentEdit!.imagePaths.isNotEmpty)
-                  GestureDetector(
-                    onTap: () => print(
-                      [
-                        'object',
-                        gv.currentEdit!.imagePaths.length,
-                      ],
-                    ),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 189,
-                      child: ListView(
-                        padding: const EdgeInsets.only(left: 12),
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(
-                            gv.currentEdit!.imagePaths.length,
-                            (index) => Container(
-                                  color: Colors.black,
-                                  margin: const EdgeInsets.only(right: 7),
-                                  width: 180,
-                                  height: 189,
-                                  child: CustomImage(
-                                      src: gv.currentEdit!.imagePaths[index]),
-                                )),
-                      ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 189,
+                    child: ListView(
+                      padding: const EdgeInsets.only(left: 12),
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                          gv.currentEdit!.imagePaths.length,
+                          (index) => Stack(
+                                children: [
+                                  Container(
+                                    color: Colors.black,
+                                    margin: const EdgeInsets.only(right: 7),
+                                    width: 180,
+                                    height: 189,
+                                    child: CustomImage(
+                                        src: gv.currentEdit!.imagePaths[index]),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: GestureDetector(
+                                      onTap: () => gc.removeImageFromModel(
+                                          gv.currentEdit!.imagePaths[index]),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
                     ),
                   ),
               ],

@@ -38,7 +38,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something that I did"),
                         CustomOverlays().showSheet(
-                            height: 700.h,
+                            height: 780,
                             color: AppColors.superLightGreen,
                             child: const EditGratitude(
                                 header: "Something that I did..."),
@@ -52,7 +52,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something that was done for me"),
                         CustomOverlays().showSheet(
-                            height: 700.h,
+                            height: 780,
                             color: AppColors.fadedYellow,
                             child: const EditGratitude(
                                 header: "Something done for me..."),
@@ -66,7 +66,7 @@ class AddNewGratitude extends StatelessWidget {
                   onTap: () => {
                         gc.createNew("Something around me"),
                         CustomOverlays().showSheet(
-                            height: 700.h,
+                            height: 780,
                             color: AppColors.fadedPink,
                             child: const EditGratitude(
                                 header: "Something around me.."),

@@ -30,6 +30,9 @@ class EnterName extends StatelessWidget {
           TextField(
             onChanged: (value) => ai.onUsernameChanged(value),
             style: GoogleFonts.inconsolata(color: Colors.white),
+            autofocus: true,
+            cursorColor: Colors.white,
+            decoration: Decorations.textBorder,
           ),
           const YSpace(250),
           Align(
@@ -41,7 +44,10 @@ class EnterName extends StatelessWidget {
                       height: 603,
                       color: AppColors.purple,
                       child: const EnterEmail()),
-                  icon: const Icon(Icons.arrow_forward)),
+                  icon: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  )),
             ),
           )
         ],

@@ -17,7 +17,6 @@ class WeeklyFrequencyModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BridgeState state = bridge(context);
-    // SettingsInputs si = SettingsInputs(state);
     SettingsController sc = SettingsController(state);
     SettingsVariables sv = SettingsVariables(state);
     return Column(
@@ -43,7 +42,6 @@ class WeeklyFrequencyModal extends StatelessWidget {
                   onTap: () => CustomOverlays().showSheet(
                     height: 560,
                     color: Colors.white,
-                    // child: const WeeklyFrequencyModal(),
                     child: showTime(sv, sc, "Weekly", e),
                   ),
                   hasBorder: true,

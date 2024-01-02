@@ -15,3 +15,11 @@ class AppColors {
   static const fadedYellow = Color(0xFFFDF1DF);
   static const deepRed = Color(0xFFBC3C3C);
 }
+
+class Decorations {
+  static const textBorder = InputDecoration(
+      border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      focusedBorder:
+          OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      focusColor: Colors.white);
+}

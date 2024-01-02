@@ -12,45 +12,45 @@ FriendModel friendModelFromJson(String str) =>
 String friendModelToJson(FriendModel data) => json.encode(data.toJson());
 
 class FriendModel extends Equatable {
-  const FriendModel( {
+  const FriendModel({
     required this.name,
     required this.id,
     required this.accepted,
     required this.senderId,
+    required this.notificationId,
   });
 
   final String name;
-  final String id,senderId;
+  final String id, senderId, notificationId;
   final bool accepted;
 
-
-  FriendModel copyWith({
-    String? name,
-    String? id,
-    bool? accepted,
-    String? senderId
-  }) =>
+  FriendModel copyWith(
+          {String? name,
+          String? id,
+          bool? accepted,
+          String? senderId,
+          String? notificationId}) =>
       FriendModel(
-        name: name ?? this.name,
-        id: id ?? this.id,
-        accepted: accepted ?? this.accepted,
-        senderId: senderId??this.senderId
-      );
+          name: name ?? this.name,
+          id: id ?? this.id,
+          accepted: accepted ?? this.accepted,
+          notificationId: notificationId ?? this.notificationId,
+          senderId: senderId ?? this.senderId);
 
   factory FriendModel.fromJson(Map<String, dynamic> json) => FriendModel(
-        name: json["name"],
-        id: json["id"],
-        accepted: json["accepted"],
-        senderId: json['senderId']
-      );
-
+      name: json["name"],
+      id: json["id"],
+      accepted: json["accepted"],
+      notificationId: json["notificationId"] ?? json["notificationid"] ?? "",
+      senderId: json['senderId']);
   Map<String, dynamic> toJson() => {
         "name": name,
         "id": id,
         "accepted": accepted,
-        "senderId":senderId
+        "senderId": senderId,
+        "notificationId": notificationId
       };
 
   @override
-  List<Object?> get props => [id,senderId];
+  List<Object?> get props => [id, senderId];
 }

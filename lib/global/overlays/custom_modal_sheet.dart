@@ -56,12 +56,17 @@ class CustomOverlays {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(right: 18.w),
+                          padding: EdgeInsets.only(right: 18.w, top: 20),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: IconButton(
                                 onPressed: () => Navigate.pop(),
-                                icon: const Icon(Icons.close)),
+                                icon: Icon(
+                                  Icons.close,
+                                  color: color == Colors.white
+                                      ? Colors.black
+                                      : Colors.white,
+                                )),
                           ),
                         ),
                         const YSpace(25),

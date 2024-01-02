@@ -12,6 +12,7 @@ class AuthServiceImpl extends AuthService {
   Future<ResponseModel> createProfile(
       {required String email,
       required String username,
+      required String notificationid,
       required String id}) async {
     return await network.post(
       path: UrlPath(Api().users, id),
@@ -19,6 +20,7 @@ class AuthServiceImpl extends AuthService {
         "id": id,
         "email": email,
         "username": username.toLowerCase(),
+        "notificationId": notificationid
       },
     );
   }

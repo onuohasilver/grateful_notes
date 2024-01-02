@@ -10,61 +10,60 @@ import 'package:grateful_notes/modules/settings/controllers/settings_variables.d
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 
-Widget showTime(SettingsVariables sv, SettingsController sc, frequency,
+dynamic showTime(SettingsVariables sv, SettingsController sc, frequency,
     [String? dayOfWeek]) {
-  return Container();
-  // return createInlinePicker(
-  //     value: TimeOfDay(
-  //         hour: sv.reminderFrequency.hour, minute: sv.reminderFrequency.minute),
-  //     onChange: (_) {
-  //       Logger().i(_);
-  //       sc.setReminderFrequency(frequency, timeOfDay: _, dayOfWeek: dayOfWeek);
-  //     },
-  //     elevation: 0,
-  //     is24HrFormat: true,
-  //     buttonsSpacing: 12.w,
-  //     buttonStyle: ButtonStyle(
-  //         minimumSize: MaterialStateProperty.all(Size(130.w, 48.h)),
-  //         side: MaterialStateProperty.all(
-  //             const BorderSide(color: Colors.grey, width: 2)),
-  //         splashFactory: NoSplash.splashFactory,
-  //         backgroundColor: MaterialStateProperty.all(Colors.white)),
-  //     accentColor: Colors.black,
-  //     onCancel: () => {
-  //           CustomOverlays().showSheet(
-  //               height: 350,
-  //               color: Colors.white,
-  //               child: SizedBox(
-  //                 width: double.infinity,
-  //                 child: Column(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   crossAxisAlignment: CrossAxisAlignment.center,
-  //                   children: [
-  //                     LottieBuilder.asset(
-  //                       const AnimationAssets().done,
-  //                       height: 100,
-  //                     ),
-  //                     Padding(
-  //                       padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-  //                       child: TextButton(
-  //                           child: Text("Back to home",
-  //                               style: GoogleFonts.inconsolata(
-  //                                   color: Colors.black,
-  //                                   decoration: TextDecoration.underline)),
-  //                           onPressed: () {
-  //                             if (sv.reminderFrequency.frequency == "Weekly") {
-  //                               Navigate.pop(number: 5);
-  //                             } else {
-  //                               Navigate.pop(number: 4);
-  //                             }
-  //                           }),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ))
-  //           // Navigate.pop(),
-  //         },
-
-  //     // iosStylePicker: true,
-  //     borderRadius: 0);
+  // return Container();
+  return showPicker(
+      isInlinePicker: true,
+      value: Time(
+          hour: sv.reminderFrequency.hour, minute: sv.reminderFrequency.minute),
+      onChange: (_) {
+        Logger().i(_);
+        sc.setReminderFrequency(frequency, timeOfDay: _, dayOfWeek: dayOfWeek);
+      },
+      elevation: 0,
+      is24HrFormat: true,
+      buttonsSpacing: 12.w,
+      buttonStyle: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(Size(130.w, 48.h)),
+          side: MaterialStateProperty.all(
+              const BorderSide(color: Colors.grey, width: 2)),
+          splashFactory: NoSplash.splashFactory,
+          backgroundColor: MaterialStateProperty.all(Colors.white)),
+      accentColor: Colors.black,
+      onCancel: () => {
+            CustomOverlays().showSheet(
+                height: 350,
+                color: Colors.white,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LottieBuilder.asset(
+                        const AnimationAssets().done,
+                        height: 100,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+                        child: TextButton(
+                            child: Text("Back to home",
+                                style: GoogleFonts.inconsolata(
+                                    color: Colors.black,
+                                    decoration: TextDecoration.underline)),
+                            onPressed: () {
+                              if (sv.reminderFrequency.frequency == "Weekly") {
+                                Navigate.pop(number: 5);
+                              } else {
+                                Navigate.pop(number: 4);
+                              }
+                            }),
+                      )
+                    ],
+                  ),
+                ))
+          },
+      iosStylePicker: true,
+      borderRadius: 0);
 }

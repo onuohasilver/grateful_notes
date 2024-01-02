@@ -5,6 +5,7 @@ abstract class AuthService {
     required String email,
     required String username,
     required String id,
+    required String notificationid
   });
 
   signup({

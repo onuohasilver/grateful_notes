@@ -4,14 +4,16 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 // GratitudeEditModel gratitudeEditModelFromJson(String str) =>
 // GratitudeEditModel.fromJson(json.decode(str));
 
 String gratitudeEditModelToJson(GratitudeEditModel data) =>
     json.encode(data.toJson());
 
-class GratitudeEditModel {
-  GratitudeEditModel(
+class GratitudeEditModel extends Equatable {
+  const GratitudeEditModel(
       {required this.texts,
       required this.imagePaths,
       required this.date,
@@ -84,10 +86,10 @@ class GratitudeEditModel {
       };
 
   factory GratitudeEditModel.createNew(String type) => GratitudeEditModel(
-      texts: [""],
-      imagePaths: [],
+      texts: const [""],
+      imagePaths: const [],
       date: DateTime.now(),
-      stickers: [],
+      stickers: const [],
       type: type,
       id: "",
       audioDuration: null,
@@ -99,4 +101,7 @@ class GratitudeEditModel {
   String toString() {
     return toJson().toString();
   }
+
+  @override
+  List<Object?> get props => [texts];
 }

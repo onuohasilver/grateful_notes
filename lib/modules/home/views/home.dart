@@ -12,6 +12,8 @@ import 'package:grateful_notes/global/display/state_aware_builder.dart';
 import 'package:grateful_notes/global/generic/flower_backdrop.dart';
 import 'package:grateful_notes/global/overlays/custom_modal_sheet.dart';
 import 'package:grateful_notes/modules/circles/controllers/circle_controller.dart';
+import 'package:grateful_notes/modules/circles/controllers/circle_variable.dart';
+import 'package:grateful_notes/modules/circles/views/close_circle_modal.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_controller.dart';
 import 'package:grateful_notes/modules/gratitudes/controllers/gratitude_variables.dart';
 import 'package:grateful_notes/modules/gratitudes/views/add_new_gratitude.dart';
@@ -42,6 +44,7 @@ class Home extends StatelessWidget {
     GratitudeController gc = GratitudeController(state);
     GratitudeVariables gv = GratitudeVariables(state);
     CircleController cc = CircleController(state);
+    CircleVariables cv = CircleVariables(state);
 
     HomeInputs hi = HomeInputs(state);
     HomeVariables hv = HomeVariables(state);
@@ -59,7 +62,7 @@ class Home extends StatelessWidget {
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
               onPressed: () => CustomOverlays().showSheet(
-                    height: 600.h,
+                    height: 700,
                     color: AppColors.superLightGreen,
                     onClose: () => auc.dispose(),
                     child: const AddNewGratitude(),
@@ -89,7 +92,7 @@ class Home extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                           onTap: () => CustomOverlays().showSheet(
-                              height: 400.h,
+                              height: 430,
                               color: Colors.white,
                               child: const SettingsModal()),
                           child: Icon(
@@ -107,6 +110,40 @@ class Home extends StatelessWidget {
               ),
               const YSpace(8),
               const RecapAvailableButton(),
+              Visibility(
+                visible: cv.circle.friends
+                    .where((element) => element.accepted)
+                    .isEmpty,
+                child: GestureDetector(
+                  onTap: () => {
+                    CustomOverlays().showSheet(
+                      height: 550,
+                      color: Colors.white,
+                      child: const CloseCircleModal(),
+                    )
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 30,
+                    color: Colors.green,
+                    child: Row(
+                      children: [
+                        const XSpace(15),
+                        const CustomText(
+                          "Tap here to add your friends to your circle",
+                          size: 12,
+                          color: Colors.white,
+                        ),
+                        const XSpace(5),
+                        Pulse(
+                            infinite: true,
+                            child: const Icon(Icons.chevron_right_sharp,
+                                color: Colors.white))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               const YSpace(12),
               Flexible(
                   child: SizedBox(
@@ -160,7 +197,9 @@ class Home extends StatelessWidget {
                     TextButton(
                         onPressed: () => {
                               hi.onCurrentViewChanged(CurrentView.myCircle),
-                              cc.getCircle()
+                              cc
+                                  .getCircle()
+                                  .whenComplete(() => gc.getCircleGratitudes())
                             },
                         child: CustomText(
                           "My Circle",
