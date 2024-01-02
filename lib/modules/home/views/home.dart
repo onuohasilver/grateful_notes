@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:animate_do/animate_do.dart';
@@ -54,23 +55,32 @@ class Home extends StatelessWidget {
       controllers: callInitMethods ? [gc, cc] : [],
       initMethods: [
         () => cc.initialise(),
-        () =>
-            lsc.jumpTo(-67.6 * DateTime(2023).difference(DateTime.now()).inDays)
+        () => lsc.jumpTo((Platform.isIOS ? -67.6 : -71.33) *
+            DateTime(2023).difference(DateTime.now()).inDays)
       ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: FadeInRightBig(
           child: FloatingActionButton.extended(
               onPressed: () => CustomOverlays().showSheet(
-                    height: 700,
-                    color: AppColors.superLightGreen,
+                    height: hv.currentView == CurrentView.myNotes ? 700 : 550,
+                    color: hv.currentView == CurrentView.myNotes
+                        ? AppColors.superLightGreen
+                        : Colors.white,
                     onClose: () => auc.dispose(),
-                    child: const AddNewGratitude(),
+                    child: hv.currentView == CurrentView.myNotes
+                        ? const AddNewGratitude()
+                        : const CloseCircleModal(),
                   ),
               shape: const RoundedRectangleBorder(),
               backgroundColor: Colors.black,
-              label: const CustomText("Add", size: 14, color: Colors.white),
-              icon: Roulette(child: const Icon(Icons.add))),
+              label: CustomText(
+                  hv.currentView == CurrentView.myNotes ? "Note" : 'Circle',
+                  size: 14,
+                  color: Colors.white),
+              icon: hv.currentView == CurrentView.myNotes
+                  ? Roulette(child: const Icon(Icons.add))
+                  : Roulette(child: const Icon(Icons.add))),
         ),
         body: FlowerBackdrop(
           filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),

@@ -46,7 +46,8 @@ class EnterPassword extends StatelessWidget {
               decoration: TextDecoration.underline,
             ),
             onTap: () {
-              launchUrl(Uri.parse("https://google.com"));
+              launchUrl(
+                  Uri.parse("https://sites.google.com/view/happynotes/home"));
             },
           ),
           const YSpace(250),
